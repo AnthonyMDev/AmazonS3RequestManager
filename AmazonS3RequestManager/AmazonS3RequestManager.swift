@@ -103,8 +103,6 @@ public class AmazonS3RequestManager: Alamofire.Manager {
     
     return NSURL(string: URLString)
   }
-  
-//  private(set) var requestManager: Alamofire.Manager
 
   /**
   MARK: Initialization
@@ -117,8 +115,6 @@ public class AmazonS3RequestManager: Alamofire.Manager {
     self.region = region
     self.accessKey = accessKey
     self.secret = secret
-    
-//    self.requestManager = Alamofire.Manager(configuration: AmazonS3RequestManager.amazonConfiguration())
   }
 
   required public init(configuration: NSURLSessionConfiguration?) {
@@ -143,8 +139,13 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   MARK: Request
   */
   
-  public override func request(method: Alamofire.Method, _ URLString: Alamofire.URLStringConvertible, parameters: [String: AnyObject]? = nil, encoding: ParameterEncoding = .URL) -> Request {
+  public override func request(method: Alamofire.Method,
+    _ URLString: Alamofire.URLStringConvertible,
+    parameters: [String: AnyObject]? = nil,
+    encoding: ParameterEncoding = .URL) -> Request {
+      
     return request(encoding.encode(amazonURLRequest(method, URL: URLString), parameters: parameters).0)
+      
   }
   
   private func amazonURLRequest(method: Alamofire.Method,
