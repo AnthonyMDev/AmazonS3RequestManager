@@ -1,8 +1,10 @@
 //
-//  AmazonS3RequestManager.swift
-//  AmazonS3RequestManager
+// AmazonS3RequestManager.swift
+// AmazonS3RequestManager
 //
-//  Copyright (c) 2015 Anthony Miller.
+// Based on `AFAmazonS3Manager` by `Matt Thompson`
+//
+// Created by Anthony Miller. 2015.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +30,36 @@ import Foundation
 import Alamofire
 
 /**
+* MARK: Information
+*/
+
+/**
+MARK: Error Domain
+
+The Error Domain for `ZRAPI`
+*/
+private let AmazonS3RequestManagerErrorDomain = "com.alamofire.AmazonS3RequestManager"
+
+/**
+MARK: Error Codes
+
+The error codes for the `AmazonS3RequestManagerErrorDomain`
+
+- AccessKeyMissing: The `accessKey` for the request manager is `nil`. The `accessKey` must be set in order to make requests with `AmazonS3RequestManager`.
+
+- SecretMissing: The secret for the request manager is `nil`. The secret must be set in order to make requests with `AmazonS3RequestManager`.
+
+*/
+public enum AmazonS3RequestManagerErrorCodes: Int {
+  
+  case AccessKeyMissing = 1,
+  SecretMissing
+  
+}
+
+/**
+MARK: Amazon S3 Regions
+
 The possible Amazon Web Service regions for the client.
 
 - USStandard:   N. Virginia or Pacific Northwest
@@ -52,7 +84,16 @@ public enum AmazonS3Region: String {
   SAEast1 = "s3-sa-east-1.amazonaws.com"
 }
 
+/**
+MARK: AmazonS3RequestManager
+
+`AmazonS3RequestManager` is a subclass of `Alamofire.Manager` that encodes requests to the Amazon S3 service.
+*/
 public class AmazonS3RequestManager: Alamofire.Manager {
+  
+  /**
+  MARK: Instance Properties
+  */
   
   /**
   The Amazon S3 Bucket for the client
@@ -60,7 +101,11 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   public var bucket: String?
   
   /**
-  The AWS Bucket for the client
+  The Amazon S3 region for the client. `AmazonS3Region.USStandard` by default. 
+  
+  :note: Must not be `nil`.
+  
+  :see: `AmazonS3Region` for defined regions.
   */
   public var region: AmazonS3Region = .USStandard
   
@@ -78,7 +123,9 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   */
   public var secret: String?
   
-  
+  /**
+  The AWS STS session token. `nil` by default.
+  */
   public var sessionToken: String?
   
   /**
@@ -108,31 +155,52 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   MARK: Initialization
   */
   
-  convenience public init(bucket: String, region: AmazonS3Region, accessKey: String?, secret: String?) {
-    self.init(configuration: AmazonS3RequestManager.amazonConfiguration())
+  /**
+  Initalizes an `AmazonS3RequestManager` with the given Amazon S3 credentials.
+  
+  :param: bucket    The Amazon S3 bucket for the client
+  :param: region    The Amazon S3 region for the client
+  :param: accessKey The Amazon S3 access key ID for the client
+  :param: secret    The Amazon S3 secret for the client
+  
+  :returns: An `AmazonS3RequestManager` with the given Amazon S3 credentials and a default configuration.
+  */
+  convenience public init(bucket: String?, region: AmazonS3Region, accessKey: String?, secret: String?) {
+    self.init(configuration: AmazonS3RequestManager.defaultAmazonConfiguration())
     
     self.bucket = bucket
     self.region = region
     self.accessKey = accessKey
     self.secret = secret
   }
-
-  required public init(configuration: NSURLSessionConfiguration?) {
-    self.bucket = ""
-    self.region = AmazonS3Region.USStandard
-    self.accessKey = ""
-    self.secret = ""
-    
-    super.init(configuration: configuration)
-  }
   
-  public class func amazonConfiguration() -> NSURLSessionConfiguration {
+  private class func defaultAmazonConfiguration() -> NSURLSessionConfiguration {
     let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
     configuration.HTTPAdditionalHeaders = Alamofire.Manager.defaultHTTPHeaders()
     
     configuration.requestCachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
     
     return configuration
+  }
+  
+  /**
+  Initalizes an `AmazonS3RequestManager` with the given Amazon S3 credentials and URL session configuration.
+  
+  :param: bucket          The Amazon S3 bucket for the client
+  :param: region          The Amazon S3 region for the client
+  :param: accessKey       The Amazon S3 access key ID for the client
+  :param: secret          The Amazon S3 secret for the client
+  :param: configuration   The `NSURLSessionConfiguration` for the request manager
+  
+  :returns: An `AmazonS3RequestManager` with the given Amazon S3 credentials and URL session configuration.
+  */
+  convenience public init(bucket: String?, region: AmazonS3Region, accessKey: String?, secret: String?, configuration: NSURLSessionConfiguration) {
+    self.init(configuration: configuration)
+    
+    self.bucket = bucket
+    self.region = region
+    self.accessKey = accessKey
+    self.secret = secret
   }
   
   /**
@@ -156,15 +224,19 @@ public class AmazonS3RequestManager: Alamofire.Manager {
     
     let amazonRequest = requestBySettingAuthorizationHeaders(forRequest: mutableURLRequest)
     
-      //TODO: Error handling
-    return amazonRequest.0!
+    return amazonRequest.0
   }
   
-  private func requestBySettingAuthorizationHeaders(forRequest request: NSURLRequest) -> (NSURLRequest?, NSError?) {
+  /**
+  MARK: Amazon S3 Request Serialization
+  */
+  
+  private func requestBySettingAuthorizationHeaders(forRequest request: NSURLRequest) -> (NSURLRequest, NSError?) {
     
     let mutableRequest = request.mutableCopy() as NSMutableURLRequest
+    let error = validateCredentials()
     
-    if accessKey != nil && secret != nil {
+    if error != nil {
       
       if sessionToken != nil {
         mutableRequest.setValue(sessionToken!, forHTTPHeaderField: "x-amz-security-token")
@@ -177,11 +249,11 @@ public class AmazonS3RequestManager: Alamofire.Manager {
       mutableRequest.setValue("AWS \(accessKey):\(signature)", forHTTPHeaderField: "Authorization")
       mutableRequest.setValue(timestamp ?? "", forHTTPHeaderField: "Date")
      
-      return(mutableRequest, nil)
+      return(mutableRequest, error)
       
     } else {
-      // TODO: Error Handling
-      return (nil, nil)
+      return (mutableRequest, error)
+      
     }
   }
   
@@ -268,5 +340,40 @@ public class AmazonS3RequestManager: Alamofire.Manager {
     }
     return canonicalizedResource
   }
+  
+  /**
+  MARK: Validation
+  */
+  
+  private func validateCredentials() -> NSError? {
+    if accessKey == nil || accessKey!.isEmpty {
+      return accessKeyMissingError
+      
+    }
+    if secret == nil || secret!.isEmpty {
+      return secretMissingError
+      
+    }
+    
+    return nil
+  }
+  
+  /**
+  MARK: Error Handling
+  */
+  
+  private lazy var accessKeyMissingError: NSError = NSError(
+    domain: AmazonS3RequestManagerErrorDomain,
+    code: AmazonS3RequestManagerErrorCodes.AccessKeyMissing.rawValue,
+    userInfo: [NSLocalizedDescriptionKey: "Access Key Missing",
+      NSLocalizedFailureReasonErrorKey: "The 'accessKey' must be set in order to make requests with 'AmazonS3RequestManager'."]
+  )
+  
+  private lazy var secretMissingError: NSError = NSError(
+    domain: AmazonS3RequestManagerErrorDomain,
+    code: AmazonS3RequestManagerErrorCodes.SecretMissing.rawValue,
+    userInfo: [NSLocalizedDescriptionKey: "Secret Missing",
+      NSLocalizedFailureReasonErrorKey: "The 'secret' must be set in order to make requests with 'AmazonS3RequestManager'."]
+  )
   
 }

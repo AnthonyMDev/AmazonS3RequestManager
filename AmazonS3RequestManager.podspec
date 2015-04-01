@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
-  s.name = 'Alamofire'
-  s.version = '1.1.4'
+  s.name = 'AmazonS3RequestManager'
+  s.version = '0.1.0'
   s.license = 'MIT'
-  s.summary = 'Elegant HTTP Networking in Swift'
-  s.homepage = 'https://github.com/Alamofire/Alamofire'
-  s.social_media_url = 'http://twitter.com/mattt'
-  s.authors = { 'Mattt Thompson' => 'm@mattt.me' }
-  s.source = { :git => 'https://github.com/Alamofire/Alamofire.git', :tag => s.version }
+  s.summary = 'An Alamofire Manager subclass for Amazon S3 requests.'
+  s.homepage = 'https://github.com/AnthonyMDev/AmazonS3RequestManager'
+  s.social_media_url = 'http://twitter.com/AnthonyMDev'
+  s.authors = { 'Anthony Miller' => 'AnthonyMDev@gmail.com' }
+  s.source = { :git => 'https://github.com/AnthonyMDev/AmazonS3RequestManager.git', :tag => s.version }
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'

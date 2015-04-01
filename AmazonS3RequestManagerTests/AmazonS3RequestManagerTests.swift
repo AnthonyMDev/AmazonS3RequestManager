@@ -44,10 +44,25 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let cachePolicyValue = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData.rawValue
     
     // then
-    let expectedHeaders = AmazonS3RequestManager.amazonConfiguration().HTTPAdditionalHeaders! as [String: String]
+    let expectedHeaders = Alamofire.Manager.defaultHTTPHeaders() as [String: String]
     
     XCTAssertEqual(headers, expectedHeaders)
     XCTAssertEqual(configuration.requestCachePolicy.rawValue, cachePolicyValue)
+  }
+  
+  func test__inits__withCustomConfiguration() {
+    // given
+    let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+    
+    // when
+    sut = AmazonS3RequestManager(bucket: bucket,
+      region: region,
+      accessKey: accessKey,
+      secret: secret,
+      configuration: configuration)
+    
+    // then
+    XCTAssertEqual(sut.session.configuration, configuration)
   }
   
   /**
@@ -83,12 +98,5 @@ class AmazonS3RequestManagerTests: XCTestCase {
     // then
     XCTAssertEqual(sut.endpointURL!, expectedURL)
   }
-  
-  /**
-  *  MARK: Amazon Configuration -  Tests
-  */
-  
-  
-  
   
 }

@@ -1,7 +1,9 @@
 // AmazonS3RequestManager.h
 // AmazonS3RequestManager
 //
-// Copyright (c) 2015 Anthony Miller
+// Based on `AFAmazonS3Manager` by `Matt Thompson`
+//
+// Created by Anthony Miller. 2015.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
