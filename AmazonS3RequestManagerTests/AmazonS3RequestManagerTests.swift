@@ -71,7 +71,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
   
   func test__endpointURL__returnsCorrectURL() {
     // when
-    let expectedURL = NSURL(string: "https://\(bucket).\(region.rawValue)")!
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)")!
     
     // then
     XCTAssertEqual(sut.endpointURL, expectedURL)
@@ -93,7 +93,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     sut.useSSL = false
     
     // when
-    let expectedURL = NSURL(string: "http://\(bucket).\(region.rawValue)")!
+    let expectedURL = NSURL(string: "http://\(region.rawValue)/\(bucket)")!
     
     // then
     XCTAssertEqual(sut.endpointURL, expectedURL)
@@ -106,7 +106,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
   func test__amazonURLRequest__setsURLWithEndpointURL() {
     // given
     let path = "TestPath"
-    let expectedURL = NSURL(string: "https://\(bucket).\(region.rawValue)/TestPath")!
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
     
     // when
     let request = sut.amazonURLRequest(.GET, path: path)

@@ -143,7 +143,7 @@ public class AmazonS3RequestManager: Alamofire.Manager {
     let scheme = self.useSSL ? "https" : "http"
     
     if bucket != nil {
-      URLString = "\(scheme)://\(bucket!).\(region.rawValue)"
+      URLString = "\(scheme)://\(region.rawValue)/\(bucket!)"
       
     } else {
       URLString = "\(scheme)://\(region.rawValue)"
@@ -209,7 +209,7 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   */
   
   /**
-  MARK: Get Object Request
+  MARK: GET Object Request
   */
   
   public func getObject(path: String) -> Request {
@@ -217,6 +217,10 @@ public class AmazonS3RequestManager: Alamofire.Manager {
     
     return request(getRequest)
   }
+  
+  /**
+  MARK: PUT Object Request
+  */
   
   public func putObject(fileURL: NSURL,
     destinationPath: String) -> Request {
