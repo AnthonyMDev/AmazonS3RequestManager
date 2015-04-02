@@ -123,9 +123,9 @@
 			isa = PBXGroup;
 			children = (
 				92EF4DB61AA64CC1002C68D2 /* AmazonS3RequestManager.h */,
+				92EF4DCD1AA64FB1002C68D2 /* AmazonS3RequestManager.swift */,
 				922820B91AA8FD9900C51349 /* AmazonS3SignatureHelpers.h */,
 				922820BA1AA8FD9900C51349 /* AmazonS3SignatureHelpers.m */,
-				92EF4DCD1AA64FB1002C68D2 /* AmazonS3RequestManager.swift */,
 				92EF4DB41AA64CC1002C68D2 /* Supporting Files */,
 			);
 			path = AmazonS3RequestManager;

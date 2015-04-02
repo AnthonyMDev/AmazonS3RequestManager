@@ -31,9 +31,44 @@
 
 @implementation AmazonS3SignatureHelpers
 
-+ (NSString *)encodedSignatureForSignature:(NSString *)signature withSecret:(NSString *)secret
++ (NSString *)AWSSignatureForRequest:(NSURLRequest *)request
+                             timeStamp:(NSString *)timestamp
+                                secret:(NSString *)key
 {
-  return @"";
+  NSMutableDictionary *mutableAMZHeaderFields = [NSMutableDictionary dictionary];
+  [[request allHTTPHeaderFields] enumerateKeysAndObjectsUsingBlock:^(NSString *field, id value, __unused BOOL *stop) {
+    field = [field lowercaseString];
+    if ([field hasPrefix:@"x-amz"]) {
+      if ([mutableAMZHeaderFields objectForKey:field]) {
+        value = [[mutableAMZHeaderFields objectForKey:field] stringByAppendingFormat:@",%@", value];
+      }
+      [mutableAMZHeaderFields setObject:value forKey:field];
+    }
+  }];
+  
+  NSMutableString *mutableCanonicalizedAMZHeaderString = [NSMutableString string];
+  for (NSString *field in [[mutableAMZHeaderFields allKeys] sortedArrayUsingSelector:@selector(compare:)]) {
+    id value = [mutableAMZHeaderFields objectForKey:field];
+    [mutableCanonicalizedAMZHeaderString appendFormat:@"%@:%@\n", field, value];
+  }
+  
+//    NSString *canonicalizedResource = bucket ? [NSString stringWithFormat:@"/%@", request.URL.path] : request.URL.path;
+  
+  NSString *canonicalizedResource = request.URL.path;
+  NSString *method = [request HTTPMethod];
+  NSString *contentMD5 = [request valueForHTTPHeaderField:@"Content-MD5"];
+  NSString *contentType = [request valueForHTTPHeaderField:@"Content-Type"];
+  
+  NSMutableString *mutableString = [NSMutableString string];
+  [mutableString appendFormat:@"%@\n", method ? method : @""];
+  [mutableString appendFormat:@"%@\n", contentMD5 ? contentMD5 : @""];
+  [mutableString appendFormat:@"%@\n", contentType ? contentType : @""];
+  [mutableString appendFormat:@"%@\n", timestamp ? timestamp : @""];
+  [mutableString appendFormat:@"%@", mutableCanonicalizedAMZHeaderString];
+  [mutableString appendFormat:@"%@", canonicalizedResource];
+  
+  NSData *data = [self HMACSHA1EncodedDataFromString:mutableString withKey:key];
+  return [self Base64EncodedStringFromData:data];
 }
 
 + (NSData *)HMACSHA1EncodedDataFromString:(NSString *)string withKey:(NSString *)key

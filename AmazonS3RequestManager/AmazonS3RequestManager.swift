@@ -26,6 +26,7 @@
 
 
 import Foundation
+import MobileCoreServices
 
 import Alamofire
 
@@ -136,7 +137,7 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   /**
   A readonly endpoint URL created for the specified bucket, region, and SSL use preference. `AmazonS3RequestManager` uses this as the baseURL for all requests.
   */
-  public var endpointURL: NSURL? {
+  public var endpointURL: NSURL {
     var URLString = ""
     
     let scheme = self.useSSL ? "https" : "http"
@@ -148,7 +149,7 @@ public class AmazonS3RequestManager: Alamofire.Manager {
       URLString = "\(scheme)://\(region.rawValue)"
     }
     
-    return NSURL(string: URLString)
+    return NSURL(string: URLString)!
   }
 
   /**
@@ -204,39 +205,75 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   }
   
   /**
-  MARK: Request
+  MARK: Requests
   */
   
-  public override func request(method: Alamofire.Method,
-    _ URLString: Alamofire.URLStringConvertible,
-    parameters: [String: AnyObject]? = nil,
-    encoding: ParameterEncoding = .URL) -> Request {
-      
-    return request(encoding.encode(amazonURLRequest(method, URL: URLString), parameters: parameters).0)
-      
+  /**
+  MARK: Get Object Request
+  */
+  
+  public func getObject(path: String) -> Request {
+    let getRequest = amazonURLRequest(.GET, path: path)
+    
+    return request(getRequest)
   }
   
-  private func amazonURLRequest(method: Alamofire.Method,
-    URL: Alamofire.URLStringConvertible) -> NSURLRequest {
+  public func putObject(fileURL: NSURL,
+    destinationPath: String) -> Request {
+      let putRequest = amazonURLRequest(.PUT, path: destinationPath)
       
-    let mutableURLRequest = NSMutableURLRequest(URL: NSURL(string: URL.URLString)!)
-    mutableURLRequest.HTTPMethod = method.rawValue
-    
-    let amazonRequest = requestBySettingAuthorizationHeaders(forRequest: mutableURLRequest)
-    
-    return amazonRequest.0
+      return upload(putRequest, file: fileURL)
   }
   
   /**
   MARK: Amazon S3 Request Serialization
   */
   
+  public func amazonURLRequest(method: Alamofire.Method, path: String) -> NSURLRequest {
+    
+    let url = endpointURL.URLByAppendingPathComponent(path)
+    
+    var mutableURLRequest = NSMutableURLRequest(URL: url)
+    mutableURLRequest.HTTPMethod = method.rawValue
+    
+    setContentType(&mutableURLRequest)
+    
+    let amazonRequest = requestBySettingAuthorizationHeaders(forRequest: mutableURLRequest)
+    
+    return amazonRequest.0
+  }
+  
+  private func setContentType(inout URLRequest: NSMutableURLRequest) {
+    var contentTypeString = MIMEType(URLRequest) ?? "application/octet-stream"
+    
+    URLRequest.setValue(contentTypeString, forHTTPHeaderField: "Content-Type")
+  }
+  
+  private func MIMEType(request: NSURLRequest) -> String? {
+    if let fileExtension = request.URL.pathExtension {
+      if !fileExtension.isEmpty {
+        
+        let UTIRef = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, nil)
+        let UTI = UTIRef.takeUnretainedValue()
+        UTIRef.release()
+        
+        let MIMETypeRef = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType)
+        let MIMEType = MIMETypeRef.takeUnretainedValue()
+        MIMETypeRef.release()
+        
+        return MIMEType
+        
+      }
+    }
+    return nil
+  }
+  
   private func requestBySettingAuthorizationHeaders(forRequest request: NSURLRequest) -> (NSURLRequest, NSError?) {
     
     let mutableRequest = request.mutableCopy() as NSMutableURLRequest
     let error = validateCredentials()
     
-    if error != nil {
+    if error == nil {
       
       if sessionToken != nil {
         mutableRequest.setValue(sessionToken!, forHTTPHeaderField: "x-amz-security-token")
@@ -244,10 +281,12 @@ public class AmazonS3RequestManager: Alamofire.Manager {
       
       let timestamp = currentTimeStamp()
       
-      let signature = authorizationSignature(forRequest: mutableRequest, timestamp: timestamp)
+      let signature = AmazonS3SignatureHelpers.AWSSignatureForRequest(mutableRequest,
+        timeStamp: timestamp,
+        secret: secret)
       
-      mutableRequest.setValue("AWS \(accessKey):\(signature)", forHTTPHeaderField: "Authorization")
       mutableRequest.setValue(timestamp ?? "", forHTTPHeaderField: "Date")
+      mutableRequest.setValue("AWS \(accessKey!):\(signature)", forHTTPHeaderField: "Authorization")
      
       return(mutableRequest, error)
       
@@ -269,77 +308,6 @@ public class AmazonS3RequestManager: Alamofire.Manager {
     
     return dateFormatter
     }()
-  
-  private func authorizationSignature(forRequest request:NSURLRequest, timestamp: String) -> String {
-    let method = request.HTTPMethod ?? ""
-    let contentMD5 = request.valueForHTTPHeaderField("Content-MD5") ?? ""
-    let contentType = request.valueForHTTPHeaderField("Content-Type") ?? ""
-    let headerString = canonicalizedHeaderString(forRequest: request)
-    let resource = canonicalizedResource(forRequest: request)
-    
-    var signature = ""
-    signature += "\(method)\n"
-    signature += "\(contentMD5)\n"
-    signature += "\(contentType)\n"
-    signature += "\(timestamp)\n"
-    signature += "\(headerString)"
-    signature += "\(resource)"
-    
-    return AmazonS3SignatureHelpers.encodedSignatureForSignature(signature, withSecret: secret)
-  }
-  
-  private func canonicalizedHeaderString(forRequest request: NSURLRequest) -> String {
-    var headerString = ""
-    
-    let AMZHeaderFields = amazonHeaderFields(forRequest: request)
-    
-    let sortedHeaderFields = sorted(AMZHeaderFields) { $0.0 < $1.0 }
-    
-    for field in sortedHeaderFields {
-      headerString += "\(field.0):\(field.1)\n"
-      
-    }
-    
-    return headerString
-  }
-  
-  private func amazonHeaderFields(forRequest request: NSURLRequest) -> [String: AnyObject] {
-    var AMZHeaderFields = [String: AnyObject]()
-    
-    if let headers = request.allHTTPHeaderFields as? [String: AnyObject] {
-      for header in headers {
-        
-        let fieldName = header.0.lowercaseString
-        
-        if fieldName.hasPrefix("x-amz") {
-          
-          if let existingValue: AnyObject = AMZHeaderFields[fieldName] {
-            
-            AMZHeaderFields[fieldName] = "\(existingValue),\(header.1)"
-            
-          } else {
-            AMZHeaderFields[fieldName] = header.1
-            
-          }
-        }
-      }
-    }
-    
-    return AMZHeaderFields
-  }
-  
-  private func canonicalizedResource(forRequest request: NSURLRequest) -> String {
-    var canonicalizedResource: String
-    
-    if bucket != nil {
-      canonicalizedResource = "/\(bucket!)\(request.URL.path)"
-      
-    } else {
-      canonicalizedResource = request.URL.path!
-      
-    }
-    return canonicalizedResource
-  }
   
   /**
   MARK: Validation
