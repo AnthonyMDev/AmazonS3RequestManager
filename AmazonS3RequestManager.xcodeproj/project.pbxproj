@@ -18,6 +18,7 @@
 		92EF4DBD1AA64CC1002C68D2 /* AmazonS3RequestManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92EF4DB11AA64CC1002C68D2 /* AmazonS3RequestManager.framework */; };
 		92EF4DC41AA64CC1002C68D2 /* AmazonS3RequestManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EF4DC31AA64CC1002C68D2 /* AmazonS3RequestManagerTests.swift */; };
 		92EF4DCE1AA64FB1002C68D2 /* AmazonS3RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EF4DCD1AA64FB1002C68D2 /* AmazonS3RequestManager.swift */; };
+		92F051121ACF6C32000B3918 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F051111ACF6C32000B3918 /* MobileCoreServices.framework */; };
 		FF5C22AAE868DD0161DE127B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E3F9197DC24E8B008B2627 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		92EF4DC31AA64CC1002C68D2 /* AmazonS3RequestManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManagerTests.swift; sourceTree = "<group>"; };
 		92EF4DCD1AA64FB1002C68D2 /* AmazonS3RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManager.swift; sourceTree = "<group>"; };
 		92EF4DD21AA69676002C68D2 /* libcommonCrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcommonCrypto.dylib; path = usr/lib/system/libcommonCrypto.dylib; sourceTree = SDKROOT; };
+		92F051111ACF6C32000B3918 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		9E597D7190CA367895AF91A9 /* Pods-AmazonS3RequestManager.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AmazonS3RequestManager.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AmazonS3RequestManager/Pods-AmazonS3RequestManager.debug.xcconfig"; sourceTree = "<group>"; };
 		A1B0C81F4198B8AD86110A10 /* Pods-AmazonS3RequestManagerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AmazonS3RequestManagerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AmazonS3RequestManagerTests/Pods-AmazonS3RequestManagerTests.release.xcconfig"; sourceTree = "<group>"; };
 		C654EFF0C0FCD904730ED696 /* Pods-AmazonS3RequestManagerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AmazonS3RequestManagerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AmazonS3RequestManagerTests/Pods-AmazonS3RequestManagerTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92F051121ACF6C32000B3918 /* MobileCoreServices.framework in Frameworks */,
 				FF5C22AAE868DD0161DE127B /* Pods.framework in Frameworks */,
 				0D80828C6F42FB5C5FF4C100 /* Pods_AmazonS3RequestManager.framework in Frameworks */,
 			);
@@ -91,6 +94,7 @@
 		6124C6883B00B9CA4E014F2D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				92F051111ACF6C32000B3918 /* MobileCoreServices.framework */,
 				92EF4DD21AA69676002C68D2 /* libcommonCrypto.dylib */,
 				87E3F9197DC24E8B008B2627 /* Pods.framework */,
 				D71C24E6A28FD552DA5FC6AF /* Pods_AmazonS3RequestManager.framework */,

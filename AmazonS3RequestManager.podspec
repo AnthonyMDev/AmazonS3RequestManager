@@ -7,9 +7,9 @@ Pod::Spec.new do |s|
   s.social_media_url = 'http://twitter.com/AnthonyMDev'
   s.authors = { 'Anthony Miller' => 'AnthonyMDev@gmail.com' }
   s.source = { :git => 'https://github.com/AnthonyMDev/AmazonS3RequestManager.git', :tag => s.version }
+  s.frameworks = 'Foundation', 'MobileCoreServices'
 
   s.ios.deployment_target = '8.0'
-  s.osx.deployment_target = '10.9'
 
   s.source_files = 'AmazonS3RequestManager/*.{h,m,swift}'
 
