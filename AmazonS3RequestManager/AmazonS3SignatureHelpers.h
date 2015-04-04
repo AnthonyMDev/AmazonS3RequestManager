@@ -34,6 +34,4 @@
                            timeStamp:(NSString *)timestamp
                               secret:(NSString *)key;
 
-+ (NSString *)encodedSignatureForSignature:(NSString *)signature withSecret:(NSString *)secret;
-
 @end
