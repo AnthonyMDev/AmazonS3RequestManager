@@ -195,13 +195,17 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   
   :returns: An `AmazonS3RequestManager` with the given Amazon S3 credentials and URL session configuration.
   */
-  convenience public init(bucket: String?, region: AmazonS3Region, accessKey: String?, secret: String?, configuration: NSURLSessionConfiguration) {
-    self.init(configuration: configuration)
+  convenience public init(bucket: String?,
+    region: AmazonS3Region,
+    accessKey: String?,
+    secret: String?,
+    configuration: NSURLSessionConfiguration) {
+      self.init(configuration: configuration)
     
-    self.bucket = bucket
-    self.region = region
-    self.accessKey = accessKey
-    self.secret = secret
+      self.bucket = bucket
+      self.region = region
+      self.accessKey = accessKey
+      self.secret = secret
   }
   
   /**
@@ -212,21 +216,63 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   MARK: GET Object Request
   */
   
-  public func getObject(path: String) -> Request {
+  /**
+  Gets an object from the Amazon S3 service and saves it to file.
+  
+  :note: The user for the manager's Amazon S3 credentials must have read access to the object
+  
+  :dicussion: This method performs a download request that allows for a progress block to be implemented. For more information on using progress blocks, see `Alamofire`.
+  
+  :param: path           The object path
+  :param: destinationURL The `NSURL` to save the object to
+  
+  :returns: A download request for the object
+  */
+  public func getObject(path: String, saveToURL destinationURL: NSURL) -> Request {
     let getRequest = amazonURLRequest(.GET, path: path)
     
-    return request(getRequest)
+    return download(getRequest, destination: { (_, _) -> (NSURL) in
+      return destinationURL
+    })
   }
   
   /**
   MARK: PUT Object Request
   */
   
-  public func putObject(fileURL: NSURL,
-    destinationPath: String) -> Request {
+  /**
+  Uploads an object to the Amazon S3 service with a given local file URL.
+  
+  :note: The user for the manager's Amazon S3 credentials must have read access to the bucket
+  
+  :param: fileURL         The local `NSURL` of the file to upload
+  :param: destinationPath The desrired destination path, including the file name and extension, in the Amazon S3 bucket
+  
+  :returns: An upload request for the object
+  */
+  public func putObject(fileURL: NSURL, destinationPath: String) -> Request {
       let putRequest = amazonURLRequest(.PUT, path: destinationPath)
       
       return upload(putRequest, file: fileURL)
+  }
+  
+  /**
+  MARK: DELETE Object Request
+  */
+  
+  /**
+  Deletes an object from the Amazon S3 service.
+  
+  :warning: Once an object has been deleted, there is no way to restore or undelete it.
+  
+  :param: path The object path
+  
+  :returns: The delete request
+  */
+  public func deleteObject(path: String) -> Request {
+    let deleteRequest = amazonURLRequest(.DELETE, path: path)
+    
+    return request(deleteRequest)
   }
   
   /**

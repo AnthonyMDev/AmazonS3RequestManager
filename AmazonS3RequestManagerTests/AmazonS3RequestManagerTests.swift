@@ -28,6 +28,8 @@ class AmazonS3RequestManagerTests: XCTestCase {
       region: region,
       accessKey: accessKey,
       secret: secret)
+    
+    sut.startRequestsImmediately = false
   }
   
   func test__inits__withValues() {
@@ -97,6 +99,103 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     // then
     XCTAssertEqual(sut.endpointURL, expectedURL)
+  }
+  
+  /**
+  *  MARK: GET Object Request - Tests
+  */
+  
+  func test__getObject_path_saveToURL_returnsDownloadRequest() {
+    // when
+    let request = sut.getObject("test", saveToURL: NSURL())
+    
+    // then
+    XCTAssertTrue(request.task.isKindOfClass(NSURLSessionDownloadTask))
+  }
+  
+  func test__getObject_path_saveToURL_setsHTTPMethod() {
+    // given
+    let expected = "GET"
+    
+    // when
+    let request = sut.getObject("test", saveToURL: NSURL())
+    
+    // then
+    XCTAssertEqual(request.request.HTTPMethod!, expected)
+  }
+  
+  func test__getObject_path_saveToURL_setsURLWithEndpoint() {
+    // given
+    let path = "TestPath"
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+    
+    // when
+    let request = sut.getObject(path, saveToURL: NSURL())
+    
+    // then
+    XCTAssertEqual(request.request.URL, expectedURL)
+  }
+  
+  /**
+  *  MARK: PUT Object Request - Tests
+  */
+  
+  func test__putObject_path_saveToURL_returnsUploadRequest() {
+    // when
+    let request = sut.putObject(NSURL(), destinationPath: "path")
+    
+    // then
+    XCTAssertTrue(request.task.isKindOfClass(NSURLSessionUploadTask))
+  }
+  
+  func test__putObject_path_saveToURL_setsHTTPMethod() {
+    // given
+    let expected = "PUT"
+    
+    // when
+    let request = sut.putObject(NSURL(), destinationPath: "path")
+    
+    // then
+    XCTAssertEqual(request.request.HTTPMethod!, expected)
+  }
+  
+  func test__putObject_path_saveToURL_setsURLWithEndpoint() {
+    // given
+    let path = "TestPath"
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+    
+    // when
+    let request = sut.putObject(NSURL(), destinationPath: path)
+    
+    // then
+    XCTAssertEqual(request.request.URL, expectedURL)
+  }
+  
+  /**
+  *  MARK: DELETE Object Request - Tests
+  */
+  
+  func test__deleteObject_setsHTTPMethod() {
+    // given
+    let expected = "DELETE"
+    
+    // when
+    let request = sut.deleteObject("test")
+    
+    // then
+    XCTAssertEqual(request.request.HTTPMethod!, expected)
+  }
+  
+  func test__deleteObject_setsURLWithEndpoint() {
+    // given
+    let path = "TestPath"
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+    
+    // when
+    let request = sut.deleteObject(path)
+    
+    // then
+    XCTAssertEqual(request.request.URL, expectedURL)
   }
   
   /**
