@@ -11,8 +11,14 @@ First create an instance of the manager.
 
 ### Get Objects
 
+Getting Objects as Response Objects:
+
+    amazonS3Manager.getObject("myFoler/fileName.jpg")
+
+Saving Objects To File:
+
     let destination: NSURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-    amazonS3Manager.getObject("myFolder/fileName.jpg", saveToURL: destination)
+    amazonS3Manager.downloadObject("myFolder/fileName.jpg", saveToURL: destination)
     
 ### Upload Objects
     let fileURL: NSURL = NSURL(fileURLWithPath: "pathToMyObject")
