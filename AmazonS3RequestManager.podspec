@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name = 'AmazonS3RequestManager'
   s.version = '0.1.0'
   s.license = 'MIT'
-  s.summary = 'An Alamofire Manager subclass for Amazon S3 requests.'
+  s.summary = 'A Alamofire based request manager that serializes requests to the AWS S3 (Amazon Simple Storage Solution). Based on AFAmazonS3Manager'
   s.homepage = 'https://github.com/AnthonyMDev/AmazonS3RequestManager'
   s.social_media_url = 'http://twitter.com/AnthonyMDev'
   s.authors = { 'Anthony Miller' => 'AnthonyMDev@gmail.com' }

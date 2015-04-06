@@ -29,7 +29,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
       accessKey: accessKey,
       secret: secret)
     
-    sut.startRequestsImmediately = false
+    sut.requestManager.startRequestsImmediately = false
   }
   
   func test__inits__withValues() {
@@ -37,34 +37,6 @@ class AmazonS3RequestManagerTests: XCTestCase {
     XCTAssertEqual(sut.secret!, secret)
     XCTAssertEqual(sut.bucket!, bucket)
     XCTAssertEqual(sut.region.rawValue, region.rawValue)
-  }
-  
-  func test__inits__withAmazonConfiguration() {
-    // when
-    let configuration = sut.session.configuration
-    let headers = configuration.HTTPAdditionalHeaders as [String: String]
-    let cachePolicyValue = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData.rawValue
-    
-    // then
-    let expectedHeaders = Alamofire.Manager.defaultHTTPHeaders() as [String: String]
-    
-    XCTAssertEqual(headers, expectedHeaders)
-    XCTAssertEqual(configuration.requestCachePolicy.rawValue, cachePolicyValue)
-  }
-  
-  func test__inits__withCustomConfiguration() {
-    // given
-    let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
-    
-    // when
-    sut = AmazonS3RequestManager(bucket: bucket,
-      region: region,
-      accessKey: accessKey,
-      secret: secret,
-      configuration: configuration)
-    
-    // then
-    XCTAssertEqual(sut.session.configuration, configuration)
   }
   
   /**
@@ -223,6 +195,17 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     // then
     XCTAssertEqual(request.HTTPMethod!, expected)
+  }
+  
+  func test__amazonURLRequest__setsCachePolicy() {
+    // given
+    let expected = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+    
+    // when
+    let request = sut.amazonURLRequest(.GET, path: "test")
+    
+    // then
+    XCTAssertEqual(request.cachePolicy, expected)
   }
   
   func test__amazonURLRequest__givenNoPathExtension_setsHTTPHeader_ContentType() {

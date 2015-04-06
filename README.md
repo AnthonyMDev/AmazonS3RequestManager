@@ -1,5 +1,5 @@
 # AmazonS3RequestManager
-A request manager subclass of Alamofire's default manager that serializes requests to the AWS S3 (Amazon Simple Storage Solution). Based on AFAmazonS3Manager
+A Alamofire based request manager that serializes requests to the AWS S3 (Amazon Simple Storage Solution). Based on AFAmazonS3Manager
 
 ## Usage
 First create an instance of the manager.

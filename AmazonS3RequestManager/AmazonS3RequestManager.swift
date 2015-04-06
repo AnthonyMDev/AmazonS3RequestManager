@@ -90,7 +90,7 @@ MARK: AmazonS3RequestManager
 
 `AmazonS3RequestManager` is a subclass of `Alamofire.Manager` that encodes requests to the Amazon S3 service.
 */
-public class AmazonS3RequestManager: Alamofire.Manager {
+public class AmazonS3RequestManager {
   
   /**
   MARK: Instance Properties
@@ -135,6 +135,13 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   public var useSSL: Bool = true
   
   /**
+  The `Alamofire.Manager` instance to use for network requests.
+  
+  :note: This defaults to the shared instance of `Manager` used by top-level Alamofire requests.
+  */
+  public var requestManager: Alamofire.Manager = Alamofire.Manager.sharedInstance
+  
+  /**
   A readonly endpoint URL created for the specified bucket, region, and SSL use preference. `AmazonS3RequestManager` uses this as the baseURL for all requests.
   */
   public var endpointURL: NSURL {
@@ -166,46 +173,11 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   
   :returns: An `AmazonS3RequestManager` with the given Amazon S3 credentials and a default configuration.
   */
-  convenience public init(bucket: String?, region: AmazonS3Region, accessKey: String?, secret: String?) {
-    self.init(configuration: AmazonS3RequestManager.defaultAmazonConfiguration())
-    
+  required public init(bucket: String?, region: AmazonS3Region, accessKey: String?, secret: String?) {
     self.bucket = bucket
     self.region = region
     self.accessKey = accessKey
     self.secret = secret
-  }
-  
-  private class func defaultAmazonConfiguration() -> NSURLSessionConfiguration {
-    let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-    configuration.HTTPAdditionalHeaders = Alamofire.Manager.defaultHTTPHeaders()
-    
-    configuration.requestCachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
-    
-    return configuration
-  }
-  
-  /**
-  Initalizes an `AmazonS3RequestManager` with the given Amazon S3 credentials and URL session configuration.
-  
-  :param: bucket          The Amazon S3 bucket for the client
-  :param: region          The Amazon S3 region for the client
-  :param: accessKey       The Amazon S3 access key ID for the client
-  :param: secret          The Amazon S3 secret for the client
-  :param: configuration   The `NSURLSessionConfiguration` for the request manager
-  
-  :returns: An `AmazonS3RequestManager` with the given Amazon S3 credentials and URL session configuration.
-  */
-  convenience public init(bucket: String?,
-    region: AmazonS3Region,
-    accessKey: String?,
-    secret: String?,
-    configuration: NSURLSessionConfiguration) {
-      self.init(configuration: configuration)
-    
-      self.bucket = bucket
-      self.region = region
-      self.accessKey = accessKey
-      self.secret = secret
   }
   
   /**
@@ -231,7 +203,7 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   public func getObject(path: String, saveToURL destinationURL: NSURL) -> Request {
     let getRequest = amazonURLRequest(.GET, path: path)
     
-    return download(getRequest, destination: { (_, _) -> (NSURL) in
+    return requestManager.download(getRequest, destination: { (_, _) -> (NSURL) in
       return destinationURL
     })
   }
@@ -253,7 +225,7 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   public func putObject(fileURL: NSURL, destinationPath: String) -> Request {
       let putRequest = amazonURLRequest(.PUT, path: destinationPath)
       
-      return upload(putRequest, file: fileURL)
+      return requestManager.upload(putRequest, file: fileURL)
   }
   
   /**
@@ -272,7 +244,7 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   public func deleteObject(path: String) -> Request {
     let deleteRequest = amazonURLRequest(.DELETE, path: path)
     
-    return request(deleteRequest)
+    return requestManager.request(deleteRequest)
   }
   
   /**
@@ -321,6 +293,9 @@ public class AmazonS3RequestManager: Alamofire.Manager {
   private func requestBySettingAuthorizationHeaders(forRequest request: NSURLRequest) -> (NSURLRequest, NSError?) {
     
     let mutableRequest = request.mutableCopy() as NSMutableURLRequest
+    
+    mutableRequest.cachePolicy = .ReloadIgnoringLocalCacheData
+    
     let error = validateCredentials()
     
     if error == nil {
