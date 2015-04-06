@@ -77,32 +77,55 @@ class AmazonS3RequestManagerTests: XCTestCase {
   *  MARK: GET Object Request - Tests
   */
   
-  func test__getObject_path_saveToURL_returnsDownloadRequest() {
-    // when
-    let request = sut.getObject("test", saveToURL: NSURL())
-    
-    // then
-    XCTAssertTrue(request.task.isKindOfClass(NSURLSessionDownloadTask))
-  }
-  
-  func test__getObject_path_saveToURL_setsHTTPMethod() {
+  func test__getObject__setsHTTPMethod() {
     // given
     let expected = "GET"
     
     // when
-    let request = sut.getObject("test", saveToURL: NSURL())
+    let request = sut.getObject("test")
     
     // then
     XCTAssertEqual(request.request.HTTPMethod!, expected)
   }
   
-  func test__getObject_path_saveToURL_setsURLWithEndpoint() {
+  func test__getObject__setsURLWithEndpoint() {
     // given
     let path = "TestPath"
     let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
     
     // when
-    let request = sut.getObject(path, saveToURL: NSURL())
+    let request = sut.getObject(path)
+    
+    // then
+    XCTAssertEqual(request.request.URL, expectedURL)
+  }
+  
+  func test__downloadObject_path_saveToURL_returnsDownloadRequest() {
+    // when
+    let request = sut.downloadObject("test", saveToURL: NSURL())
+    
+    // then
+    XCTAssertTrue(request.task.isKindOfClass(NSURLSessionDownloadTask))
+  }
+  
+  func test__downloadObject_path_saveToURL_setsHTTPMethod() {
+    // given
+    let expected = "GET"
+    
+    // when
+    let request = sut.downloadObject("test", saveToURL: NSURL())
+    
+    // then
+    XCTAssertEqual(request.request.HTTPMethod!, expected)
+  }
+  
+  func test__downloadObject_path_saveToURL_setsURLWithEndpoint() {
+    // given
+    let path = "TestPath"
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+    
+    // when
+    let request = sut.downloadObject(path, saveToURL: NSURL())
     
     // then
     XCTAssertEqual(request.request.URL, expectedURL)

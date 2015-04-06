@@ -185,8 +185,23 @@ public class AmazonS3RequestManager {
   */
   
   /**
-  MARK: GET Object Request
+  MARK: GET Object Requests
   */
+  
+  /**
+  Gets and object from the Amazon S3 service and returns it as the response object without saving to file.
+  
+  :note: This method performs a standard GET request and does not allow use of progress blocks.
+  
+  :param: path The object path
+  
+  :returns: A GET request for the object
+  */
+  public func getObject(path: String) -> Request {
+    let getRequest = amazonURLRequest(.GET, path: path)
+    
+    return requestManager.request(getRequest)
+  }
   
   /**
   Gets an object from the Amazon S3 service and saves it to file.
@@ -200,7 +215,7 @@ public class AmazonS3RequestManager {
   
   :returns: A download request for the object
   */
-  public func getObject(path: String, saveToURL destinationURL: NSURL) -> Request {
+  public func downloadObject(path: String, saveToURL destinationURL: NSURL) -> Request {
     let getRequest = amazonURLRequest(.GET, path: path)
     
     return requestManager.download(getRequest, destination: { (_, _) -> (NSURL) in
