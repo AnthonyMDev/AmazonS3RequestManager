@@ -97,7 +97,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.getObject(path)
     
     // then
-    XCTAssertEqual(request.request.URL, expectedURL)
+    XCTAssertEqual(request.request.URL!, expectedURL)
   }
   
   func test__downloadObject_path_saveToURL_returnsDownloadRequest() {
@@ -128,7 +128,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.downloadObject(path, saveToURL: NSURL())
     
     // then
-    XCTAssertEqual(request.request.URL, expectedURL)
+    XCTAssertEqual(request.request.URL!, expectedURL)
   }
   
   /**
@@ -163,7 +163,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.putObject(NSURL(), destinationPath: path)
     
     // then
-    XCTAssertEqual(request.request.URL, expectedURL)
+    XCTAssertEqual(request.request.URL!, expectedURL)
   }
   
   /**
@@ -190,7 +190,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.deleteObject(path)
     
     // then
-    XCTAssertEqual(request.request.URL, expectedURL)
+    XCTAssertEqual(request.request.URL!, expectedURL)
   }
   
   /**
@@ -206,7 +206,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.amazonURLRequest(.GET, path: path)
     
     // then
-    XCTAssertEqual(request.URL, expectedURL)
+    XCTAssertEqual(request.URL!, expectedURL)
   }
   
   func test__amazonURLRequest__setsHTTPMethod() {
