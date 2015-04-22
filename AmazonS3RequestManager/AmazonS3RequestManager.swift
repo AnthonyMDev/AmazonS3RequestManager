@@ -244,6 +244,22 @@ public class AmazonS3RequestManager {
   }
   
   /**
+  Uploads an object to the Amazon S3 service with the given data.
+  
+  :note: The user for the manager's Amazon S3 credentials must have read access to the bucket
+  
+  :param: data            The `NSData` for the object to upload
+  :param: destinationPath The desrired destination path, including the file name and extension, in the Amazon S3 bucket
+  
+  :returns: An upload request for the object
+  */
+  public func putObject(data: NSData, destinationPath: String) -> Request {
+    let putRequest = amazonURLRequest(.PUT, path: destinationPath)
+    
+    return requestManager.upload(putRequest, data: data)
+  }
+  
+  /**
   MARK: DELETE Object Request
   */
   

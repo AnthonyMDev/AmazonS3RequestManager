@@ -135,7 +135,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
   *  MARK: PUT Object Request - Tests
   */
   
-  func test__putObject_path_saveToURL_returnsUploadRequest() {
+  func test__putObject_fileURL_destinationPath__returnsUploadRequest() {
     // when
     let request = sut.putObject(NSURL(), destinationPath: "path")
     
@@ -143,7 +143,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     XCTAssertTrue(request.task.isKindOfClass(NSURLSessionUploadTask))
   }
   
-  func test__putObject_path_saveToURL_setsHTTPMethod() {
+  func test__putObject_fileURL_destinationPath_setsHTTPMethod() {
     // given
     let expected = "PUT"
     
@@ -154,13 +154,44 @@ class AmazonS3RequestManagerTests: XCTestCase {
     XCTAssertEqual(request.request.HTTPMethod!, expected)
   }
   
-  func test__putObject_path_saveToURL_setsURLWithEndpoint() {
+  func test__putObject_fileURL_destinationPath_setsURLWithEndpoint() {
     // given
     let path = "TestPath"
     let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
     
     // when
     let request = sut.putObject(NSURL(), destinationPath: path)
+    
+    // then
+    XCTAssertEqual(request.request.URL!, expectedURL)
+  }
+  
+  func test__putObject_data_destinationPath__returnsUploadRequest() {
+    // when
+    let request = sut.putObject(NSData(), destinationPath: "path")
+    
+    // then
+    XCTAssertTrue(request.task.isKindOfClass(NSURLSessionUploadTask))
+  }
+  
+  func test__putObject_data_destinationPath_setsHTTPMethod() {
+    // given
+    let expected = "PUT"
+    
+    // when
+    let request = sut.putObject(NSData(), destinationPath: "path")
+    
+    // then
+    XCTAssertEqual(request.request.HTTPMethod!, expected)
+  }
+  
+  func test__putObject_data_destinationPath_setsURLWithEndpoint() {
+    // given
+    let path = "TestPath"
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+    
+    // when
+    let request = sut.putObject(NSData(), destinationPath: path)
     
     // then
     XCTAssertEqual(request.request.URL!, expectedURL)
