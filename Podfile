@@ -10,4 +10,6 @@ end
 
 target :AmazonS3RequestManagerTests do
   pod 'Alamofire', '~> 1.2'
+  pod 'Quick'
+  pod 'Nimble'
 end
