@@ -19,7 +19,6 @@
 		92EF4DC41AA64CC1002C68D2 /* AmazonS3RequestManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EF4DC31AA64CC1002C68D2 /* AmazonS3RequestManagerTests.swift */; };
 		92EF4DCE1AA64FB1002C68D2 /* AmazonS3RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EF4DCD1AA64FB1002C68D2 /* AmazonS3RequestManager.swift */; };
 		92F051121ACF6C32000B3918 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F051111ACF6C32000B3918 /* MobileCoreServices.framework */; };
-		FF5C22AAE868DD0161DE127B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E3F9197DC24E8B008B2627 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,7 +60,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				92F051121ACF6C32000B3918 /* MobileCoreServices.framework in Frameworks */,
-				FF5C22AAE868DD0161DE127B /* Pods.framework in Frameworks */,
 				0D80828C6F42FB5C5FF4C100 /* Pods_AmazonS3RequestManager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -233,7 +233,7 @@ public class AmazonS3RequestManager {
   :note: The user for the manager's Amazon S3 credentials must have read access to the bucket
   
   :param: fileURL         The local `NSURL` of the file to upload
-  :param: destinationPath The desrired destination path, including the file name and extension, in the Amazon S3 bucket
+  :param: destinationPath The desired destination path, including the file name and extension, in the Amazon S3 bucket
   
   :returns: An upload request for the object
   */
@@ -249,7 +249,7 @@ public class AmazonS3RequestManager {
   :note: The user for the manager's Amazon S3 credentials must have read access to the bucket
   
   :param: data            The `NSData` for the object to upload
-  :param: destinationPath The desrired destination path, including the file name and extension, in the Amazon S3 bucket
+  :param: destinationPath The desired destination path, including the file name and extension, in the Amazon S3 bucket
   
   :returns: An upload request for the object
   */
@@ -280,8 +280,18 @@ public class AmazonS3RequestManager {
   
   /**
   MARK: Amazon S3 Request Serialization
+  
+  :discussion: These methods serialize requests for use with the Amazon S3 service. The `NSURLRequest`s returned from these methods may be used with `Alamofire`, `NSURLSession` or any other network request manager.
   */
   
+  /**
+  This method serializes a request for the Amazon S3 service with the given method and path.
+  
+  :param: method The HTTP method for the request. For more information see `Alamofire.Method`.
+  :param: path   The desired path, including the file name and extension, in the Amazon S3 Bucket.
+  
+  :returns: An `NSURLRequest`, serialized for use with the Amazon S3 service.
+  */
   public func amazonURLRequest(method: Alamofire.Method, path: String) -> NSURLRequest {
     
     let url = endpointURL.URLByAppendingPathComponent(path)
@@ -289,17 +299,17 @@ public class AmazonS3RequestManager {
     var mutableURLRequest = NSMutableURLRequest(URL: url)
     mutableURLRequest.HTTPMethod = method.rawValue
     
-    setContentType(&mutableURLRequest)
+    setContentType(forRequest: &mutableURLRequest)
     
-    let amazonRequest = requestBySettingAuthorizationHeaders(forRequest: mutableURLRequest)
+    let error = setAuthorizationHeaders(forRequest: &mutableURLRequest)
     
-    return amazonRequest.0
+    return mutableURLRequest
   }
   
-  private func setContentType(inout URLRequest: NSMutableURLRequest) {
-    var contentTypeString = MIMEType(URLRequest) ?? "application/octet-stream"
+  private func setContentType(inout forRequest request: NSMutableURLRequest) {
+    var contentTypeString = MIMEType(request) ?? "application/octet-stream"
     
-    URLRequest.setValue(contentTypeString, forHTTPHeaderField: "Content-Type")
+    request.setValue(contentTypeString, forHTTPHeaderField: "Content-Type")
   }
   
   private func MIMEType(request: NSURLRequest) -> String? {
@@ -321,35 +331,29 @@ public class AmazonS3RequestManager {
     return nil
   }
   
-  private func requestBySettingAuthorizationHeaders(forRequest request: NSURLRequest) -> (NSURLRequest, NSError?) {
+  private func setAuthorizationHeaders(inout forRequest request: NSMutableURLRequest) -> NSError? {
     
-    let mutableRequest = request.mutableCopy() as! NSMutableURLRequest
-    
-    mutableRequest.cachePolicy = .ReloadIgnoringLocalCacheData
+    request.cachePolicy = .ReloadIgnoringLocalCacheData
     
     let error = validateCredentials()
     
     if error == nil {
       
       if sessionToken != nil {
-        mutableRequest.setValue(sessionToken!, forHTTPHeaderField: "x-amz-security-token")
+        request.setValue(sessionToken!, forHTTPHeaderField: "x-amz-security-token")
       }
       
       let timestamp = currentTimeStamp()
       
-      let signature = AmazonS3SignatureHelpers.AWSSignatureForRequest(mutableRequest,
+      let signature = AmazonS3SignatureHelpers.AWSSignatureForRequest(request,
         timeStamp: timestamp,
         secret: secret)
       
-      mutableRequest.setValue(timestamp ?? "", forHTTPHeaderField: "Date")
-      mutableRequest.setValue("AWS \(accessKey!):\(signature)", forHTTPHeaderField: "Authorization")
-     
-      return(mutableRequest, error)
-      
-    } else {
-      return (mutableRequest, error)
+      request.setValue(timestamp ?? "", forHTTPHeaderField: "Date")
+      request.setValue("AWS \(accessKey!):\(signature)", forHTTPHeaderField: "Authorization")
       
     }
+    return error
   }
   
   private func currentTimeStamp() -> String {
