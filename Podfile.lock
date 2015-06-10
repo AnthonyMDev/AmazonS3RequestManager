@@ -6,11 +6,11 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 1.2)
   - Nimble
-  - Quick
+  - Quick (= 0.3.1)
 
 SPEC CHECKSUMS:
   Alamofire: 11a6022f5089887d92ffb5a3014c97a0a915ab98
   Nimble: 49b7a7da8919f42823d37c6d68cc6d15a7009f32
   Quick: 824572d3d198d51e52cf4aa722cebf7e59952a35
 
-COCOAPODS: 0.37.1
+COCOAPODS: 0.37.2

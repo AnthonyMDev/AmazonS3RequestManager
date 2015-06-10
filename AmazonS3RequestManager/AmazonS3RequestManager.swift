@@ -238,14 +238,10 @@ public class AmazonS3RequestManager {
   
   :returns: An upload request for the object
   */
-  public func putObject(fileURL: NSURL, destinationPath: String, acl: AmazonS3ACL?) -> Request {
+  public func putObject(fileURL: NSURL, destinationPath: String, acl: AmazonS3ACL? = nil) -> Request {
     let putRequest = amazonURLRequest(.PUT, path: destinationPath, acl: acl)
     
     return requestManager.upload(putRequest, file: fileURL)
-  }
-  
-  public func putObject(fileURL: NSURL, destinationPath: String) -> Request {
-    return putObject(fileURL, destinationPath: destinationPath, acl: nil)
   }
   
   /**
@@ -259,14 +255,10 @@ public class AmazonS3RequestManager {
   
   :returns: An upload request for the object
   */
-  public func putObject(data: NSData, destinationPath: String, acl: AmazonS3ACL?) -> Request {
+  public func putObject(data: NSData, destinationPath: String, acl: AmazonS3ACL? = nil) -> Request {
     let putRequest = amazonURLRequest(.PUT, path: destinationPath, acl: acl)
     
     return requestManager.upload(putRequest, data: data)
-  }
-  
-  public func putObject(data: NSData, destinationPath: String) -> Request {
-    return putObject(data, destinationPath: destinationPath, acl: nil)
   }
   
   /**
@@ -303,7 +295,7 @@ public class AmazonS3RequestManager {
   
   :returns: An `NSURLRequest`, serialized for use with the Amazon S3 service.
   */
-  public func amazonURLRequest(method: Alamofire.Method, path: String, acl: AmazonS3ACL?) -> NSURLRequest {
+  public func amazonURLRequest(method: Alamofire.Method, path: String, acl: AmazonS3ACL? = nil) -> NSURLRequest {
     
     let url = endpointURL.URLByAppendingPathComponent(path)
     
@@ -380,10 +372,6 @@ public class AmazonS3RequestManager {
     
     return dateFormatter
     }()
-  
-  public func amazonURLRequest(method: Alamofire.Method, path: String) -> NSURLRequest {
-    return amazonURLRequest(method, path: path, acl: nil)
-  }
   
   /**
   MARK: Validation
