@@ -166,6 +166,22 @@ class AmazonS3RequestManagerTests: XCTestCase {
     XCTAssertEqual(request.request.URL!, expectedURL)
   }
   
+  func test__putObject_fileURL_destinationPath__givenACL_setsHTTPHeader_ACL() {
+    // given
+    let acl = AmazonS3PredefinedACL.Public
+    let path = "TestPath"
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+    
+    let request = sut.putObject(NSURL(), destinationPath: path, acl: acl)
+    
+    // when
+    let headers = request.request.allHTTPHeaderFields!
+    let aclHeader: String? = headers["x-amz-acl"] as? String
+    
+    // then
+    XCTAssertNotNil(aclHeader, "Should have ACL header field")
+  }
+  
   func test__putObject_data_destinationPath__returnsUploadRequest() {
     // when
     let request = sut.putObject(NSData(), destinationPath: "path")
@@ -174,7 +190,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     XCTAssertTrue(request.task.isKindOfClass(NSURLSessionUploadTask))
   }
   
-  func test__putObject_data_destinationPath_setsHTTPMethod() {
+  func test__putObject_data_destinationPath__setsHTTPMethod() {
     // given
     let expected = "PUT"
     
@@ -185,7 +201,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     XCTAssertEqual(request.request.HTTPMethod!, expected)
   }
   
-  func test__putObject_data_destinationPath_setsURLWithEndpoint() {
+  func test__putObject_data_destinationPath__setsURLWithEndpoint() {
     // given
     let path = "TestPath"
     let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
@@ -195,6 +211,22 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     // then
     XCTAssertEqual(request.request.URL!, expectedURL)
+  }
+  
+  func test__putObject_data_destinationPath__givenACL_setsHTTPHeader_ACL() {
+    // given
+    let acl = AmazonS3PredefinedACL.Public
+    let path = "TestPath"
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+    
+    let request = sut.putObject(NSData(), destinationPath: path, acl: acl)
+    
+    // when
+    let headers = request.request.allHTTPHeaderFields!
+    let aclHeader: String? = headers["x-amz-acl"] as? String
+    
+    // then
+    XCTAssertNotNil(aclHeader, "Should have ACL header field")
   }
   
   /**
@@ -325,6 +357,19 @@ class AmazonS3RequestManagerTests: XCTestCase {
     // then
     XCTAssertNotNil(authHeader, "Should have 'Authorization' header field")
     XCTAssertTrue(authHeader!.hasPrefix("AWS \(accessKey):"), "Authorization header should begin with 'AWS [accessKey]'.")
+  }
+  
+  func test__amazonURLRequest__givenACL__setsHTTPHeader_ACL() {
+    // given
+    let acl = AmazonS3PredefinedACL.Public
+    let request = sut.amazonURLRequest(.GET, path: "test", acl: acl)
+    
+    // when
+    let headers = request.allHTTPHeaderFields!
+    let aclHeader: String? = headers["x-amz-acl"] as? String
+    
+    // then
+    XCTAssertNotNil(aclHeader, "Should have ACL header field")
   }
   
 }

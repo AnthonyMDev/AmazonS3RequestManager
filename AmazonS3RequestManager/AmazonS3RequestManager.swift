@@ -234,13 +234,18 @@ public class AmazonS3RequestManager {
   
   :param: fileURL         The local `NSURL` of the file to upload
   :param: destinationPath The desired destination path, including the file name and extension, in the Amazon S3 bucket
+  :param: acl             The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
   
   :returns: An upload request for the object
   */
+  public func putObject(fileURL: NSURL, destinationPath: String, acl: AmazonS3ACL?) -> Request {
+    let putRequest = amazonURLRequest(.PUT, path: destinationPath, acl: acl)
+    
+    return requestManager.upload(putRequest, file: fileURL)
+  }
+  
   public func putObject(fileURL: NSURL, destinationPath: String) -> Request {
-      let putRequest = amazonURLRequest(.PUT, path: destinationPath)
-      
-      return requestManager.upload(putRequest, file: fileURL)
+    return putObject(fileURL, destinationPath: destinationPath, acl: nil)
   }
   
   /**
@@ -250,13 +255,18 @@ public class AmazonS3RequestManager {
   
   :param: data            The `NSData` for the object to upload
   :param: destinationPath The desired destination path, including the file name and extension, in the Amazon S3 bucket
+  :param: acl             The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
   
   :returns: An upload request for the object
   */
-  public func putObject(data: NSData, destinationPath: String) -> Request {
-    let putRequest = amazonURLRequest(.PUT, path: destinationPath)
+  public func putObject(data: NSData, destinationPath: String, acl: AmazonS3ACL?) -> Request {
+    let putRequest = amazonURLRequest(.PUT, path: destinationPath, acl: acl)
     
     return requestManager.upload(putRequest, data: data)
+  }
+  
+  public func putObject(data: NSData, destinationPath: String) -> Request {
+    return putObject(data, destinationPath: destinationPath, acl: nil)
   }
   
   /**
@@ -289,10 +299,11 @@ public class AmazonS3RequestManager {
   
   :param: method The HTTP method for the request. For more information see `Alamofire.Method`.
   :param: path   The desired path, including the file name and extension, in the Amazon S3 Bucket.
+  :param: acl    The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
   
   :returns: An `NSURLRequest`, serialized for use with the Amazon S3 service.
   */
-  public func amazonURLRequest(method: Alamofire.Method, path: String) -> NSURLRequest {
+  public func amazonURLRequest(method: Alamofire.Method, path: String, acl: AmazonS3ACL?) -> NSURLRequest {
     
     let url = endpointURL.URLByAppendingPathComponent(path)
     
@@ -300,6 +311,7 @@ public class AmazonS3RequestManager {
     mutableURLRequest.HTTPMethod = method.rawValue
     
     setContentType(forRequest: &mutableURLRequest)
+    acl?.setACLHeaders(forRequest: &mutableURLRequest)
     
     let error = setAuthorizationHeaders(forRequest: &mutableURLRequest)
     
@@ -368,6 +380,10 @@ public class AmazonS3RequestManager {
     
     return dateFormatter
     }()
+  
+  public func amazonURLRequest(method: Alamofire.Method, path: String) -> NSURLRequest {
+    return amazonURLRequest(method, path: path, acl: nil)
+  }
   
   /**
   MARK: Validation
