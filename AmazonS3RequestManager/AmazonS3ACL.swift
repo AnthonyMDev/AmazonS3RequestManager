@@ -63,42 +63,6 @@ public enum AmazonS3PredefinedACL: String, AmazonS3ACL {
   
 }
 
-/**
-MARK: - Custom ACLs
-
-An `AmazonS3CustomACL` contains an array of `AmazonS3ACLPermissionGrant`s and can be used to create a custom access control list (ACL).
-
-:note: The Amazon S3 Service accepts a maximum of 100 permission grants per bucket/object.
-*/
-public struct AmazonS3CustomACL: AmazonS3ACL {
-  
-  /**
-  The array of `AmazonS3ACLPermissionGrants` to use for the access control list
-  
-  :note: Only one `AmazonS3PermissionGrant` should be added to the array for each `AmazonS3ACLPermission` type. Each permission may contain multiple grantees.
-  */
-  public var grants: Set<AmazonS3ACLPermissionGrant>
-  
-  /**
-  Initializes an `AmazonS3CustomACL` with a given array of `AmazonS3PermissionGrant`s.
-  
-  :param: grant The grants for the custom ACL
-  
-  :returns: An `AmazonS3CustomACL` with the given grants
-  */
-  public init(grants: Set<AmazonS3ACLPermissionGrant>) {
-    self.grants = grants
-    
-  }
-  
-  public func setACLHeaders(inout forRequest request: NSMutableURLRequest) {
-    for grant in grants {
-      grant.setACLHeaders(forRequest: &request)
-    }
-  }
-  
-}
-
 public enum AmazonS3ACLPermission {
   case Read,
   Write,
@@ -135,7 +99,34 @@ public enum AmazonS3ACLPermission {
       return "x-amz-grant-full-control"
     }
   }
-    
+  
+}
+
+public enum AmazonS3ACLGrantee {
+  case AuthenticatedUsers,
+  AllUsers,
+  LogDeliveryGroup,
+  EmailAddress(String),
+  UserID(String)
+  
+  var requestHeaderFieldValue: String {
+    switch (self) {
+    case .AuthenticatedUsers:
+      return "uri=\"http://acs.amazonaws.com/groups/global/AuthenticatedUsers\""
+      
+    case .AllUsers:
+      return "uri=\"http://acs.amazonaws.com/groups/global/AllUsers\""
+      
+    case .LogDeliveryGroup:
+      return "uri=\"http://acs.amazonaws.com/groups/s3/LogDelivery\""
+      
+    case .EmailAddress(let email):
+      return "emailAddress=\"\(email)\""
+      
+    case .UserID(let id):
+      return "id=\"\(id)\""
+    }
+  }
 }
 
 public struct AmazonS3ACLPermissionGrant: AmazonS3ACL, Hashable {
@@ -168,36 +159,44 @@ public struct AmazonS3ACLPermissionGrant: AmazonS3ACL, Hashable {
       return permission.hashValue
     }
   }
-  
 }
 
 public func ==(lhs: AmazonS3ACLPermissionGrant, rhs: AmazonS3ACLPermissionGrant) -> Bool {
-  return true
+  return lhs.permission == rhs.permission
 }
 
-public enum AmazonS3ACLGrantee {
-  case AuthenticatedUsers,
-  AllUsers,
-  LogDeliveryGroup,
-  EmailAddress(String),
-  UserID(String)
+/**
+MARK: - Custom ACLs
+
+An `AmazonS3CustomACL` contains an array of `AmazonS3ACLPermissionGrant`s and can be used to create a custom access control list (ACL).
+
+:note: The Amazon S3 Service accepts a maximum of 100 permission grants per bucket/object.
+*/
+public struct AmazonS3CustomACL: AmazonS3ACL {
   
-  var requestHeaderFieldValue: String {
-    switch (self) {
-    case .AuthenticatedUsers:
-      return "uri=\"http://acs.amazonaws.com/groups/global/AuthenticatedUsers\""
-      
-    case .AllUsers:
-      return "uri=\"http://acs.amazonaws.com/groups/global/AllUsers\""
-      
-    case .LogDeliveryGroup:
-      return "uri=\"http://acs.amazonaws.com/groups/s3/LogDelivery\""
-      
-    case .EmailAddress(let email):
-      return "emailAddress=\"\(email)\""
-      
-    case .UserID(let id):
-      return "id=\"\(id)\""
+  /**
+  The set of `AmazonS3ACLPermissionGrants` to use for the access control list
+  
+  :note: Only one `AmazonS3PermissionGrant` can be added to the set for each `AmazonS3ACLPermission` type. Each permission may map to multiple grantees.
+  */
+  public var grants: Set<AmazonS3ACLPermissionGrant>
+  
+  /**
+  Initializes an `AmazonS3CustomACL` with a given array of `AmazonS3PermissionGrant`s.
+  
+  :param: grant The grants for the custom ACL
+  
+  :returns: An `AmazonS3CustomACL` with the given grants
+  */
+  public init(grants: Set<AmazonS3ACLPermissionGrant>) {
+    self.grants = grants
+    
+  }
+  
+  public func setACLHeaders(inout forRequest request: NSMutableURLRequest) {
+    for grant in grants {
+      grant.setACLHeaders(forRequest: &request)
     }
   }
+  
 }
