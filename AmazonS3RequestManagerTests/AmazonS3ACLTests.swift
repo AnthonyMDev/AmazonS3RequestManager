@@ -253,7 +253,7 @@ class AmazonS3ACLSpec: QuickSpec {
       
       describe("With Multiple Grantees") {
         
-        func aclWithGrantees(grantees: [AmazonS3ACLGrantee]) -> AmazonS3ACLPermissionGrant {
+        func aclWithGrantees(grantees: Set<AmazonS3ACLGrantee>) -> AmazonS3ACLPermissionGrant {
           let permission = AmazonS3ACLPermission.Read
           return AmazonS3ACLPermissionGrant(permission: permission, grantees: grantees)
           
