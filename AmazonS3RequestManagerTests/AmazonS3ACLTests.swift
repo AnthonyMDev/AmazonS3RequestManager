@@ -101,15 +101,14 @@ class AmazonS3ACLSpec: QuickSpec {
       }
     }
     
-    describe("Custom ACL") {
+    describe("ACL Permission Grant") {
       
       describe("With Permission") {
         
-        func aclWithPermission(permission: AmazonS3ACLPermission) -> AmazonS3CustomACL {
+        func aclWithPermission(permission: AmazonS3ACLPermission) -> AmazonS3ACLPermissionGrant {
           let grantee = AmazonS3ACLGrantee.AuthenticatedUsers
-          let grant = AmazonS3ACLPermissionGrant(permission: permission, grantee: grantee)
+          return AmazonS3ACLPermissionGrant(permission: permission, grantee: grantee)
           
-          return AmazonS3CustomACL(grant: grant)
         }
         
         describe("Read") {
@@ -177,13 +176,13 @@ class AmazonS3ACLSpec: QuickSpec {
           }
         }
       }
+      
       describe("With Grantee") {
         
-        func aclWithGrantee(grantee: AmazonS3ACLGrantee) -> AmazonS3ACL {
+        func aclWithGrantee(grantee: AmazonS3ACLGrantee) -> AmazonS3ACLPermissionGrant {
           let permission = AmazonS3ACLPermission.Read
-          let grant = AmazonS3ACLPermissionGrant(permission: permission, grantee: grantee)
+          return AmazonS3ACLPermissionGrant(permission: permission, grantee: grantee)
           
-          return AmazonS3CustomACL(grant: grant)
         }
         
         describe("Grantee: Authenticated Users") {
@@ -249,6 +248,27 @@ class AmazonS3ACLSpec: QuickSpec {
             let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"] as? String
             expect(aclHeader).to(equal("id=\"123456\""))
           }
+        }
+      }
+      
+      describe("With Multiple Grantees") {
+        
+        func aclWithGrantees(grantees: [AmazonS3ACLGrantee]) -> AmazonS3ACLPermissionGrant {
+          let permission = AmazonS3ACLPermission.Read
+          return AmazonS3ACLPermissionGrant(permission: permission, grantees: grantees)
+          
+        }
+        
+        it("sets ACL request headers") {
+          let acl = aclWithGrantees([
+            AmazonS3ACLGrantee.EmailAddress("test@test.com"),
+            AmazonS3ACLGrantee.UserID("123456")])
+          
+          var request = NSMutableURLRequest()
+          acl.setACLHeaders(forRequest: &request)
+          
+          let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"] as? String
+          expect(aclHeader).to(equal("emailAddress=\"test@test.com\", id=\"123456\""))
         }
       }
     }

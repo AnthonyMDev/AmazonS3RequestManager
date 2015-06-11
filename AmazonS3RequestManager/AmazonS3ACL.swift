@@ -8,14 +8,45 @@
 
 import Foundation
 
+/// MARK: - Constants
+
 private let AmazonS3PredefinedACLHeaderKey = "x-amz-acl"
 
+/**
+MARK: - AmazonS3ACL Protocol
+
+An object conforming to the `AmazonS3ACL` protocol describes an access control list (ACL) that can be used by `AmazonS3RequestManager` to set the ACL Headers for a request.
+*/
 public protocol AmazonS3ACL {
   
+  /**
+  This method should be implemented to set the ACL headers for the object.
+  */
   func setACLHeaders(inout forRequest request: NSMutableURLRequest)
   
 }
 
+/**
+MARK: - Predefined (Canned) ACLs.
+A list of predefined, or canned, ACLs recognized by the Amazon S3 service.
+
+:see: For more information on Predefined ACLs, see "http://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl"
+
+- Private:                Owner gets full control. No one else has access rights. This is the default ACL for a new bucket/object. Applies to buckets and objects.
+
+- Public:                 Owner gets full control. All other users (anonymous or authenticated) get READ and WRITE access. Granting this on a bucket is generally not recommended. Applies to buckets and objects.
+
+- PublicReadOnly:         Owner gets full control. All other users (anonymous or authenticated) get READ access. Applies to buckets and objects.
+
+- AuthenticatedReadOnly:  Owner gets full control. All authenticated users get READ access. Applies to buckets and objects.
+
+- BucketOwnerReadOnly:    Object owner gets full control. Bucket owner gets READ access. Applies to objects only; if you specify this canned ACL when creating a bucket, Amazon S3 ignores it.
+
+- BucketOwnerFullControl: Both the object owner and the bucket owner get full control over the object. Applies to objects only; if you specify this canned ACL when creating a bucket, Amazon S3 ignores it.
+
+- LogDeliveryWrite:       The `LogDelivery` group gets WRITE and READ_ACP permissions on the bucket.
+  :see: For more information on logs, see "http://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html"
+*/
 public enum AmazonS3PredefinedACL: String, AmazonS3ACL {
   
   case Private = "private",
@@ -29,6 +60,43 @@ public enum AmazonS3PredefinedACL: String, AmazonS3ACL {
   public func setACLHeaders(inout forRequest request: NSMutableURLRequest) {
     request.addValue(self.rawValue, forHTTPHeaderField: AmazonS3PredefinedACLHeaderKey)
   }
+  
+}
+
+/**
+MARK: - Custom ACLs
+
+An `AmazonS3CustomACL` contains an array of `AmazonS3ACLPermissionGrant`s and can be used to create a custom access control list (ACL).
+
+:note: The Amazon S3 Service accepts a maximum of 100 permission grants per bucket/object.
+*/
+public struct AmazonS3CustomACL: AmazonS3ACL {
+  
+  /**
+  The array of `AmazonS3ACLPermissionGrants` to use for the access control list
+  
+  :note: Only one `AmazonS3PermissionGrant` should be added to the array for each `AmazonS3ACLPermission` type. Each permission may contain multiple grantees.
+  */
+  public var grants: Set<AmazonS3ACLPermissionGrant>
+  
+  /**
+  Initializes an `AmazonS3CustomACL` with a given array of `AmazonS3PermissionGrant`s.
+  
+  :param: grant The grants for the custom ACL
+  
+  :returns: An `AmazonS3CustomACL` with the given grants
+  */
+  public init(grants: Set<AmazonS3ACLPermissionGrant>) {
+    self.grants = grants
+    
+  }
+  
+  public func setACLHeaders(inout forRequest request: NSMutableURLRequest) {
+    for grant in grants {
+      grant.setACLHeaders(forRequest: &request)
+    }
+  }
+  
 }
 
 public enum AmazonS3ACLPermission {
@@ -70,28 +138,7 @@ public enum AmazonS3ACLPermission {
     
 }
 
-public struct AmazonS3CustomACL: AmazonS3ACL {
-  
-  public var grants: [AmazonS3ACLPermissionGrant]
-  
-  public init(grant: AmazonS3ACLPermissionGrant) {
-    self.grants = [grant]
-  }
-  
-  public init(grants: [AmazonS3ACLPermissionGrant]) {
-   self.grants = grants
-    
-  }
-  
-  public func setACLHeaders(inout forRequest request: NSMutableURLRequest) {
-    for grant in grants {
-      grant.setACLHeaders(forRequest: &request)
-    }
-  }
-  
-}
-
-public struct AmazonS3ACLPermissionGrant: AmazonS3ACL {
+public struct AmazonS3ACLPermissionGrant: AmazonS3ACL, Hashable {
   
   public init(permission: AmazonS3ACLPermission, grantees: [AmazonS3ACLGrantee]) {
     self.permission = permission
@@ -116,6 +163,16 @@ public struct AmazonS3ACLPermissionGrant: AmazonS3ACL {
     request.addValue(granteeList, forHTTPHeaderField: permission.requestHeaderFieldKey)
   }
   
+  public var hashValue: Int {
+    get {
+      return permission.hashValue
+    }
+  }
+  
+}
+
+public func ==(lhs: AmazonS3ACLPermissionGrant, rhs: AmazonS3ACLPermissionGrant) -> Bool {
+  return true
 }
 
 public enum AmazonS3ACLGrantee {
