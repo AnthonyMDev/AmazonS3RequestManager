@@ -74,7 +74,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
   }
   
   /**
-  *  MARK: GET Object Request - Tests
+  *  MARK: - GET Object Request - Tests
   */
   
   func test__getObject__setsHTTPMethod() {
@@ -99,6 +99,10 @@ class AmazonS3RequestManagerTests: XCTestCase {
     // then
     XCTAssertEqual(request.request.URL!, expectedURL)
   }
+  
+  /**
+  *  MARK: - Download Object Request - Tests
+  */
   
   func test__downloadObject_path_saveToURL_returnsDownloadRequest() {
     // when
@@ -132,7 +136,34 @@ class AmazonS3RequestManagerTests: XCTestCase {
   }
   
   /**
-  *  MARK: PUT Object Request - Tests
+  *  MARK: - Get Object ACL Request - Tests
+  */
+  
+  func test__getACL_forObjectAtPath__setsHTTPMethod() {
+    // given
+    let expected = "GET"
+    
+    // when
+    let request = sut.getACL(forObjectAtPath: "test")
+    
+    // then
+    XCTAssertEqual(request.request.HTTPMethod!, expected)
+  }
+  
+  func test__getACL_forObjectAtPath__setsURL_withACLQuery() {
+    // given
+    let path = "TestPath"
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/\(path)?acl")!
+    
+    // when
+    let request = sut.getACL(forObjectAtPath: path)
+    
+    // then
+    XCTAssertEqual(request.request.URL!, expectedURL)
+  }
+  
+  /**
+  *  MARK: - PUT Object Request - Tests
   */
   
   func test__putObject_fileURL_destinationPath__returnsUploadRequest() {

@@ -181,11 +181,13 @@ public class AmazonS3RequestManager {
   }
   
   /**
-  MARK: Requests
+  MARK: Bucket Requests
   */
   
+  
+  
   /**
-  MARK: GET Object Requests
+  MARK: - GET Object Requests
   */
   
   /**
@@ -224,7 +226,24 @@ public class AmazonS3RequestManager {
   }
   
   /**
-  MARK: PUT Object Request
+  Gets the access control list (ACL) for the object at the given path.
+  
+  :note: To use this operation, you must have `AmazonS3ACLPermission.ReadACL`
+  
+  :see: For more information on the ACL response headers for this request, see "http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectGETacl.html"
+  
+  :param: path The object path
+  
+  :returns: A GET request for the ACL
+  */
+  public func getACL(forObjectAtPath path:String) -> Request {
+    let getRequest = amazonURLRequest(.GET, path: path, subresource: "acl")
+    
+    return requestManager.request(getRequest)
+  }
+  
+  /**
+  MARK: PUT Object Requests
   */
   
   /**
@@ -295,9 +314,9 @@ public class AmazonS3RequestManager {
   
   :returns: An `NSURLRequest`, serialized for use with the Amazon S3 service.
   */
-  public func amazonURLRequest(method: Alamofire.Method, path: String, acl: AmazonS3ACL? = nil) -> NSURLRequest {
+  public func amazonURLRequest(method: Alamofire.Method, path: String, subresource: String? = nil, acl: AmazonS3ACL? = nil) -> NSURLRequest {
     
-    let url = endpointURL.URLByAppendingPathComponent(path)
+    var url = endpointURL.URLByAppendingPathComponent(path).URLByAppendingS3Subresource(subresource)
     
     var mutableURLRequest = NSMutableURLRequest(URL: url)
     mutableURLRequest.HTTPMethod = method.rawValue
@@ -407,5 +426,18 @@ public class AmazonS3RequestManager {
     userInfo: [NSLocalizedDescriptionKey: "Secret Missing",
       NSLocalizedFailureReasonErrorKey: "The 'secret' must be set in order to make requests with 'AmazonS3RequestManager'."]
   )
+  
+}
+
+private extension NSURL {
+  
+  private func URLByAppendingS3Subresource(subresource: String?) -> NSURL {
+    if subresource != nil && !subresource!.isEmpty {
+      let URLString = self.absoluteString!.stringByAppendingString("?\(subresource!)")
+      return NSURL(string: URLString)!
+      
+    }
+    return self
+  }
   
 }
