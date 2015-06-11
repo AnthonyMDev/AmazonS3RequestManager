@@ -4,10 +4,10 @@ A Alamofire based request manager that serializes requests to the AWS S3 (Amazon
 ## Usage
 First create an instance of the manager.
 
-    let amazonS3Manager = AmazonS3RequestManager(bucket: AmazonS3Bucket,
+    let amazonS3Manager = AmazonS3RequestManager(bucket: myAmazonS3Bucket,
         region: .USStandard,
-        accessKey: AmazonS3AccessKey,
-        secret: AmazonS3Secret)
+        accessKey: myAmazonS3AccessKey,
+        secret: myAmazonS3Secret)
 
 ### Get Objects
 
@@ -27,3 +27,15 @@ Saving Objects To File:
 ### Delete Objects
 
     amazonS3Manager.deleteObject("myFolder/fileName.jpg")
+
+
+## Access Control Lists (ACL)
+
+`AmazonS3RequestManager` provides simple APIs for getting and setting ACLs on buckets and objects.
+
+### Getting ACLs
+
+You can retrieve the ACLs for the current bucket set on the request manager with a `GET` request:
+    amazonS3Manager.getBucketACL()
+    
+    
