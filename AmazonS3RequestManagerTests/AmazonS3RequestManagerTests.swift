@@ -136,33 +136,6 @@ class AmazonS3RequestManagerTests: XCTestCase {
   }
   
   /**
-  *  MARK: - Get Object ACL Request - Tests
-  */
-  
-  func test__getACL_forObjectAtPath__setsHTTPMethod() {
-    // given
-    let expected = "GET"
-    
-    // when
-    let request = sut.getACL(forObjectAtPath: "test")
-    
-    // then
-    XCTAssertEqual(request.request.HTTPMethod!, expected)
-  }
-  
-  func test__getACL_forObjectAtPath__setsURL_withACLQuery() {
-    // given
-    let path = "TestPath"
-    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/\(path)?acl")!
-    
-    // when
-    let request = sut.getACL(forObjectAtPath: path)
-    
-    // then
-    XCTAssertEqual(request.request.URL!, expectedURL)
-  }
-  
-  /**
   *  MARK: - PUT Object Request - Tests
   */
   
@@ -201,7 +174,6 @@ class AmazonS3RequestManagerTests: XCTestCase {
     // given
     let acl = AmazonS3PredefinedACL.Public
     let path = "TestPath"
-    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
     
     let request = sut.putObject(NSURL(), destinationPath: path, acl: acl)
     
@@ -285,6 +257,138 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     // then
     XCTAssertEqual(request.request.URL!, expectedURL)
+  }
+  
+  /**
+  *  MARK: - ACL Request - Tests
+  */
+  
+  func test__getBucketACL__setsHTTPMethod() {
+    // given
+    let expected = "GET"
+    
+    // when
+    let request = sut.getBucketACL()
+    
+    // then
+    XCTAssertEqual(request.request.HTTPMethod!, expected)
+  }
+  
+  func test__getObject__setsURL_withACLSubresource() {
+    // given
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/?acl")!
+    
+    // when
+    let request = sut.getBucketACL()
+    
+    // then
+    XCTAssertEqual(request.request.URL!, expectedURL)
+  }
+  
+  func test__setBucketACL__setsHTTPMethod() {
+    // given
+    let expected = "PUT"
+    
+    let acl = AmazonS3PredefinedACL.Public
+    
+    // when
+    let request = sut.setBucketACL(acl)
+    
+    // then
+    XCTAssertEqual(request.request.HTTPMethod!, expected)
+  }
+  
+  func test__setBucketACL_setsURLWithEndpoint() {
+    // given
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/?acl")!
+    
+    let acl = AmazonS3PredefinedACL.Public
+    
+    // when
+    let request = sut.setBucketACL(acl)
+    
+    // then
+    XCTAssertEqual(request.request.URL!, expectedURL)
+  }
+  
+  func test__setBucketACL_setsHTTPHeader_ACL() {
+    // given
+    let acl = AmazonS3PredefinedACL.Public
+    
+    // when
+    let request = sut.setBucketACL(acl)
+    
+    let headers = request.request.allHTTPHeaderFields!
+    let aclHeader: String? = headers["x-amz-acl"] as? String
+    
+    // then
+    XCTAssertNotNil(aclHeader, "Should have ACL header field")
+  }
+  
+  func test__getACL_forObjectAtPath__setsHTTPMethod() {
+    // given
+    let expected = "GET"
+    
+    // when
+    let request = sut.getACL(forObjectAtPath: "test")
+    
+    // then
+    XCTAssertEqual(request.request.HTTPMethod!, expected)
+  }
+  
+  func test__getACL_forObjectAtPath__setsURL_withACLSubresource() {
+    // given
+    let path = "TestPath"
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/\(path)?acl")!
+    
+    // when
+    let request = sut.getACL(forObjectAtPath: path)
+    
+    // then
+    XCTAssertEqual(request.request.URL!, expectedURL)
+  }
+  
+  func test__setACL_forObjectAtPath__setsHTTPMethod() {
+    // given
+    let expected = "PUT"
+    
+    let path = "TestPath"
+    let acl = AmazonS3PredefinedACL.Public
+    
+    // when
+    let request = sut.setACL(forObjectAtPath: path, acl: acl)
+    
+    // then
+    XCTAssertEqual(request.request.HTTPMethod!, expected)
+  }
+  
+  func test__setACL_forObjectAtPath__setsURLWithEndpoint() {
+    // given
+    let path = "TestPath"
+    let acl = AmazonS3PredefinedACL.Public
+    
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/\(path)?acl")!
+    
+    // when
+    let request = sut.setACL(forObjectAtPath: path, acl: acl)
+    
+    // then
+    XCTAssertEqual(request.request.URL!, expectedURL)
+  }
+  
+  func test__setACL_forObjectAtPath__setsHTTPHeader_ACL() {
+    // given
+    let acl = AmazonS3PredefinedACL.Public
+    let path = "TestPath"
+    
+    // when
+    let request = sut.setACL(forObjectAtPath: path, acl: acl)
+    
+    let headers = request.request.allHTTPHeaderFields!
+    let aclHeader: String? = headers["x-amz-acl"] as? String
+    
+    // then
+    XCTAssertNotNil(aclHeader, "Should have ACL header field")
   }
   
   /**

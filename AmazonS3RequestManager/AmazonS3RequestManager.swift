@@ -181,12 +181,6 @@ public class AmazonS3RequestManager {
   }
   
   /**
-  MARK: Bucket Requests
-  */
-  
-  
-  
-  /**
   MARK: - GET Object Requests
   */
   
@@ -200,9 +194,7 @@ public class AmazonS3RequestManager {
   :returns: A GET request for the object
   */
   public func getObject(path: String) -> Request {
-    let getRequest = amazonURLRequest(.GET, path: path)
-    
-    return requestManager.request(getRequest)
+    return requestManager.request(amazonURLRequest(.GET, path: path))
   }
   
   /**
@@ -218,28 +210,9 @@ public class AmazonS3RequestManager {
   :returns: A download request for the object
   */
   public func downloadObject(path: String, saveToURL destinationURL: NSURL) -> Request {
-    let getRequest = amazonURLRequest(.GET, path: path)
-    
-    return requestManager.download(getRequest, destination: { (_, _) -> (NSURL) in
+    return requestManager.download(amazonURLRequest(.GET, path: path), destination: { (_, _) -> (NSURL) in
       return destinationURL
     })
-  }
-  
-  /**
-  Gets the access control list (ACL) for the object at the given path.
-  
-  :note: To use this operation, you must have `AmazonS3ACLPermission.ReadACL`
-  
-  :see: For more information on the ACL response headers for this request, see "http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectGETacl.html"
-  
-  :param: path The object path
-  
-  :returns: A GET request for the ACL
-  */
-  public func getACL(forObjectAtPath path:String) -> Request {
-    let getRequest = amazonURLRequest(.GET, path: path, subresource: "acl")
-    
-    return requestManager.request(getRequest)
   }
   
   /**
@@ -297,6 +270,64 @@ public class AmazonS3RequestManager {
     let deleteRequest = amazonURLRequest(.DELETE, path: path)
     
     return requestManager.request(deleteRequest)
+  }
+  
+  /**
+  MARK: ACL Requests
+  */
+  
+  /**
+  Gets the access control list (ACL) for the current `bucket`
+  
+  :note: To use this operation, you must have the `AmazonS3ACLPermission.ReadACL` for the bucket.
+  
+  :see: For more information on the ACL response headers for this request, see "http://docs.aws.amazon.com/AmazonS3/latest/API/RESTBucketGETacl.html"
+  
+  :returns: A GET request for the bucket's ACL
+  */
+  public func getBucketACL() -> Request {
+    return requestManager.request(amazonURLRequest(.GET, path: "", subresource: "acl", acl: nil))
+  }
+  
+  /**
+  Sets the access control list (ACL) for the current `bucket`
+  
+  :note: To use this operation, you must have the `AmazonS3ACLPermission.WriteACL` for the bucket.
+  
+  :see: For more information on the ACL response headers for this request, see "http://docs.aws.amazon.com/AmazonS3/latest/API/RESTBucketPUTacl.html"
+  
+  :returns: A PUT request to set the bucket's ACL
+  */
+  public func setBucketACL(acl: AmazonS3ACL) -> Request {
+    return requestManager.request(amazonURLRequest(.PUT, path: "", subresource: "acl", acl: acl))
+  }
+  
+  /**
+  Gets the access control list (ACL) for the object at the given path.
+  
+  :note: To use this operation, you must have the `AmazonS3ACLPermission.ReadACL` for the object.
+  
+  :see: For more information on the ACL response headers for this request, see "http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectGETacl.html"
+  
+  :param: path The object path
+  
+  :returns: A GET request for the object's ACL
+  */
+  public func getACL(forObjectAtPath path:String) -> Request {
+    return requestManager.request(amazonURLRequest(.GET, path: path, subresource: "acl"))
+  }
+  
+  /**
+  Sets the access control list (ACL) for the object at the given path.
+  
+  :note: To use this operation, you must have the `AmazonS3ACLPermission.WriteACL` for the object.
+  
+  :see: For more information on the ACL response headers for this request, see "http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPUTacl.html"
+  
+  :returns: A PUT request to set the objects's ACL
+  */
+  public func setACL(forObjectAtPath path: String, acl: AmazonS3ACL) -> Request {
+    return requestManager.request(amazonURLRequest(.PUT, path: path, subresource: "acl", acl: acl))
   }
   
   /**
