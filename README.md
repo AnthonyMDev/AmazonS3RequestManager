@@ -1,6 +1,28 @@
 # AmazonS3RequestManager
 A Alamofire based request manager that serializes requests to the AWS S3 (Amazon Simple Storage Solution). Based on AFAmazonS3Manager
 
+## Installation
+
+### CocoaPods
+
+[CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects.
+
+To integrate AmazonS3RequestManager into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+```ruby
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
+
+pod 'AmazonS3RequestManager', '~> 0.5'
+```
+
+Then, run the following command:
+
+```bash
+$ pod install
+```
+
 ## Usage
 First create an instance of the manager.
 
