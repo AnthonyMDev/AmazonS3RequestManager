@@ -26,8 +26,6 @@
 
 
 import Foundation
-import MobileCoreServices
-
 import Alamofire
 
 /**

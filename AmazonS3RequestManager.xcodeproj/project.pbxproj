@@ -7,31 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0AD101A815600EEB2E707FE6 /* Pods_AmazonS3RequestManagerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDB1A488AB23F40B190021D4 /* Pods_AmazonS3RequestManagerTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0D80828C6F42FB5C5FF4C100 /* Pods_AmazonS3RequestManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71C24E6A28FD552DA5FC6AF /* Pods_AmazonS3RequestManager.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		922820BB1AA8FD9900C51349 /* AmazonS3SignatureHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 922820B91AA8FD9900C51349 /* AmazonS3SignatureHelpers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		922820BC1AA8FD9900C51349 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 922820BA1AA8FD9900C51349 /* AmazonS3SignatureHelpers.m */; };
-		922820C01AA909C800C51349 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 922820BA1AA8FD9900C51349 /* AmazonS3SignatureHelpers.m */; };
-		922820C21AA90AEC00C51349 /* AmazonS3RequestManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 92EF4DB61AA64CC1002C68D2 /* AmazonS3RequestManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		922820C31AA90AF200C51349 /* AmazonS3SignatureHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 922820B91AA8FD9900C51349 /* AmazonS3SignatureHelpers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		925ABF3E1B276464003B9900 /* AmazonS3ACL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925ABF3D1B276464003B9900 /* AmazonS3ACL.swift */; };
-		925ABF401B2768DA003B9900 /* AmazonS3ACLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925ABF3F1B2768DA003B9900 /* AmazonS3ACLTests.swift */; };
 		92EF4DB71AA64CC1002C68D2 /* AmazonS3RequestManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 92EF4DB61AA64CC1002C68D2 /* AmazonS3RequestManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		92EF4DBD1AA64CC1002C68D2 /* AmazonS3RequestManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92EF4DB11AA64CC1002C68D2 /* AmazonS3RequestManager.framework */; };
-		92EF4DC41AA64CC1002C68D2 /* AmazonS3RequestManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EF4DC31AA64CC1002C68D2 /* AmazonS3RequestManagerTests.swift */; };
 		92EF4DCE1AA64FB1002C68D2 /* AmazonS3RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92EF4DCD1AA64FB1002C68D2 /* AmazonS3RequestManager.swift */; };
-		92F051121ACF6C32000B3918 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92F051111ACF6C32000B3918 /* MobileCoreServices.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		92EF4DBE1AA64CC1002C68D2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 92EF4DA81AA64CC1002C68D2 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 92EF4DB01AA64CC1002C68D2;
-			remoteInfo = AmazonS3RequestManager;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		21E72FF8C267EFE90B20CFCC /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -45,7 +27,6 @@
 		92EF4DB11AA64CC1002C68D2 /* AmazonS3RequestManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AmazonS3RequestManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92EF4DB51AA64CC1002C68D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92EF4DB61AA64CC1002C68D2 /* AmazonS3RequestManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AmazonS3RequestManager.h; sourceTree = "<group>"; };
-		92EF4DBC1AA64CC1002C68D2 /* AmazonS3RequestManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmazonS3RequestManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		92EF4DC21AA64CC1002C68D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92EF4DC31AA64CC1002C68D2 /* AmazonS3RequestManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManagerTests.swift; sourceTree = "<group>"; };
 		92EF4DCD1AA64FB1002C68D2 /* AmazonS3RequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManager.swift; sourceTree = "<group>"; };
@@ -63,17 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92F051121ACF6C32000B3918 /* MobileCoreServices.framework in Frameworks */,
 				0D80828C6F42FB5C5FF4C100 /* Pods_AmazonS3RequestManager.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		92EF4DB91AA64CC1002C68D2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				92EF4DBD1AA64CC1002C68D2 /* AmazonS3RequestManager.framework in Frameworks */,
-				0AD101A815600EEB2E707FE6 /* Pods_AmazonS3RequestManagerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,7 +91,6 @@
 			isa = PBXGroup;
 			children = (
 				92EF4DB11AA64CC1002C68D2 /* AmazonS3RequestManager.framework */,
-				92EF4DBC1AA64CC1002C68D2 /* AmazonS3RequestManagerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -167,15 +137,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		922820C11AA90AE400C51349 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				922820C21AA90AEC00C51349 /* AmazonS3RequestManager.h in Headers */,
-				922820C31AA90AF200C51349 /* AmazonS3SignatureHelpers.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		92EF4DAE1AA64CC1002C68D2 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -192,7 +153,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 92EF4DC71AA64CC1002C68D2 /* Build configuration list for PBXNativeTarget "AmazonS3RequestManager" */;
 			buildPhases = (
-				0F49808FCC4C10CEBD64A74B /* Check Pods Manifest.lock */,
 				92EF4DAC1AA64CC1002C68D2 /* Sources */,
 				92EF4DAD1AA64CC1002C68D2 /* Frameworks */,
 				92EF4DAE1AA64CC1002C68D2 /* Headers */,
@@ -209,28 +169,6 @@
 			productReference = 92EF4DB11AA64CC1002C68D2 /* AmazonS3RequestManager.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		92EF4DBB1AA64CC1002C68D2 /* AmazonS3RequestManagerTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 92EF4DCA1AA64CC1002C68D2 /* Build configuration list for PBXNativeTarget "AmazonS3RequestManagerTests" */;
-			buildPhases = (
-				1EDF022C4891D988E8D00DD5 /* Check Pods Manifest.lock */,
-				92EF4DB81AA64CC1002C68D2 /* Sources */,
-				92EF4DB91AA64CC1002C68D2 /* Frameworks */,
-				922820C11AA90AE400C51349 /* Headers */,
-				92EF4DBA1AA64CC1002C68D2 /* Resources */,
-				C0A5313087766BD9F3F23312 /* Embed Pods Frameworks */,
-				9F48051A30C3DE54837AE271 /* Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				92EF4DBF1AA64CC1002C68D2 /* PBXTargetDependency */,
-			);
-			name = AmazonS3RequestManagerTests;
-			productName = AmazonS3RequestManagerTests;
-			productReference = 92EF4DBC1AA64CC1002C68D2 /* AmazonS3RequestManagerTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -241,9 +179,6 @@
 				ORGANIZATIONNAME = "Anthony Miller";
 				TargetAttributes = {
 					92EF4DB01AA64CC1002C68D2 = {
-						CreatedOnToolsVersion = 6.1.1;
-					};
-					92EF4DBB1AA64CC1002C68D2 = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
 				};
@@ -261,7 +196,6 @@
 			projectRoot = "";
 			targets = (
 				92EF4DB01AA64CC1002C68D2 /* AmazonS3RequestManager */,
-				92EF4DBB1AA64CC1002C68D2 /* AmazonS3RequestManagerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -274,46 +208,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		92EF4DBA1AA64CC1002C68D2 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0F49808FCC4C10CEBD64A74B /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		1EDF022C4891D988E8D00DD5 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		54749449A70282C508FC8D24 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -327,36 +224,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AmazonS3RequestManager/Pods-AmazonS3RequestManager-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9F48051A30C3DE54837AE271 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AmazonS3RequestManagerTests/Pods-AmazonS3RequestManagerTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C0A5313087766BD9F3F23312 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AmazonS3RequestManagerTests/Pods-AmazonS3RequestManagerTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D45996DCB4C888572937337A /* Embed Pods Frameworks */ = {
@@ -387,25 +254,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		92EF4DB81AA64CC1002C68D2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				922820C01AA909C800C51349 /* AmazonS3SignatureHelpers.m in Sources */,
-				925ABF401B2768DA003B9900 /* AmazonS3ACLTests.swift in Sources */,
-				92EF4DC41AA64CC1002C68D2 /* AmazonS3RequestManagerTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		92EF4DBF1AA64CC1002C68D2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 92EF4DB01AA64CC1002C68D2 /* AmazonS3RequestManager */;
-			targetProxy = 92EF4DBE1AA64CC1002C68D2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		92EF4DC51AA64CC1002C68D2 /* Debug */ = {
@@ -446,7 +295,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = macosx10.10;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -485,7 +334,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
+				SDKROOT = macosx10.10;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -526,40 +375,6 @@
 			};
 			name = Release;
 		};
-		92EF4DCB1AA64CC1002C68D2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C654EFF0C0FCD904730ED696 /* Pods-AmazonS3RequestManagerTests.debug.xcconfig */;
-			buildSettings = {
-				DEFINES_MODULE = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = AmazonS3RequestManagerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		92EF4DCC1AA64CC1002C68D2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A1B0C81F4198B8AD86110A10 /* Pods-AmazonS3RequestManagerTests.release.xcconfig */;
-			buildSettings = {
-				DEFINES_MODULE = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = AmazonS3RequestManagerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -577,15 +392,6 @@
 			buildConfigurations = (
 				92EF4DC81AA64CC1002C68D2 /* Debug */,
 				92EF4DC91AA64CC1002C68D2 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		92EF4DCA1AA64CC1002C68D2 /* Build configuration list for PBXNativeTarget "AmazonS3RequestManagerTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				92EF4DCB1AA64CC1002C68D2 /* Debug */,
-				92EF4DCC1AA64CC1002C68D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,15 +1,13 @@
-source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+# source 'https://github.com/CocoaPods/Specs.git'
+platform :osx, '10.10'
 
-use_frameworks!
-inhibit_all_warnings!
-
-target :AmazonS3RequestManager do
+target 'AmazonS3RequestManager' do
+  use_frameworks!
   pod 'Alamofire', '~> 1.3'
 end
 
-target :AmazonS3RequestManagerTests do
-  pod 'Alamofire', '~> 1.3'
-  pod 'Quick', '0.3.1'
-  pod 'Nimble'
+target 'AmazonS3RequestManagerTests' do
+  # pod 'Alamofire', '~> 1.3'
+  # pod 'Quick', '0.3.1'
+  # pod 'Nimble'
 end
