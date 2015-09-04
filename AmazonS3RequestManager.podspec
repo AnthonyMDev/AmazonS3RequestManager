@@ -90,8 +90,8 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "AmazonS3RequestManager/*.swift,AmazonS3RequestManager/*.h,AmazonS3RequestManager/*.m"
-  # s.exclude_files = "Classes/Exclude"
+  s.source_files  = "AmazonS3RequestManager/*"
+  s.exclude_files = "AmazonS3RequestManager/Info.plist"
 
   # s.public_header_files = "Classes/**/*.h"
 
