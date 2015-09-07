@@ -8,6 +8,7 @@
 
 import UIKit
 import XCTest
+import Nimble
 
 import Alamofire
 import AmazonS3RequestManager
@@ -452,7 +453,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     // then
     XCTAssertNotNil(typeHeader, "Should have 'Content-Type' header field")
-    XCTAssertEqual(typeHeader!, "image/jpeg")
+    expect(typeHeader).to(equal("image/jpeg"))
   }
   
   func test__amazonURLRequest__givenTXTPathExtension_setsHTTPHeader_ContentType() {
@@ -466,6 +467,19 @@ class AmazonS3RequestManagerTests: XCTestCase {
     // then
     XCTAssertNotNil(typeHeader, "Should have 'Content-Type' header field")
     XCTAssertEqual(typeHeader!, "text/plain")
+  }
+  
+  func test__amazonURLRequest__givenNumbersPathExtension_setsHTTPHeader_ContentType() {
+    // given
+    let request = sut.amazonURLRequest(.GET, path: "test.numbers")
+    
+    // when
+    let headers = request.allHTTPHeaderFields!
+    let typeHeader: String? = headers["Content-Type"] as? String
+    
+    // then
+    XCTAssertNotNil(typeHeader, "Should have 'Content-Type' header field")
+    expect(typeHeader).to(equal("application/octet-stream"))
   }
   
   func test__amazonURLRequest__setsHTTPHeader_Date() {

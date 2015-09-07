@@ -374,12 +374,12 @@ public class AmazonS3RequestManager {
         let UTI = UTIRef.takeUnretainedValue()
         UTIRef.release()
         
-        let MIMETypeRef = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType)
-        let MIMEType = MIMETypeRef.takeUnretainedValue()
-        MIMETypeRef.release()
-        
-        return MIMEType as String
-        
+        if let MIMETypeRef = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType) {
+          let MIMEType = MIMETypeRef.takeUnretainedValue()
+          MIMETypeRef.release()
+          
+          return MIMEType as String
+        }
       }
     }
     return nil
