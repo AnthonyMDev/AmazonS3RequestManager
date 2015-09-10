@@ -23,7 +23,7 @@ class AmazonS3ACLSpec: QuickSpec {
           var request = NSMutableURLRequest()
           acl.setACLHeaders(forRequest: &request)
           
-          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"] as? String
+          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
           expect(aclHeader).to(equal("private"))
         }
       }
@@ -35,7 +35,7 @@ class AmazonS3ACLSpec: QuickSpec {
           var request = NSMutableURLRequest()
           acl.setACLHeaders(forRequest: &request)
           
-          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"] as? String
+          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
           expect(aclHeader).to(equal("public-read-write"))
         }
       }
@@ -47,7 +47,7 @@ class AmazonS3ACLSpec: QuickSpec {
           var request = NSMutableURLRequest()
           acl.setACLHeaders(forRequest: &request)
           
-          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"] as? String
+          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
           expect(aclHeader).to(equal("public-read"))
         }
       }
@@ -59,7 +59,7 @@ class AmazonS3ACLSpec: QuickSpec {
           var request = NSMutableURLRequest()
           acl.setACLHeaders(forRequest: &request)
           
-          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"] as? String
+          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
           expect(aclHeader).to(equal("authenticated-read"))
         }
       }
@@ -71,7 +71,7 @@ class AmazonS3ACLSpec: QuickSpec {
           var request = NSMutableURLRequest()
           acl.setACLHeaders(forRequest: &request)
           
-          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"] as? String
+          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
           expect(aclHeader).to(equal("bucket-owner-read"))
         }
       }
@@ -83,7 +83,7 @@ class AmazonS3ACLSpec: QuickSpec {
           var request = NSMutableURLRequest()
           acl.setACLHeaders(forRequest: &request)
           
-          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"] as? String
+          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
           expect(aclHeader).to(equal("bucket-owner-full-control"))
         }
       }
@@ -95,7 +95,7 @@ class AmazonS3ACLSpec: QuickSpec {
           var request = NSMutableURLRequest()
           acl.setACLHeaders(forRequest: &request)
           
-          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"] as? String
+          let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
           expect(aclHeader).to(equal("log-delivery-write"))
         }
       }
@@ -119,7 +119,7 @@ class AmazonS3ACLSpec: QuickSpec {
             var request = NSMutableURLRequest()
             acl.setACLHeaders(forRequest: &request)
             
-            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"] as? String
+            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]
             expect(aclHeader).toNot(beNil())
           }
         }
@@ -132,7 +132,7 @@ class AmazonS3ACLSpec: QuickSpec {
             var request = NSMutableURLRequest()
             acl.setACLHeaders(forRequest: &request)
             
-            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-write"] as? String
+            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-write"]
             expect(aclHeader).toNot(beNil())
           }
         }
@@ -145,7 +145,7 @@ class AmazonS3ACLSpec: QuickSpec {
             var request = NSMutableURLRequest()
             acl.setACLHeaders(forRequest: &request)
             
-            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read-acp"] as? String
+            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read-acp"]
             expect(aclHeader).toNot(beNil())
           }
         }
@@ -158,7 +158,7 @@ class AmazonS3ACLSpec: QuickSpec {
             var request = NSMutableURLRequest()
             acl.setACLHeaders(forRequest: &request)
             
-            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-write-acp"] as? String
+            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-write-acp"]
             expect(aclHeader).toNot(beNil())
           }
         }
@@ -171,7 +171,7 @@ class AmazonS3ACLSpec: QuickSpec {
             var request = NSMutableURLRequest()
             acl.setACLHeaders(forRequest: &request)
             
-            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-full-control"] as? String
+            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-full-control"]
             expect(aclHeader).toNot(beNil())
           }
         }
@@ -193,7 +193,7 @@ class AmazonS3ACLSpec: QuickSpec {
             var request = NSMutableURLRequest()
             acl.setACLHeaders(forRequest: &request)
             
-            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"] as? String
+            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]
             expect(aclHeader).to(equal("uri=\"http://acs.amazonaws.com/groups/global/AuthenticatedUsers\""))
           }
         }
@@ -206,7 +206,7 @@ class AmazonS3ACLSpec: QuickSpec {
             var request = NSMutableURLRequest()
             acl.setACLHeaders(forRequest: &request)
             
-            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"] as? String
+            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]
             expect(aclHeader).to(equal("uri=\"http://acs.amazonaws.com/groups/global/AllUsers\""))
           }
         }
@@ -219,7 +219,7 @@ class AmazonS3ACLSpec: QuickSpec {
             var request = NSMutableURLRequest()
             acl.setACLHeaders(forRequest: &request)
             
-            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"] as? String
+            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]
             expect(aclHeader).to(equal("uri=\"http://acs.amazonaws.com/groups/s3/LogDelivery\""))
           }
         }
@@ -232,7 +232,7 @@ class AmazonS3ACLSpec: QuickSpec {
             var request = NSMutableURLRequest()
             acl.setACLHeaders(forRequest: &request)
             
-            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"] as? String
+            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]
             expect(aclHeader).to(equal("emailAddress=\"test@test.com\""))
           }
         }
@@ -245,7 +245,7 @@ class AmazonS3ACLSpec: QuickSpec {
             var request = NSMutableURLRequest()
             acl.setACLHeaders(forRequest: &request)
             
-            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"] as? String
+            let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]
             expect(aclHeader).to(equal("id=\"123456\""))
           }
         }
@@ -267,7 +267,7 @@ class AmazonS3ACLSpec: QuickSpec {
           var request = NSMutableURLRequest()
           acl.setACLHeaders(forRequest: &request)
           
-          let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"] as? String
+          let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]
           expect(aclHeader).to(equal("emailAddress=\"test@test.com\", id=\"123456\""))
         }
       }

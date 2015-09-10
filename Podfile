@@ -4,12 +4,13 @@ platform :ios, '8.0'
 use_frameworks!
 inhibit_all_warnings!
 
+pod 'Alamofire', '~> 2.0'
+
 target :AmazonS3RequestManager do
-  pod 'Alamofire', '~> 1.3'
+
 end
 
 target :AmazonS3RequestManagerTests do
-  pod 'Alamofire', '~> 1.3'
-  pod 'Quick', '0.3.1'
-  pod 'Nimble'
+  pod 'Quick', '~> 0.6.0'
+  pod 'Nimble', '2.0.0-rc.3'
 end
