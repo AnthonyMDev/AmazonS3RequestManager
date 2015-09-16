@@ -206,10 +206,10 @@ public struct AmazonS3ACLPermissionGrant: AmazonS3ACL, Hashable {
   /**
   Creates a grant with the given permission for a `Set` of grantees
   
-  :param: permission The `AmazonS3ACLPermission` to set for the `grantees`
-  :param: grantees   The `Set` of `AmazonS3ACLGrantees` to set the permission for
+  - parameter permission: The `AmazonS3ACLPermission` to set for the `grantees`
+  - parameter grantees:   The `Set` of `AmazonS3ACLGrantees` to set the permission for
   
-  :returns: An grant for the given permission and grantees
+  - returns: An grant for the given permission and grantees
   */
   public init(permission: AmazonS3ACLPermission, grantees: Set<AmazonS3ACLGrantee>) {
     self.permission = permission
@@ -219,10 +219,10 @@ public struct AmazonS3ACLPermissionGrant: AmazonS3ACL, Hashable {
   /**
   Creates a grant with the given permission for a single grantee
   
-  :param: permission The `AmazonS3ACLPermission` to set for the `grantee`
-  :param: grantees   The single `AmazonS3ACLGrantees` to set the permission for
+  - parameter permission: The `AmazonS3ACLPermission` to set for the `grantee`
+  - parameter grantees:   The single `AmazonS3ACLGrantees` to set the permission for
   
-  :returns: An grant for the given permission and grantees
+  - returns: An grant for the given permission and grantees
   */
   public init(permission: AmazonS3ACLPermission, grantee: AmazonS3ACLGrantee) {
     self.permission = permission
@@ -236,7 +236,7 @@ public struct AmazonS3ACLPermissionGrant: AmazonS3ACL, Hashable {
   private(set) public var grantees: Set<AmazonS3ACLGrantee>
   
   public func setACLHeaders(inout forRequest request: NSMutableURLRequest) {
-    let granteeList = join(", ", granteeStrings())
+    let granteeList =  granteeStrings().joinWithSeparator(", ")
     request.addValue(granteeList, forHTTPHeaderField: permission.requestHeaderFieldKey)
   }
   
@@ -280,9 +280,9 @@ public struct AmazonS3CustomACL: AmazonS3ACL {
   /**
   Initializes an `AmazonS3CustomACL` with a given array of `AmazonS3PermissionGrant`s.
   
-  :param: grant The grants for the custom ACL
+  - parameter grant: The grants for the custom ACL
   
-  :returns: An `AmazonS3CustomACL` with the given grants
+  - returns: An `AmazonS3CustomACL` with the given grants
   */
   public init(grants: Set<AmazonS3ACLPermissionGrant>) {
     self.grants = grants

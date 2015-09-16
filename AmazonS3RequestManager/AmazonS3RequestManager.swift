@@ -30,20 +30,16 @@ import MobileCoreServices
 
 import Alamofire
 
-/**
-* MARK: Information
-*/
+// MARK: - Information
 
-/**
-MARK: Error Domain
-
+// MARK: Error Domain
+/*
 The Error Domain for `ZRAPI`
 */
 private let AmazonS3RequestManagerErrorDomain = "com.alamofire.AmazonS3RequestManager"
 
+// MARK: Error Codes
 /**
-MARK: Error Codes
-
 The error codes for the `AmazonS3RequestManagerErrorDomain`
 
 - AccessKeyMissing: The `accessKey` for the request manager is `nil`. The `accessKey` must be set in order to make requests with `AmazonS3RequestManager`.
@@ -58,9 +54,8 @@ public enum AmazonS3RequestManagerErrorCodes: Int {
   
 }
 
+// MARK: Amazon S3 Regions
 /**
-MARK: Amazon S3 Regions
-
 The possible Amazon Web Service regions for the client.
 
 - USStandard:   N. Virginia or Pacific Northwest
@@ -85,16 +80,13 @@ public enum AmazonS3Region: String {
   SAEast1 = "s3-sa-east-1.amazonaws.com"
 }
 
+// MARK: - AmazonS3RequestManager
 /**
-MARK: AmazonS3RequestManager
-
 `AmazonS3RequestManager` is a subclass of `Alamofire.Manager` that encodes requests to the Amazon S3 service.
 */
 public class AmazonS3RequestManager {
   
-  /**
-  MARK: Instance Properties
-  */
+  // MARK: Instance Properties
   
   /**
   The Amazon S3 Bucket for the client
@@ -115,14 +107,14 @@ public class AmazonS3RequestManager {
   
   :dicussion: This can be found on the AWS control panel: http://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key
   */
-  public var accessKey: String?
+  public var accessKey: String
   
   /**
   The Amazon S3 Secret used to generate authorization headers and pre-signed queries
   
   :dicussion: This can be found on the AWS control panel: http://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key
   */
-  public var secret: String?
+  public var secret: String
   
   /**
   The AWS STS session token. `nil` by default.
@@ -159,39 +151,35 @@ public class AmazonS3RequestManager {
     return NSURL(string: URLString)!
   }
 
-  /**
-  MARK: Initialization
-  */
+  // MARK: Initialization
   
   /**
   Initalizes an `AmazonS3RequestManager` with the given Amazon S3 credentials.
   
-  :param: bucket    The Amazon S3 bucket for the client
-  :param: region    The Amazon S3 region for the client
-  :param: accessKey The Amazon S3 access key ID for the client
-  :param: secret    The Amazon S3 secret for the client
+  - parameter bucket:    The Amazon S3 bucket for the client
+  - parameter region:    The Amazon S3 region for the client
+  - parameter accessKey: The Amazon S3 access key ID for the client
+  - parameter secret:    The Amazon S3 secret for the client
   
-  :returns: An `AmazonS3RequestManager` with the given Amazon S3 credentials and a default configuration.
+  - returns: An `AmazonS3RequestManager` with the given Amazon S3 credentials and a default configuration.
   */
-  required public init(bucket: String?, region: AmazonS3Region, accessKey: String?, secret: String?) {
+  required public init(bucket: String?, region: AmazonS3Region, accessKey: String, secret: String) {
     self.bucket = bucket
     self.region = region
     self.accessKey = accessKey
     self.secret = secret
   }
   
-  /**
-  MARK: - GET Object Requests
-  */
+  // MARK: - GET Object Requests
   
   /**
   Gets and object from the Amazon S3 service and returns it as the response object without saving to file.
   
   :note: This method performs a standard GET request and does not allow use of progress blocks.
   
-  :param: path The object path
+  - parameter path: The object path
   
-  :returns: A GET request for the object
+  - returns: A GET request for the object
   */
   public func getObject(path: String) -> Request {
     return requestManager.request(amazonURLRequest(.GET, path: path))
@@ -204,10 +192,10 @@ public class AmazonS3RequestManager {
   
   :dicussion: This method performs a download request that allows for a progress block to be implemented. For more information on using progress blocks, see `Alamofire`.
   
-  :param: path           The object path
-  :param: destinationURL The `NSURL` to save the object to
+  - parameter path:           The object path
+  - parameter destinationURL: The `NSURL` to save the object to
   
-  :returns: A download request for the object
+  - returns: A download request for the object
   */
   public func downloadObject(path: String, saveToURL destinationURL: NSURL) -> Request {
     return requestManager.download(amazonURLRequest(.GET, path: path), destination: { (_, _) -> (NSURL) in
@@ -215,20 +203,18 @@ public class AmazonS3RequestManager {
     })
   }
   
-  /**
-  MARK: PUT Object Requests
-  */
+  // MARK: PUT Object Requests
   
   /**
   Uploads an object to the Amazon S3 service with a given local file URL.
   
   :note: The user for the manager's Amazon S3 credentials must have read access to the bucket
   
-  :param: fileURL         The local `NSURL` of the file to upload
-  :param: destinationPath The desired destination path, including the file name and extension, in the Amazon S3 bucket
-  :param: acl             The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
+  - parameter fileURL:         The local `NSURL` of the file to upload
+  - parameter destinationPath: The desired destination path, including the file name and extension, in the Amazon S3 bucket
+  - parameter acl:             The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
   
-  :returns: An upload request for the object
+  - returns: An upload request for the object
   */
   public func putObject(fileURL: NSURL, destinationPath: String, acl: AmazonS3ACL? = nil) -> Request {
     let putRequest = amazonURLRequest(.PUT, path: destinationPath, acl: acl)
@@ -241,11 +227,11 @@ public class AmazonS3RequestManager {
   
   :note: The user for the manager's Amazon S3 credentials must have read access to the bucket
   
-  :param: data            The `NSData` for the object to upload
-  :param: destinationPath The desired destination path, including the file name and extension, in the Amazon S3 bucket
-  :param: acl             The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
+  - parameter data:            The `NSData` for the object to upload
+  - parameter destinationPath: The desired destination path, including the file name and extension, in the Amazon S3 bucket
+  - parameter acl:             The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
   
-  :returns: An upload request for the object
+  - returns: An upload request for the object
   */
   public func putObject(data: NSData, destinationPath: String, acl: AmazonS3ACL? = nil) -> Request {
     let putRequest = amazonURLRequest(.PUT, path: destinationPath, acl: acl)
@@ -253,18 +239,16 @@ public class AmazonS3RequestManager {
     return requestManager.upload(putRequest, data: data)
   }
   
-  /**
-  MARK: DELETE Object Request
-  */
+  // MARK: DELETE Object Request
   
   /**
   Deletes an object from the Amazon S3 service.
   
   :warning: Once an object has been deleted, there is no way to restore or undelete it.
   
-  :param: path The object path
+  - parameter path: The object path
   
-  :returns: The delete request
+  - returns: The delete request
   */
   public func deleteObject(path: String) -> Request {
     let deleteRequest = amazonURLRequest(.DELETE, path: path)
@@ -272,9 +256,7 @@ public class AmazonS3RequestManager {
     return requestManager.request(deleteRequest)
   }
   
-  /**
-  MARK: ACL Requests
-  */
+  // MARK: ACL Requests
   
   /**
   Gets the access control list (ACL) for the current `bucket`
@@ -283,7 +265,7 @@ public class AmazonS3RequestManager {
   
   :see: For more information on the ACL response headers for this request, see "http://docs.aws.amazon.com/AmazonS3/latest/API/RESTBucketGETacl.html"
   
-  :returns: A GET request for the bucket's ACL
+  - returns: A GET request for the bucket's ACL
   */
   public func getBucketACL() -> Request {
     return requestManager.request(amazonURLRequest(.GET, path: "", subresource: "acl", acl: nil))
@@ -296,7 +278,7 @@ public class AmazonS3RequestManager {
   
   :see: For more information on the ACL response headers for this request, see "http://docs.aws.amazon.com/AmazonS3/latest/API/RESTBucketPUTacl.html"
   
-  :returns: A PUT request to set the bucket's ACL
+  - returns: A PUT request to set the bucket's ACL
   */
   public func setBucketACL(acl: AmazonS3ACL) -> Request {
     return requestManager.request(amazonURLRequest(.PUT, path: "", subresource: "acl", acl: acl))
@@ -309,9 +291,9 @@ public class AmazonS3RequestManager {
   
   :see: For more information on the ACL response headers for this request, see "http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectGETacl.html"
   
-  :param: path The object path
+  - parameter path: The object path
   
-  :returns: A GET request for the object's ACL
+  - returns: A GET request for the object's ACL
   */
   public func getACL(forObjectAtPath path:String) -> Request {
     return requestManager.request(amazonURLRequest(.GET, path: path, subresource: "acl"))
@@ -324,30 +306,28 @@ public class AmazonS3RequestManager {
   
   :see: For more information on the ACL response headers for this request, see "http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPUTacl.html"
   
-  :returns: A PUT request to set the objects's ACL
+  - returns: A PUT request to set the objects's ACL
   */
   public func setACL(forObjectAtPath path: String, acl: AmazonS3ACL) -> Request {
     return requestManager.request(amazonURLRequest(.PUT, path: path, subresource: "acl", acl: acl))
   }
   
+  // MARK: Amazon S3 Request Serialization
   /**
-  MARK: Amazon S3 Request Serialization
-  
   :discussion: These methods serialize requests for use with the Amazon S3 service. The `NSURLRequest`s returned from these methods may be used with `Alamofire`, `NSURLSession` or any other network request manager.
   */
   
   /**
   This method serializes a request for the Amazon S3 service with the given method and path.
   
-  :param: method The HTTP method for the request. For more information see `Alamofire.Method`.
-  :param: path   The desired path, including the file name and extension, in the Amazon S3 Bucket.
-  :param: acl    The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
+  - parameter method: The HTTP method for the request. For more information see `Alamofire.Method`.
+  - parameter path:   The desired path, including the file name and extension, in the Amazon S3 Bucket.
+  - parameter acl:    The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
   
-  :returns: An `NSURLRequest`, serialized for use with the Amazon S3 service.
+  - returns: An `NSURLRequest`, serialized for use with the Amazon S3 service.
   */
   public func amazonURLRequest(method: Alamofire.Method, path: String, subresource: String? = nil, acl: AmazonS3ACL? = nil) -> NSURLRequest {
-    
-    var url = endpointURL.URLByAppendingPathComponent(path).URLByAppendingS3Subresource(subresource)
+    let url = endpointURL.URLByAppendingPathComponent(path).URLByAppendingS3Subresource(subresource)
     
     var mutableURLRequest = NSMutableURLRequest(URL: url)
     mutableURLRequest.HTTPMethod = method.rawValue
@@ -355,59 +335,49 @@ public class AmazonS3RequestManager {
     setContentType(forRequest: &mutableURLRequest)
     acl?.setACLHeaders(forRequest: &mutableURLRequest)
     
-    let error = setAuthorizationHeaders(forRequest: &mutableURLRequest)
+    setAuthorizationHeaders(forRequest: &mutableURLRequest)
     
     return mutableURLRequest
   }
   
   private func setContentType(inout forRequest request: NSMutableURLRequest) {
-    var contentTypeString = MIMEType(request) ?? "application/octet-stream"
+    let contentTypeString = MIMEType(request) ?? "application/octet-stream"
     
     request.setValue(contentTypeString, forHTTPHeaderField: "Content-Type")
   }
   
   private func MIMEType(request: NSURLRequest) -> String? {
-    if let fileExtension = request.URL?.pathExtension {
-      if !fileExtension.isEmpty {
+    if let fileExtension = request.URL?.pathExtension where !fileExtension.isEmpty,
+      let UTIRef = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, nil),
+      MIMETypeRef = UTTypeCopyPreferredTagWithClass(UTIRef.takeUnretainedValue(), kUTTagClassMIMEType) {
         
-        let UTIRef = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, nil)
-        let UTI = UTIRef.takeUnretainedValue()
         UTIRef.release()
         
-        if let MIMETypeRef = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType) {
-          let MIMEType = MIMETypeRef.takeUnretainedValue()
-          MIMETypeRef.release()
-          
-          return MIMEType as String
-        }
-      }
+        let MIMEType = MIMETypeRef.takeUnretainedValue()
+        MIMETypeRef.release()
+        
+        return MIMEType as String
+        
     }
     return nil
   }
   
-  private func setAuthorizationHeaders(inout forRequest request: NSMutableURLRequest) -> NSError? {
-    
+  private func setAuthorizationHeaders(inout forRequest request: NSMutableURLRequest) {
     request.cachePolicy = .ReloadIgnoringLocalCacheData
     
-    let error = validateCredentials()
-    
-    if error == nil {
-      
-      if sessionToken != nil {
-        request.setValue(sessionToken!, forHTTPHeaderField: "x-amz-security-token")
-      }
-      
-      let timestamp = currentTimeStamp()
-      
-      let signature = AmazonS3SignatureHelpers.AWSSignatureForRequest(request,
-        timeStamp: timestamp,
-        secret: secret)
-      
-      request.setValue(timestamp ?? "", forHTTPHeaderField: "Date")
-      request.setValue("AWS \(accessKey!):\(signature)", forHTTPHeaderField: "Authorization")
-      
+    if sessionToken != nil {
+      request.setValue(sessionToken!, forHTTPHeaderField: "x-amz-security-token")
     }
-    return error
+    
+    let timestamp = currentTimeStamp()
+    
+    let signature = AmazonS3SignatureHelpers.AWSSignatureForRequest(request,
+      timeStamp: timestamp,
+      secret: secret)
+    
+    request.setValue(timestamp ?? "", forHTTPHeaderField: "Date")
+    request.setValue("AWS \(accessKey):\(signature)", forHTTPHeaderField: "Authorization")
+    
   }
   
   private func currentTimeStamp() -> String {
@@ -422,49 +392,13 @@ public class AmazonS3RequestManager {
     
     return dateFormatter
     }()
-  
-  /**
-  MARK: Validation
-  */
-  
-  private func validateCredentials() -> NSError? {
-    if accessKey == nil || accessKey!.isEmpty {
-      return accessKeyMissingError
-      
-    }
-    if secret == nil || secret!.isEmpty {
-      return secretMissingError
-      
-    }
-    
-    return nil
-  }
-  
-  /**
-  MARK: Error Handling
-  */
-  
-  private lazy var accessKeyMissingError: NSError = NSError(
-    domain: AmazonS3RequestManagerErrorDomain,
-    code: AmazonS3RequestManagerErrorCodes.AccessKeyMissing.rawValue,
-    userInfo: [NSLocalizedDescriptionKey: "Access Key Missing",
-      NSLocalizedFailureReasonErrorKey: "The 'accessKey' must be set in order to make requests with 'AmazonS3RequestManager'."]
-  )
-  
-  private lazy var secretMissingError: NSError = NSError(
-    domain: AmazonS3RequestManagerErrorDomain,
-    code: AmazonS3RequestManagerErrorCodes.SecretMissing.rawValue,
-    userInfo: [NSLocalizedDescriptionKey: "Secret Missing",
-      NSLocalizedFailureReasonErrorKey: "The 'secret' must be set in order to make requests with 'AmazonS3RequestManager'."]
-  )
-  
 }
 
 private extension NSURL {
   
   private func URLByAppendingS3Subresource(subresource: String?) -> NSURL {
     if subresource != nil && !subresource!.isEmpty {
-      let URLString = self.absoluteString!.stringByAppendingString("?\(subresource!)")
+      let URLString = self.absoluteString.stringByAppendingString("?\(subresource!)")
       return NSURL(string: URLString)!
       
     }

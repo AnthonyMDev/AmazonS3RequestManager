@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0AD101A815600EEB2E707FE6 /* Pods_AmazonS3RequestManagerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDB1A488AB23F40B190021D4 /* Pods_AmazonS3RequestManagerTests.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0D80828C6F42FB5C5FF4C100 /* Pods_AmazonS3RequestManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71C24E6A28FD552DA5FC6AF /* Pods_AmazonS3RequestManager.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		21C2072C527B56F0B91B17DC /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E3F9197DC24E8B008B2627 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		922820BB1AA8FD9900C51349 /* AmazonS3SignatureHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 922820B91AA8FD9900C51349 /* AmazonS3SignatureHelpers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		922820BC1AA8FD9900C51349 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 922820BA1AA8FD9900C51349 /* AmazonS3SignatureHelpers.m */; };
 		922820C01AA909C800C51349 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 922820BA1AA8FD9900C51349 /* AmazonS3SignatureHelpers.m */; };
@@ -65,6 +66,7 @@
 			files = (
 				92F051121ACF6C32000B3918 /* MobileCoreServices.framework in Frameworks */,
 				0D80828C6F42FB5C5FF4C100 /* Pods_AmazonS3RequestManager.framework in Frameworks */,
+				21C2072C527B56F0B91B17DC /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,7 +239,9 @@
 		92EF4DA81AA64CC1002C68D2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Anthony Miller";
 				TargetAttributes = {
 					92EF4DB01AA64CC1002C68D2 = {
@@ -326,7 +330,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AmazonS3RequestManager/Pods-AmazonS3RequestManager-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9F48051A30C3DE54837AE271 /* Copy Pods Resources */ = {
@@ -429,6 +433,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -504,6 +509,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AmazonS3RequestManager/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.AnthonyMDev.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -521,6 +527,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AmazonS3RequestManager/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.AnthonyMDev.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -531,16 +538,13 @@
 			baseConfigurationReference = C654EFF0C0FCD904730ED696 /* Pods-AmazonS3RequestManagerTests.debug.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = AmazonS3RequestManagerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.AnthonyMDev.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -550,12 +554,9 @@
 			baseConfigurationReference = A1B0C81F4198B8AD86110A10 /* Pods-AmazonS3RequestManagerTests.release.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = AmazonS3RequestManagerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.AnthonyMDev.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

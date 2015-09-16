@@ -34,8 +34,8 @@ class AmazonS3RequestManagerTests: XCTestCase {
   }
   
   func test__inits__withValues() {
-    XCTAssertEqual(sut.accessKey!, accessKey)
-    XCTAssertEqual(sut.secret!, secret)
+    XCTAssertEqual(sut.accessKey, accessKey)
+    XCTAssertEqual(sut.secret, secret)
     XCTAssertEqual(sut.bucket!, bucket)
     XCTAssertEqual(sut.region.rawValue, region.rawValue)
   }
@@ -86,7 +86,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.getObject("test")
     
     // then
-    XCTAssertEqual(request.request.HTTPMethod!, expected)
+    XCTAssertEqual(request.request!.HTTPMethod!, expected)
   }
   
   func test__getObject__setsURLWithEndpoint() {
@@ -98,7 +98,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.getObject(path)
     
     // then
-    XCTAssertEqual(request.request.URL!, expectedURL)
+    XCTAssertEqual(request.request!.URL!, expectedURL)
   }
   
   /**
@@ -121,7 +121,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.downloadObject("test", saveToURL: NSURL())
     
     // then
-    XCTAssertEqual(request.request.HTTPMethod!, expected)
+    XCTAssertEqual(request.request!.HTTPMethod!, expected)
   }
   
   func test__downloadObject_path_saveToURL_setsURLWithEndpoint() {
@@ -133,7 +133,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.downloadObject(path, saveToURL: NSURL())
     
     // then
-    XCTAssertEqual(request.request.URL!, expectedURL)
+    XCTAssertEqual(request.request!.URL!, expectedURL)
   }
   
   /**
@@ -156,7 +156,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.putObject(NSURL(), destinationPath: "path")
     
     // then
-    XCTAssertEqual(request.request.HTTPMethod!, expected)
+    XCTAssertEqual(request.request!.HTTPMethod!, expected)
   }
   
   func test__putObject_fileURL_destinationPath_setsURLWithEndpoint() {
@@ -168,7 +168,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.putObject(NSURL(), destinationPath: path)
     
     // then
-    XCTAssertEqual(request.request.URL!, expectedURL)
+    XCTAssertEqual(request.request!.URL!, expectedURL)
   }
   
   func test__putObject_fileURL_destinationPath__givenACL_setsHTTPHeader_ACL() {
@@ -179,8 +179,8 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.putObject(NSURL(), destinationPath: path, acl: acl)
     
     // when
-    let headers = request.request.allHTTPHeaderFields!
-    let aclHeader: String? = headers["x-amz-acl"] as? String
+    let headers = request.request!.allHTTPHeaderFields!
+    let aclHeader: String? = headers["x-amz-acl"]
     
     // then
     XCTAssertNotNil(aclHeader, "Should have ACL header field")
@@ -202,7 +202,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.putObject(NSData(), destinationPath: "path")
     
     // then
-    XCTAssertEqual(request.request.HTTPMethod!, expected)
+    XCTAssertEqual(request.request!.HTTPMethod!, expected)
   }
   
   func test__putObject_data_destinationPath__setsURLWithEndpoint() {
@@ -214,20 +214,19 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.putObject(NSData(), destinationPath: path)
     
     // then
-    XCTAssertEqual(request.request.URL!, expectedURL)
+    XCTAssertEqual(request.request!.URL!, expectedURL)
   }
   
   func test__putObject_data_destinationPath__givenACL_setsHTTPHeader_ACL() {
     // given
     let acl = AmazonS3PredefinedACL.Public
     let path = "TestPath"
-    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
     
     let request = sut.putObject(NSData(), destinationPath: path, acl: acl)
     
     // when
-    let headers = request.request.allHTTPHeaderFields!
-    let aclHeader: String? = headers["x-amz-acl"] as? String
+    let headers = request.request!.allHTTPHeaderFields!
+    let aclHeader: String? = headers["x-amz-acl"]
     
     // then
     XCTAssertNotNil(aclHeader, "Should have ACL header field")
@@ -245,7 +244,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.deleteObject("test")
     
     // then
-    XCTAssertEqual(request.request.HTTPMethod!, expected)
+    XCTAssertEqual(request.request!.HTTPMethod!, expected)
   }
   
   func test__deleteObject_setsURLWithEndpoint() {
@@ -257,7 +256,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.deleteObject(path)
     
     // then
-    XCTAssertEqual(request.request.URL!, expectedURL)
+    XCTAssertEqual(request.request!.URL!, expectedURL)
   }
   
   /**
@@ -272,7 +271,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.getBucketACL()
     
     // then
-    XCTAssertEqual(request.request.HTTPMethod!, expected)
+    XCTAssertEqual(request.request!.HTTPMethod!, expected)
   }
   
   func test__getObject__setsURL_withACLSubresource() {
@@ -283,7 +282,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.getBucketACL()
     
     // then
-    XCTAssertEqual(request.request.URL!, expectedURL)
+    XCTAssertEqual(request.request!.URL!, expectedURL)
   }
   
   func test__setBucketACL__setsHTTPMethod() {
@@ -296,7 +295,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.setBucketACL(acl)
     
     // then
-    XCTAssertEqual(request.request.HTTPMethod!, expected)
+    XCTAssertEqual(request.request!.HTTPMethod!, expected)
   }
   
   func test__setBucketACL_setsURLWithEndpoint() {
@@ -309,7 +308,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.setBucketACL(acl)
     
     // then
-    XCTAssertEqual(request.request.URL!, expectedURL)
+    XCTAssertEqual(request.request!.URL!, expectedURL)
   }
   
   func test__setBucketACL_setsHTTPHeader_ACL() {
@@ -319,8 +318,8 @@ class AmazonS3RequestManagerTests: XCTestCase {
     // when
     let request = sut.setBucketACL(acl)
     
-    let headers = request.request.allHTTPHeaderFields!
-    let aclHeader: String? = headers["x-amz-acl"] as? String
+    let headers = request.request!.allHTTPHeaderFields!
+    let aclHeader: String? = headers["x-amz-acl"]
     
     // then
     XCTAssertNotNil(aclHeader, "Should have ACL header field")
@@ -334,7 +333,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.getACL(forObjectAtPath: "test")
     
     // then
-    XCTAssertEqual(request.request.HTTPMethod!, expected)
+    XCTAssertEqual(request.request!.HTTPMethod!, expected)
   }
   
   func test__getACL_forObjectAtPath__setsURL_withACLSubresource() {
@@ -346,7 +345,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.getACL(forObjectAtPath: path)
     
     // then
-    XCTAssertEqual(request.request.URL!, expectedURL)
+    XCTAssertEqual(request.request!.URL!, expectedURL)
   }
   
   func test__setACL_forObjectAtPath__setsHTTPMethod() {
@@ -360,7 +359,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.setACL(forObjectAtPath: path, acl: acl)
     
     // then
-    XCTAssertEqual(request.request.HTTPMethod!, expected)
+    XCTAssertEqual(request.request!.HTTPMethod!, expected)
   }
   
   func test__setACL_forObjectAtPath__setsURLWithEndpoint() {
@@ -374,7 +373,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.setACL(forObjectAtPath: path, acl: acl)
     
     // then
-    XCTAssertEqual(request.request.URL!, expectedURL)
+    XCTAssertEqual(request.request!.URL!, expectedURL)
   }
   
   func test__setACL_forObjectAtPath__setsHTTPHeader_ACL() {
@@ -385,8 +384,8 @@ class AmazonS3RequestManagerTests: XCTestCase {
     // when
     let request = sut.setACL(forObjectAtPath: path, acl: acl)
     
-    let headers = request.request.allHTTPHeaderFields!
-    let aclHeader: String? = headers["x-amz-acl"] as? String
+    let headers = request.request!.allHTTPHeaderFields!
+    let aclHeader: String? = headers["x-amz-acl"]
     
     // then
     XCTAssertNotNil(aclHeader, "Should have ACL header field")
@@ -436,7 +435,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     // when
     let headers = request.allHTTPHeaderFields!
-    let typeHeader: String? = headers["Content-Type"] as? String
+    let typeHeader: String? = headers["Content-Type"]
     
     // then
     XCTAssertNotNil(typeHeader, "Should have 'Content-Type' header field")
@@ -449,7 +448,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     // when
     let headers = request.allHTTPHeaderFields!
-    let typeHeader: String? = headers["Content-Type"] as? String
+    let typeHeader: String? = headers["Content-Type"]
     
     // then
     XCTAssertNotNil(typeHeader, "Should have 'Content-Type' header field")
@@ -462,7 +461,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     // when
     let headers = request.allHTTPHeaderFields!
-    let typeHeader: String? = headers["Content-Type"] as? String
+    let typeHeader: String? = headers["Content-Type"]
     
     // then
     XCTAssertNotNil(typeHeader, "Should have 'Content-Type' header field")
@@ -475,7 +474,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     // when
     let headers = request.allHTTPHeaderFields!
-    let typeHeader: String? = headers["Content-Type"] as? String
+    let typeHeader: String? = headers["Content-Type"]
     
     // then
     XCTAssertNotNil(typeHeader, "Should have 'Content-Type' header field")
@@ -488,7 +487,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     // when
     let headers = request.allHTTPHeaderFields!
-    let dateHeader: String? = headers["Date"] as? String
+    let dateHeader: String? = headers["Date"]
     
     // then
     XCTAssertNotNil(dateHeader, "Should have 'Date' header field")
@@ -501,7 +500,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     // when
     let headers = request.allHTTPHeaderFields!
-    let authHeader: String? = headers["Authorization"] as? String
+    let authHeader: String? = headers["Authorization"]
     
     // then
     XCTAssertNotNil(authHeader, "Should have 'Authorization' header field")
@@ -515,7 +514,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     // when
     let headers = request.allHTTPHeaderFields!
-    let aclHeader: String? = headers["x-amz-acl"] as? String
+    let aclHeader: String? = headers["x-amz-acl"]
     
     // then
     XCTAssertNotNil(aclHeader, "Should have ACL header field")
