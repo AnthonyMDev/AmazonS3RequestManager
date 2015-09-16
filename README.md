@@ -14,6 +14,10 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
+// For Swift 2.0
+pod 'AmazonS3RequestManager', '~> 0.6'
+
+// For Swift 1.2
 pod 'AmazonS3RequestManager', '~> 0.5'
 ```
 
