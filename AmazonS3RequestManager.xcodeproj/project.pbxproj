@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D80828C6F42FB5C5FF4C100 /* Pods_AmazonS3RequestManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D71C24E6A28FD552DA5FC6AF /* Pods_AmazonS3RequestManager.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		21C2072C527B56F0B91B17DC /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87E3F9197DC24E8B008B2627 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		922820BB1AA8FD9900C51349 /* AmazonS3SignatureHelpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 922820B91AA8FD9900C51349 /* AmazonS3SignatureHelpers.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		922820BC1AA8FD9900C51349 /* AmazonS3SignatureHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 922820BA1AA8FD9900C51349 /* AmazonS3SignatureHelpers.m */; };
 		925ABF3E1B276464003B9900 /* AmazonS3ACL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925ABF3D1B276464003B9900 /* AmazonS3ACL.swift */; };
@@ -45,6 +46,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D80828C6F42FB5C5FF4C100 /* Pods_AmazonS3RequestManager.framework in Frameworks */,
+				21C2072C527B56F0B91B17DC /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -279,6 +281,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;

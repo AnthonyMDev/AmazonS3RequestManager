@@ -7,6 +7,15 @@
 #
 
 Pod::Spec.new do |s|
+  s.name = 'AmazonS3RequestManager'
+  s.version = '0.6.0'
+  s.license = 'MIT'
+  s.summary = 'A Alamofire based request manager that serializes requests to the AWS S3 (Amazon Simple Storage Solution). Based on AFAmazonS3Manager'
+  s.homepage = 'https://github.com/AnthonyMDev/AmazonS3RequestManager'
+  s.social_media_url = 'http://twitter.com/AnthonyMDev'
+  s.authors = { 'Anthony Miller' => 'AnthonyMDev@gmail.com' }
+  s.source = { :git => 'https://github.com/AnthonyMDev/AmazonS3RequestManager.git', :tag => s.version }
+  s.frameworks = 'Foundation', 'MobileCoreServices'
 
   # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -134,5 +143,4 @@ Pod::Spec.new do |s|
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # s.dependency "JSONKit", "~> 1.4"
-
 end
