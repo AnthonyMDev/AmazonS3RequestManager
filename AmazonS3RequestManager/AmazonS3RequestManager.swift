@@ -369,8 +369,8 @@ public class AmazonS3RequestManager {
       if !fileExtension.isEmpty {
         
         let UTIRef = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, nil)
-        let UTI = UTIRef.takeUnretainedValue()
-        UTIRef.release()
+        let UTI = UTIRef!.takeUnretainedValue()
+        UTIRef!.release()
         
         let MIMETypeRef = UTTypeCopyPreferredTagWithClass(UTI, kUTTagClassMIMEType)
         let MIMEType = MIMETypeRef.takeUnretainedValue()
@@ -462,7 +462,7 @@ private extension NSURL {
   
   private func URLByAppendingS3Subresource(subresource: String?) -> NSURL {
     if subresource != nil && !subresource!.isEmpty {
-      let URLString = self.absoluteString!.stringByAppendingString("?\(subresource!)")
+      let URLString = self.absoluteString.stringByAppendingString("?\(subresource!)")
       return NSURL(string: URLString)!
       
     }

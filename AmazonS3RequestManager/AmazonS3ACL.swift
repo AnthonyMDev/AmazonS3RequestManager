@@ -236,6 +236,7 @@ public struct AmazonS3ACLPermissionGrant: AmazonS3ACL, Hashable {
   private(set) public var grantees: Set<AmazonS3ACLGrantee>
   
   public func setACLHeaders(inout forRequest request: NSMutableURLRequest) {
+    
     let granteeList = join(", ", granteeStrings())
     request.addValue(granteeList, forHTTPHeaderField: permission.requestHeaderFieldKey)
   }
