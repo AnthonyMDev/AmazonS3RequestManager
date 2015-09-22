@@ -32,28 +32,6 @@ import Alamofire
 
 // MARK: - Information
 
-// MARK: Error Domain
-/*
-The Error Domain for `ZRAPI`
-*/
-private let AmazonS3RequestManagerErrorDomain = "com.alamofire.AmazonS3RequestManager"
-
-// MARK: Error Codes
-/**
-The error codes for the `AmazonS3RequestManagerErrorDomain`
-
-- AccessKeyMissing: The `accessKey` for the request manager is `nil`. The `accessKey` must be set in order to make requests with `AmazonS3RequestManager`.
-
-- SecretMissing: The secret for the request manager is `nil`. The secret must be set in order to make requests with `AmazonS3RequestManager`.
-
-*/
-public enum AmazonS3RequestManagerErrorCodes: Int {
-  
-  case AccessKeyMissing = 1,
-  SecretMissing
-  
-}
-
 // MARK: Amazon S3 Regions
 /**
 The possible Amazon Web Service regions for the client.
