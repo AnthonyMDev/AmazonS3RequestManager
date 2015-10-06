@@ -161,6 +161,9 @@ public class AmazonS3RequestManager {
   */
   public func getObject(path: String) -> Request {
     return requestManager.request(amazonURLRequest(.GET, path: path))
+      .responseS3Data { (response) -> Void in
+        
+    }
   }
   
   /**
