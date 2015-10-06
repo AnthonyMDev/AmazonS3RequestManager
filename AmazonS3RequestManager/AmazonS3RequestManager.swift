@@ -215,7 +215,7 @@ public class AmazonS3RequestManager {
     let putRequest = amazonURLRequest(.PUT, path: destinationPath, acl: acl)
     
     return requestManager.upload(putRequest, data: data)
-  }
+  } 
   
   // MARK: DELETE Object Request
   

@@ -8,12 +8,15 @@
 
 import Foundation
 
+/// The domain used for creating all AmazonS3RequestManager errors.
+public let AmazonS3RequestManagerErrorDomain = "com.AmazonS3RequestManager.error"
+
 /**
-*  The error types that can be returned from a failed request to the Amazon S3 service. 
+*  The error types that can be returned from a failed request to the Amazon S3 service.
 *
 *  :see: For more information on these errors, see `http://docs.aws.amazon.com/AmazonS3/latest/API/ErrorResponses.html`.
 */
-public enum AmazonS3Error: String, ErrorType {
+public enum AmazonS3Error: String {
   
   case AccessDenied = "AccessDenied",
   AccountProblem = "AccountProblem",
@@ -94,4 +97,20 @@ public enum AmazonS3Error: String, ErrorType {
   UnresolvableGrantByEmailAddress = "UnresolvableGrantByEmailAddress",
   UserKeyMustBeSpecified = "UserKeyMustBeSpecified"
   
+  public var code: Int {
+    switch self {
+    default: return -9999
+    }
+  }
+  
+  func error(failureReason failureReason: String?) -> NSError {
+    var userInfo: [String: AnyObject]? = nil
+    if let failureReason = failureReason {
+      userInfo = [NSLocalizedFailureReasonErrorKey: failureReason]
+    }
+    
+    return NSError(domain: AmazonS3RequestManagerErrorDomain, code: self.code, userInfo: userInfo)
+  }
+  
 }
+
