@@ -9,6 +9,7 @@
 import UIKit
 import XCTest
 import Nimble
+import Nocilla
 
 import Alamofire
 import AmazonS3RequestManager
@@ -40,7 +41,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     XCTAssertEqual(sut.region.rawValue, region.rawValue)
   }
   
-  /**
+  /*
   *  MARK: Endpoint URL - Tests
   */
   
@@ -74,7 +75,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     XCTAssertEqual(sut.endpointURL, expectedURL)
   }
   
-  /**
+  /*
   *  MARK: - GET Object Request - Tests
   */
   
@@ -100,8 +101,8 @@ class AmazonS3RequestManagerTests: XCTestCase {
     // then
     XCTAssertEqual(request.request!.URL!, expectedURL)
   }
-  
-  /**
+
+  /*
   *  MARK: - Download Object Request - Tests
   */
   
@@ -136,7 +137,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     XCTAssertEqual(request.request!.URL!, expectedURL)
   }
   
-  /**
+  /*
   *  MARK: - PUT Object Request - Tests
   */
   
@@ -232,7 +233,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     XCTAssertNotNil(aclHeader, "Should have ACL header field")
   }
   
-  /**
+  /*
   *  MARK: DELETE Object Request - Tests
   */
   
@@ -259,7 +260,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     XCTAssertEqual(request.request!.URL!, expectedURL)
   }
   
-  /**
+  /*
   *  MARK: - ACL Request - Tests
   */
   
@@ -391,7 +392,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     XCTAssertNotNil(aclHeader, "Should have ACL header field")
   }
   
-  /**
+  /*
   *  MARK: Amazon URL Request Serialization - Tests
   */
   

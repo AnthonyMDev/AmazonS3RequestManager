@@ -58,6 +58,14 @@ Saving Objects To File:
 
     amazonS3Manager.deleteObject("myFolder/fileName.jpg")
 
+## Response Serialization
+`AmazonS3RequestManager` includes a custom data response serializer that parses errors from the Amazon S3 Service.
+
+    amazonS3Manager.getObject("myFoler/fileName.jpg")
+      .responseS3Data { (response) -> Void in
+        // Handle Response Data or Error
+    }
+
 ## Access Control Lists (ACL)
 
 `AmazonS3RequestManager` provides simple APIs for getting and setting ACLs on buckets and objects.
