@@ -21,6 +21,9 @@ use_frameworks!
 // For Swift 2.0
 pod 'AmazonS3RequestManager', '~> 0.6'
 
+// For Swift 2.0 with Alamofire 3.0.0-beta
+pod 'AmazonS3RequestManager', '0.7.0-beta.2'
+
 // For Swift 1.2
 pod 'AmazonS3RequestManager', '~> 0.5'
 ```
