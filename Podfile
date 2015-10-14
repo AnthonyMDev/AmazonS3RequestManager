@@ -12,7 +12,7 @@ target :AmazonS3RequestManager do
 end
 
 target :AmazonS3RequestManagerTests do
-  pod 'Quick', '~> 0.6.0'
+  pod 'Quick', '~> 0.6'
   pod 'Nimble', '~> 2.0'
   pod 'Nocilla', '~> 0.10'
 end

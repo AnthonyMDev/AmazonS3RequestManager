@@ -34,45 +34,15 @@ class AmazonS3RequestManagerTests: XCTestCase {
     sut.requestManager.startRequestsImmediately = false
   }
   
-  func test__inits__withValues() {
-    XCTAssertEqual(sut.accessKey, accessKey)
-    XCTAssertEqual(sut.secret, secret)
-    XCTAssertEqual(sut.bucket!, bucket)
-    XCTAssertEqual(sut.region.rawValue, region.rawValue)
-  }
-  
   /*
-  *  MARK: Endpoint URL - Tests
+  *  MARK: - Initialization - Tests
   */
   
-  func test__endpointURL__returnsCorrectURL() {
-    // when
-    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)")!
-    
-    // then
-    XCTAssertEqual(sut.endpointURL, expectedURL)
-  }
-  
-  func test__endpointURL__givenNoBucket_returnsCorrectURL() {
-    // given
-    sut.bucket = nil
-    
-    // when
-    let expectedURL = NSURL(string: "https://\(region.rawValue)")!
-    
-    // then
-    XCTAssertEqual(sut.endpointURL, expectedURL)
-  }
-  
-  func test__endpointURL__givenUseSSL_False_returnsCorrectURL() {
-    // given
-    sut.useSSL = false
-    
-    // when
-    let expectedURL = NSURL(string: "http://\(region.rawValue)/\(bucket)")!
-    
-    // then
-    XCTAssertEqual(sut.endpointURL, expectedURL)
+  func test__inits__withConfiguredRequestSerializer() {
+    expect(self.sut.requestSerializer.accessKey).to(equal(self.accessKey))
+    expect(self.sut.requestSerializer.secret).to(equal(self.secret))
+    expect(self.sut.requestSerializer.bucket).to(equal(self.bucket))
+    expect(self.sut.requestSerializer.region).to(equal(self.region))
   }
   
   /*
@@ -386,135 +356,6 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let request = sut.setACL(forObjectAtPath: path, acl: acl)
     
     let headers = request.request!.allHTTPHeaderFields!
-    let aclHeader: String? = headers["x-amz-acl"]
-    
-    // then
-    XCTAssertNotNil(aclHeader, "Should have ACL header field")
-  }
-  
-  /*
-  *  MARK: Amazon URL Request Serialization - Tests
-  */
-  
-  func test__amazonURLRequest__setsURLWithEndpointURL() {
-    // given
-    let path = "TestPath"
-    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
-    
-    // when
-    let request = sut.amazonURLRequest(.GET, path: path)
-    
-    // then
-    XCTAssertEqual(request.URL!, expectedURL)
-  }
-  
-  func test__amazonURLRequest__setsHTTPMethod() {
-    // given
-    let expected = "GET"
-    
-    // when
-    let request = sut.amazonURLRequest(.GET, path: "test")
-    
-    // then
-    XCTAssertEqual(request.HTTPMethod!, expected)
-  }
-  
-  func test__amazonURLRequest__setsCachePolicy() {
-    // given
-    let expected = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
-    
-    // when
-    let request = sut.amazonURLRequest(.GET, path: "test")
-    
-    // then
-    XCTAssertEqual(request.cachePolicy, expected)
-  }
-  
-  func test__amazonURLRequest__givenNoPathExtension_setsHTTPHeader_ContentType() {
-    // given
-    let request = sut.amazonURLRequest(.GET, path: "test")
-    
-    // when
-    let headers = request.allHTTPHeaderFields!
-    let typeHeader: String? = headers["Content-Type"]
-    
-    // then
-    XCTAssertNotNil(typeHeader, "Should have 'Content-Type' header field")
-    XCTAssertEqual(typeHeader!, "application/octet-stream")
-  }
-  
-  func test__amazonURLRequest__givenJPGPathExtension_setsHTTPHeader_ContentType() {
-    // given
-    let request = sut.amazonURLRequest(.GET, path: "test.jpg")
-    
-    // when
-    let headers = request.allHTTPHeaderFields!
-    let typeHeader: String? = headers["Content-Type"]
-    
-    // then
-    XCTAssertNotNil(typeHeader, "Should have 'Content-Type' header field")
-    expect(typeHeader).to(equal("image/jpeg"))
-  }
-  
-  func test__amazonURLRequest__givenTXTPathExtension_setsHTTPHeader_ContentType() {
-    // given
-    let request = sut.amazonURLRequest(.GET, path: "test.txt")
-    
-    // when
-    let headers = request.allHTTPHeaderFields!
-    let typeHeader: String? = headers["Content-Type"]
-    
-    // then
-    XCTAssertNotNil(typeHeader, "Should have 'Content-Type' header field")
-    XCTAssertEqual(typeHeader!, "text/plain")
-  }
-  
-  func test__amazonURLRequest__givenNumbersPathExtension_setsHTTPHeader_ContentType() {
-    // given
-    let request = sut.amazonURLRequest(.GET, path: "test.numbers")
-    
-    // when
-    let headers = request.allHTTPHeaderFields!
-    let typeHeader: String? = headers["Content-Type"]
-    
-    // then
-    XCTAssertNotNil(typeHeader, "Should have 'Content-Type' header field")
-    expect(typeHeader).to(equal("application/octet-stream"))
-  }
-  
-  func test__amazonURLRequest__setsHTTPHeader_Date() {
-    // given
-    let request = sut.amazonURLRequest(.GET, path: "test")
-    
-    // when
-    let headers = request.allHTTPHeaderFields!
-    let dateHeader: String? = headers["Date"]
-    
-    // then
-    XCTAssertNotNil(dateHeader, "Should have 'Date' header field")
-    XCTAssertTrue(dateHeader!.hasSuffix("GMT"))
-  }
-  
-  func test__amazonURLRequest__setsHTTPHeader_Authorization() {
-    // given
-    let request = sut.amazonURLRequest(.GET, path: "test")
-    
-    // when
-    let headers = request.allHTTPHeaderFields!
-    let authHeader: String? = headers["Authorization"]
-    
-    // then
-    XCTAssertNotNil(authHeader, "Should have 'Authorization' header field")
-    XCTAssertTrue(authHeader!.hasPrefix("AWS \(accessKey):"), "Authorization header should begin with 'AWS [accessKey]'.")
-  }
-  
-  func test__amazonURLRequest__givenACL__setsHTTPHeader_ACL() {
-    // given
-    let acl = AmazonS3PredefinedACL.Public
-    let request = sut.amazonURLRequest(.GET, path: "test", acl: acl)
-    
-    // when
-    let headers = request.allHTTPHeaderFields!
     let aclHeader: String? = headers["x-amz-acl"]
     
     // then
