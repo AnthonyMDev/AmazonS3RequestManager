@@ -70,7 +70,7 @@ public class AmazonS3RequestSerializer {
   
   - returns: An `AmazonS3RequestSerializer` with the given Amazon S3 credentials
   */
-  init(accessKey: String, secret: String, region: AmazonS3Region, bucket: String? = nil) {
+  public init(accessKey: String, secret: String, region: AmazonS3Region, bucket: String? = nil) {
     self.accessKey = accessKey
     self.secret = secret
     self.region = region
