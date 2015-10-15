@@ -3,7 +3,19 @@
 [![License](https://img.shields.io/cocoapods/l/AmazonS3RequestManager.svg?style=flat)](http://cocoapods.org/pods/AmazonS3RequestManager)
 [![Platform](https://img.shields.io/cocoapods/p/AmazonS3RequestManager.svg?style=flat)](http://cocoapods.org/pods/AmazonS3RequestManager)
 
-A Alamofire based request manager that serializes requests to the AWS S3 (Amazon Simple Storage Solution). Based on AFAmazonS3Manager
+An Alamofire based request manager that serializes requests to the AWS S3 (Amazon Simple Storage Solution).
+
+`AmazonS3RequestManager` also includes a request serializer that creates `NSURLRequest` objects for use with any other networking methods.
+
+## Features
+
+- [x] Request Serialization
+- [x] Response Validation
+- [x] Amazon S3 Response Error Parsing
+- [x] Access Control List (ACL) Management
+- [x] Support for Amazon S3 Subresources
+- [x] Comprehensive Unit Test Coverage
+- [x] [Complete Documentation](http://cocoadocs.org/docsets/AmazonS3RequestManager)
 
 ## Installation
 
@@ -19,14 +31,7 @@ platform :ios, '8.0'
 use_frameworks!
 
 // For Swift 2.0
-pod 'AmazonS3RequestManager', '~> 0.6'
-
-// For Swift 2.0 with Alamofire 3.0.0-beta
-pod 'AmazonS3RequestManager', '0.7.0-beta.2'
-
-// For Swift 1.2
-pod 'AmazonS3RequestManager', '~> 0.5'
-```
+pod 'AmazonS3RequestManager', '~> 0.8'
 
 Then, run the following command:
 
