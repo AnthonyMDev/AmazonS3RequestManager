@@ -14,6 +14,7 @@ An Alamofire based request manager that serializes requests to the AWS S3 (Amazo
 - [x] Amazon S3 Response Error Parsing
 - [x] Access Control List (ACL) Management
 - [x] Support for Amazon S3 Subresources
+- [x] Support for Amazon S3 Storage Classes
 - [x] Comprehensive Unit Test Coverage
 - [x] [Complete Documentation](http://cocoadocs.org/docsets/AmazonS3RequestManager)
 
