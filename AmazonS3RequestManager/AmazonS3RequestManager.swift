@@ -70,8 +70,8 @@ https://aws.amazon.com/blogs/aws/new-amazon-s3-reduced-redundancy-storage-rrs/
 - ReducedRedundancy:    Reduced Redundancy storage class. "If you store 10,000 objects with us, on average we may lose one of them every year. RRS is designed to sustain the loss of data in a single facility."
 */
 public enum AmazonS3StorageClass: String {
-	case Standard = "STANDARD",
-	ReducedRedundancy = "REDUCED_REDUNDANCY"
+  case Standard = "STANDARD",
+  ReducedRedundancy = "REDUCED_REDUNDANCY"
 }
 
 /**
@@ -91,7 +91,7 @@ public class AmazonS3RequestManager {
   :note: This defaults to the shared instance of `Manager` used by top-level Alamofire requests.
   */
   public var requestManager: Alamofire.Manager = Alamofire.Manager.sharedInstance
-
+  
   // MARK: - Initialization
   
   /**
@@ -159,7 +159,7 @@ public class AmazonS3RequestManager {
   
   - returns: An upload request for the object
   */
-	public func putObject(fileURL: NSURL, destinationPath: String, acl: AmazonS3ACL? = nil, storageClass: AmazonS3StorageClass = .Standard) -> Request {
+  public func putObject(fileURL: NSURL, destinationPath: String, acl: AmazonS3ACL? = nil, storageClass: AmazonS3StorageClass = .Standard) -> Request {
     let putRequest = requestSerializer.amazonURLRequest(.PUT, path: destinationPath, acl: acl, storageClass: storageClass)
     
     return requestManager.upload(putRequest, file: fileURL)
@@ -178,10 +178,10 @@ public class AmazonS3RequestManager {
   - returns: An upload request for the object
   */
   public func putObject(data: NSData, destinationPath: String, acl: AmazonS3ACL? = nil, storageClass: AmazonS3StorageClass = .Standard) -> Request {
-	let putRequest = requestSerializer.amazonURLRequest(.PUT, path: destinationPath, acl: acl, storageClass: storageClass)
-	
+    let putRequest = requestSerializer.amazonURLRequest(.PUT, path: destinationPath, acl: acl, storageClass: storageClass)
+    
     return requestManager.upload(putRequest, data: data)
-  } 
+  }
   
   // MARK: DELETE Object Request
   
@@ -255,5 +255,5 @@ public class AmazonS3RequestManager {
   public func setACL(forObjectAtPath path: String, acl: AmazonS3ACL) -> Request {
     return requestManager.request(requestSerializer.amazonURLRequest(.PUT, path: path, subresource: "acl", acl: acl))
   }
-
+  
 }
