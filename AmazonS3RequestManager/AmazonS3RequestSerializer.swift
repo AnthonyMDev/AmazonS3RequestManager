@@ -93,7 +93,8 @@ public class AmazonS3RequestSerializer {
   public func amazonURLRequest(method: Alamofire.Method,
     path: String,
     subresource: String? = nil,
-    acl: AmazonS3ACL? = nil) -> NSURLRequest {
+    acl: AmazonS3ACL? = nil,
+	storageClass: AmazonS3StorageClass = .Standard) -> NSURLRequest {
       let url = endpointURL.URLByAppendingPathComponent(path).URLByAppendingS3Subresource(subresource)
       
       var mutableURLRequest = NSMutableURLRequest(URL: url)
@@ -101,7 +102,9 @@ public class AmazonS3RequestSerializer {
       
       setContentType(forRequest: &mutableURLRequest)
       acl?.setACLHeaders(forRequest: &mutableURLRequest)
-      
+		
+	  setStorageClassHeaders(forRequest: &mutableURLRequest, storageClass: storageClass)
+		
       setAuthorizationHeaders(forRequest: &mutableURLRequest)
       
       return mutableURLRequest
@@ -164,6 +167,10 @@ public class AmazonS3RequestSerializer {
     request.setValue("AWS \(accessKey):\(signature)", forHTTPHeaderField: "Authorization")
     
   }
+	
+	private func setStorageClassHeaders(inout forRequest request: NSMutableURLRequest, storageClass: AmazonS3StorageClass) {
+		request.setValue(storageClass.rawValue, forHTTPHeaderField: "x-amz-storage-class")
+	}
   
   private func currentTimeStamp() -> String {
     return requestDateFormatter.stringFromDate(NSDate())

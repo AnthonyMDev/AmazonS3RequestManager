@@ -59,6 +59,22 @@ public enum AmazonS3Region: String {
 }
 
 /**
+MARK: Amazon S3 Storage Classes
+
+The possible Amazon Web Service Storage Classes for an upload.
+
+For more information about these classes and when you might want to use one over the other, including the pros and cons of each selection, see
+https://aws.amazon.com/blogs/aws/new-amazon-s3-reduced-redundancy-storage-rrs/
+
+- Standard:				Default storage class for all uploads. "If you store 10,000 objects with us, on average we may lose one of them every 10 million years or so. This storage is designed in such a way that we can sustain the concurrent loss of data in two separate storage facilities."
+- ReducedRedundancy:    Reduced Redundancy storage class. "If you store 10,000 objects with us, on average we may lose one of them every year. RRS is designed to sustain the loss of data in a single facility."
+*/
+public enum AmazonS3StorageClass: String {
+	case Standard = "STANDARD",
+	ReducedRedundancy = "REDUCED_REDUNDANCY"
+}
+
+/**
 MARK: - AmazonS3RequestManager
 
 `AmazonS3RequestManager` manages the serialization of requests and responses to the Amazon S3 service using `Alamofire.Manager`.
@@ -143,8 +159,8 @@ public class AmazonS3RequestManager {
   
   - returns: An upload request for the object
   */
-  public func putObject(fileURL: NSURL, destinationPath: String, acl: AmazonS3ACL? = nil) -> Request {
-    let putRequest = requestSerializer.amazonURLRequest(.PUT, path: destinationPath, acl: acl)
+	public func putObject(fileURL: NSURL, destinationPath: String, acl: AmazonS3ACL? = nil, storageClass: AmazonS3StorageClass = .Standard) -> Request {
+    let putRequest = requestSerializer.amazonURLRequest(.PUT, path: destinationPath, acl: acl, storageClass: storageClass)
     
     return requestManager.upload(putRequest, file: fileURL)
   }
@@ -157,12 +173,13 @@ public class AmazonS3RequestManager {
   - parameter data:            The `NSData` for the object to upload
   - parameter destinationPath: The desired destination path, including the file name and extension, in the Amazon S3 bucket
   - parameter acl:             The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
+  - parameter storageClass:    The optional storage class to use for the object to upload. If none is specified, standard is used. For more information see `AmazonS3StorageClass`.
   
   - returns: An upload request for the object
   */
-  public func putObject(data: NSData, destinationPath: String, acl: AmazonS3ACL? = nil) -> Request {
-    let putRequest = requestSerializer.amazonURLRequest(.PUT, path: destinationPath, acl: acl)
-    
+  public func putObject(data: NSData, destinationPath: String, acl: AmazonS3ACL? = nil, storageClass: AmazonS3StorageClass = .Standard) -> Request {
+	let putRequest = requestSerializer.amazonURLRequest(.PUT, path: destinationPath, acl: acl, storageClass: storageClass)
+	
     return requestManager.upload(putRequest, data: data)
   } 
   
