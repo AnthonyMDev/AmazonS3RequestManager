@@ -1,0 +1,13 @@
+source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
+
+target 'AmazonS3RequestManager_Example', :exclusive => true do
+  pod "AmazonS3RequestManager", :path => "../"
+end
+
+target 'AmazonS3RequestManager_Tests', :exclusive => true do
+  pod "AmazonS3RequestManager", :path => "../"
+
+  pod 'Quick', '~> 0.8.0'
+  pod 'Nimble', '3.0.0'
+end
