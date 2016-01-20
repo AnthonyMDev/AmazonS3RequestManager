@@ -1,0 +1,6 @@
+framework module AmazonS3RequestManager {
+  umbrella header "Pods-OSX-Tests-AmazonS3RequestManager-umbrella.h"
+
+  export *
+  module * { export * }
+}
