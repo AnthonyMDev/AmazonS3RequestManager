@@ -1,0 +1,6 @@
+framework module Nocilla {
+  umbrella header "Pods-OSX-Tests-Nocilla-umbrella.h"
+
+  export *
+  module * { export * }
+}

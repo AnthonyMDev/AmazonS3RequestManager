@@ -1,0 +1,6 @@
+framework module SWXMLHash {
+  umbrella header "Pods-OSX-Example-SWXMLHash-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,40 +1,23 @@
-#
-# Be sure to run `pod lib lint AmazonS3RequestManager.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
-  s.name             = "AmazonS3RequestManager"
-  s.version          = "0.1.0"
-  s.summary          = "A short description of AmazonS3RequestManager."
+s.name = 'AmazonS3RequestManager'
+s.version = '0.9.1'
+s.license = 'MIT'
+s.summary = 'A Alamofire based request manager that serializes requests to the AWS S3 (Amazon Simple Storage Solution). Based on AFAmazonS3Manager'
+s.homepage = 'https://github.com/AnthonyMDev/AmazonS3RequestManager'
+s.social_media_url = 'http://twitter.com/AnthonyMDev'
+s.authors = { 'Anthony Miller' => 'AnthonyMDev@gmail.com' }
+s.source = { :git => 'https://github.com/AnthonyMDev/AmazonS3RequestManager.git', :tag => s.version }
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!  
-  s.description      = <<-DESC
-                       DESC
+s.ios.frameworks = 'MobileCoreServices'
+s.osx.frameworks = 'CoreServices'
 
-  s.homepage         = "https://github.com/<GITHUB_USERNAME>/AmazonS3RequestManager"
-  # s.screenshots     = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
-  s.license          = 'MIT'
-  s.author           = { "Anthony Miller" => "anthony@app-order.com" }
-  s.source           = { :git => "https://github.com/<GITHUB_USERNAME>/AmazonS3RequestManager.git", :tag => s.version.to_s }
-  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+s.ios.deployment_target = '8.0'
+s.osx.deployment_target = '10.10'
 
-  s.platform     = :ios, '8.0'
-  s.requires_arc = true
+s.source_files = 'Source/*.{h,m,swift}'
 
-  s.source_files = 'Pod/Classes/**/*'
-  s.resource_bundles = {
-    'AmazonS3RequestManager' => ['Pod/Assets/*.png']
-  }
+s.requires_arc = true
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+s.dependency 'Alamofire', '~> 3.0'
+s.dependency 'SWXMLHash', '~> 2.0'
 end

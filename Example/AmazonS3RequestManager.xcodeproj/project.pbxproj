@@ -7,14 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A7185094B691B32C2D5BA1F /* Pods_iOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC26398DE14B7F3792C285C9 /* Pods_iOS_Tests.framework */; };
+		24A1AEFF08B70B020ECBDAAA /* Pods_OSX_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD6F62109D0DE5209FB1D76 /* Pods_OSX_Example.framework */; };
+		2C2D662F88D24D20566B93AB /* Pods_iOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46BDBB3AC26F4D45CAD4D25B /* Pods_iOS_Example.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		C7A61E8FA1C99B44E62F3785 /* Pods_AmazonS3RequestManager_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E87ED3EEFF3496262A1B894 /* Pods_AmazonS3RequestManager_Tests.framework */; };
-		E8DA8BBF43916813C0366D00 /* Pods_AmazonS3RequestManager_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 26F726C736B6CF2DD5106362 /* Pods_AmazonS3RequestManager_Example.framework */; };
+		92E8C3ED1C4EF62400759119 /* AmazonS3ACLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E8C3E91C4EF62400759119 /* AmazonS3ACLTests.swift */; };
+		92E8C3EE1C4EF62400759119 /* AmazonS3RequestManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E8C3EA1C4EF62400759119 /* AmazonS3RequestManagerTests.swift */; };
+		92E8C3EF1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E8C3EB1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift */; };
+		92E8C3F01C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E8C3EC1C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift */; };
+		92E8C40E1C4EFAC900759119 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E8C40D1C4EFAC900759119 /* AppDelegate.swift */; };
+		92E8C4101C4EFAC900759119 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E8C40F1C4EFAC900759119 /* ViewController.swift */; };
+		92E8C4121C4EFAC900759119 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E8C4111C4EFAC900759119 /* Assets.xcassets */; };
+		92E8C4151C4EFAC900759119 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92E8C4131C4EFAC900759119 /* Main.storyboard */; };
+		92E8C4371C4EFD4400759119 /* AmazonS3ACLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E8C3E91C4EF62400759119 /* AmazonS3ACLTests.swift */; };
+		92E8C4381C4EFD4600759119 /* AmazonS3RequestManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E8C3EA1C4EF62400759119 /* AmazonS3RequestManagerTests.swift */; };
+		92E8C4391C4EFD4800759119 /* AmazonS3RequestSerializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E8C3EB1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift */; };
+		92E8C43A1C4EFD4A00759119 /* AmazonS3ResponseSerializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E8C3EC1C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift */; };
+		CC41F8986EEDCF29E9B5CB4D /* Pods_OSX_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0914547996879F9181CB5CD /* Pods_OSX_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,28 +38,61 @@
 			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
 			remoteInfo = AmazonS3RequestManager;
 		};
+		92E8C4321C4EFC6900759119 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 92E8C40A1C4EFAC800759119;
+			remoteInfo = "OSX-Example";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0358A0E3E011074FF555499C /* Pods-OSX-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSX-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OSX-Tests/Pods-OSX-Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		11916EFEE85913DFEEFF12E8 /* Pods-iOS-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-Tests/Pods-iOS-Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		249CA46EF70F76327438A9A8 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		26F726C736B6CF2DD5106362 /* Pods_AmazonS3RequestManager_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AmazonS3RequestManager_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E87ED3EEFF3496262A1B894 /* Pods_AmazonS3RequestManager_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AmazonS3RequestManager_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		335CB020C6752C1306142888 /* Pods-AmazonS3RequestManager_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AmazonS3RequestManager_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AmazonS3RequestManager_Example/Pods-AmazonS3RequestManager_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		42ED1C0C7E591FBEA515ED92 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		46BDBB3AC26F4D45CAD4D25B /* Pods_iOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		56588EBCE788A04E745FC6DA /* Pods-OSX-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSX-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OSX-Example/Pods-OSX-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		570FEF4262BE75160D95A42D /* Pods-AmazonS3RequestManager_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AmazonS3RequestManager_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AmazonS3RequestManager_Tests/Pods-AmazonS3RequestManager_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		5FDEE5E53EEC87745C3E8955 /* AmazonS3RequestManager.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = AmazonS3RequestManager.podspec; path = ../AmazonS3RequestManager.podspec; sourceTree = "<group>"; };
-		607FACD01AFB9204008FA782 /* AmazonS3RequestManager_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AmazonS3RequestManager_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6031EE711594C9974025F831 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		607FACD01AFB9204008FA782 /* iOS-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		607FACE51AFB9204008FA782 /* AmazonS3RequestManager_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AmazonS3RequestManager_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACE51AFB9204008FA782 /* iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		66BD00D4B8F1662240B1E27C /* Pods-iOS-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-Tests/Pods-iOS-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		688C4A3D26DCC9FB4046C32C /* Pods-AmazonS3RequestManager_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AmazonS3RequestManager_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AmazonS3RequestManager_Tests/Pods-AmazonS3RequestManager_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		6DD6F62109D0DE5209FB1D76 /* Pods_OSX_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OSX_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		884ACA65B311A8F4DEF52C37 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		92E8C3E81C4EF62300759119 /* AmazonS3RequestManager_Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AmazonS3RequestManager_Tests-Bridging-Header.h"; sourceTree = "<group>"; };
+		92E8C3E91C4EF62400759119 /* AmazonS3ACLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3ACLTests.swift; sourceTree = "<group>"; };
+		92E8C3EA1C4EF62400759119 /* AmazonS3RequestManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManagerTests.swift; sourceTree = "<group>"; };
+		92E8C3EB1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestSerializerTests.swift; sourceTree = "<group>"; };
+		92E8C3EC1C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3ResponseSerializationTests.swift; sourceTree = "<group>"; };
+		92E8C40B1C4EFAC800759119 /* OSX-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OSX-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		92E8C40D1C4EFAC900759119 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		92E8C40F1C4EFAC900759119 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		92E8C4111C4EFAC900759119 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		92E8C4141C4EFAC900759119 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		92E8C4161C4EFAC900759119 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92E8C42D1C4EFC6900759119 /* OSX-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OSX-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		979B336F31C39D658A7EDBC8 /* Pods-OSX-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSX-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-OSX-Example/Pods-OSX-Example.release.xcconfig"; sourceTree = "<group>"; };
 		A3CCE46F09EB7F84BC2351B4 /* Pods-AmazonS3RequestManager_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AmazonS3RequestManager_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-AmazonS3RequestManager_Example/Pods-AmazonS3RequestManager_Example.release.xcconfig"; sourceTree = "<group>"; };
+		AC26398DE14B7F3792C285C9 /* Pods_iOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC9388B5E029F0A19BFAD156 /* Pods-iOS-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-Example/Pods-iOS-Example.debug.xcconfig"; sourceTree = "<group>"; };
+		E8014EE70C8CB23D8CC5CB28 /* Pods-OSX-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSX-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-OSX-Tests/Pods-OSX-Tests.release.xcconfig"; sourceTree = "<group>"; };
+		EB60E86E5E26A196521F36DB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0914547996879F9181CB5CD /* Pods_OSX_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OSX_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F63C1F90FFF008F3C3588032 /* Pods-iOS-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-Example/Pods-iOS-Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8DA8BBF43916813C0366D00 /* Pods_AmazonS3RequestManager_Example.framework in Frameworks */,
+				2C2D662F88D24D20566B93AB /* Pods_iOS_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,7 +108,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7A61E8FA1C99B44E62F3785 /* Pods_AmazonS3RequestManager_Tests.framework in Frameworks */,
+				1A7185094B691B32C2D5BA1F /* Pods_iOS_Tests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92E8C4081C4EFAC800759119 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24A1AEFF08B70B020ECBDAAA /* Pods_OSX_Example.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92E8C42A1C4EFC6900759119 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC41F8986EEDCF29E9B5CB4D /* Pods_OSX_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +136,11 @@
 			children = (
 				26F726C736B6CF2DD5106362 /* Pods_AmazonS3RequestManager_Example.framework */,
 				2E87ED3EEFF3496262A1B894 /* Pods_AmazonS3RequestManager_Tests.framework */,
+				6DD6F62109D0DE5209FB1D76 /* Pods_OSX_Example.framework */,
+				46BDBB3AC26F4D45CAD4D25B /* Pods_iOS_Example.framework */,
+				F0914547996879F9181CB5CD /* Pods_OSX_Tests.framework */,
+				AC26398DE14B7F3792C285C9 /* Pods_iOS_Tests.framework */,
+				EB60E86E5E26A196521F36DB /* Pods.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -82,7 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
-				607FACD21AFB9204008FA782 /* Example for AmazonS3RequestManager */,
+				607FACD21AFB9204008FA782 /* iOS-Example */,
+				92E8C40C1C4EFAC900759119 /* OSX-Example */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				B2C1CA20638BD222AA65A2D9 /* Pods */,
@@ -93,13 +161,15 @@
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD01AFB9204008FA782 /* AmazonS3RequestManager_Example.app */,
-				607FACE51AFB9204008FA782 /* AmazonS3RequestManager_Tests.xctest */,
+				607FACD01AFB9204008FA782 /* iOS-Example.app */,
+				607FACE51AFB9204008FA782 /* iOS-Tests.xctest */,
+				92E8C40B1C4EFAC800759119 /* OSX-Example.app */,
+				92E8C42D1C4EFC6900759119 /* OSX-Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		607FACD21AFB9204008FA782 /* Example for AmazonS3RequestManager */ = {
+		607FACD21AFB9204008FA782 /* iOS-Example */ = {
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
@@ -109,7 +179,7 @@
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
-			name = "Example for AmazonS3RequestManager";
+			name = "iOS-Example";
 			path = AmazonS3RequestManager;
 			sourceTree = "<group>";
 		};
@@ -124,8 +194,12 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				607FACEB1AFB9204008FA782 /* Tests.swift */,
+				92E8C3E91C4EF62400759119 /* AmazonS3ACLTests.swift */,
+				92E8C3EA1C4EF62400759119 /* AmazonS3RequestManagerTests.swift */,
+				92E8C3EB1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift */,
+				92E8C3EC1C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
+				92E8C3E81C4EF62300759119 /* AmazonS3RequestManager_Tests-Bridging-Header.h */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -148,6 +222,18 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		92E8C40C1C4EFAC900759119 /* OSX-Example */ = {
+			isa = PBXGroup;
+			children = (
+				92E8C40D1C4EFAC900759119 /* AppDelegate.swift */,
+				92E8C40F1C4EFAC900759119 /* ViewController.swift */,
+				92E8C4111C4EFAC900759119 /* Assets.xcassets */,
+				92E8C4131C4EFAC900759119 /* Main.storyboard */,
+				92E8C4161C4EFAC900759119 /* Info.plist */,
+			);
+			path = "OSX-Example";
+			sourceTree = "<group>";
+		};
 		B2C1CA20638BD222AA65A2D9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +241,16 @@
 				A3CCE46F09EB7F84BC2351B4 /* Pods-AmazonS3RequestManager_Example.release.xcconfig */,
 				570FEF4262BE75160D95A42D /* Pods-AmazonS3RequestManager_Tests.debug.xcconfig */,
 				688C4A3D26DCC9FB4046C32C /* Pods-AmazonS3RequestManager_Tests.release.xcconfig */,
+				56588EBCE788A04E745FC6DA /* Pods-OSX-Example.debug.xcconfig */,
+				979B336F31C39D658A7EDBC8 /* Pods-OSX-Example.release.xcconfig */,
+				0358A0E3E011074FF555499C /* Pods-OSX-Tests.debug.xcconfig */,
+				E8014EE70C8CB23D8CC5CB28 /* Pods-OSX-Tests.release.xcconfig */,
+				DC9388B5E029F0A19BFAD156 /* Pods-iOS-Example.debug.xcconfig */,
+				F63C1F90FFF008F3C3588032 /* Pods-iOS-Example.release.xcconfig */,
+				11916EFEE85913DFEEFF12E8 /* Pods-iOS-Tests.debug.xcconfig */,
+				66BD00D4B8F1662240B1E27C /* Pods-iOS-Tests.release.xcconfig */,
+				6031EE711594C9974025F831 /* Pods.debug.xcconfig */,
+				249CA46EF70F76327438A9A8 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -162,9 +258,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		607FACCF1AFB9204008FA782 /* AmazonS3RequestManager_Example */ = {
+		607FACCF1AFB9204008FA782 /* iOS-Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "AmazonS3RequestManager_Example" */;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOS-Example" */;
 			buildPhases = (
 				02A367865DA5ECAB7EBD7C69 /* Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
@@ -177,14 +273,14 @@
 			);
 			dependencies = (
 			);
-			name = AmazonS3RequestManager_Example;
+			name = "iOS-Example";
 			productName = AmazonS3RequestManager;
-			productReference = 607FACD01AFB9204008FA782 /* AmazonS3RequestManager_Example.app */;
+			productReference = 607FACD01AFB9204008FA782 /* iOS-Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		607FACE41AFB9204008FA782 /* AmazonS3RequestManager_Tests */ = {
+		607FACE41AFB9204008FA782 /* iOS-Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "AmazonS3RequestManager_Tests" */;
+			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOS-Tests" */;
 			buildPhases = (
 				186EF69F0F86C9B5156F9EEE /* Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
@@ -198,9 +294,50 @@
 			dependencies = (
 				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
 			);
-			name = AmazonS3RequestManager_Tests;
+			name = "iOS-Tests";
 			productName = Tests;
-			productReference = 607FACE51AFB9204008FA782 /* AmazonS3RequestManager_Tests.xctest */;
+			productReference = 607FACE51AFB9204008FA782 /* iOS-Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		92E8C40A1C4EFAC800759119 /* OSX-Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92E8C4171C4EFAC900759119 /* Build configuration list for PBXNativeTarget "OSX-Example" */;
+			buildPhases = (
+				6E7BAC119E7BBEC27BA6EFC6 /* Check Pods Manifest.lock */,
+				92E8C4071C4EFAC800759119 /* Sources */,
+				92E8C4081C4EFAC800759119 /* Frameworks */,
+				92E8C4091C4EFAC800759119 /* Resources */,
+				3E2234A1A492AEA3A0F75C79 /* Embed Pods Frameworks */,
+				C7752FB278CB55FF4BA8FBFF /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OSX-Example";
+			productName = "OSX-Example";
+			productReference = 92E8C40B1C4EFAC800759119 /* OSX-Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		92E8C42C1C4EFC6900759119 /* OSX-Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 92E8C4341C4EFC6900759119 /* Build configuration list for PBXNativeTarget "OSX-Tests" */;
+			buildPhases = (
+				8D27F6C894A63BA24AD12AC4 /* Check Pods Manifest.lock */,
+				92E8C4291C4EFC6900759119 /* Sources */,
+				92E8C42A1C4EFC6900759119 /* Frameworks */,
+				92E8C42B1C4EFC6900759119 /* Resources */,
+				9DC083B6C5E7637B446AEA54 /* Embed Pods Frameworks */,
+				D3D2DB2554CA70A36B0FE644 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				92E8C4331C4EFC6900759119 /* PBXTargetDependency */,
+			);
+			name = "OSX-Tests";
+			productName = "OSX-Tests";
+			productReference = 92E8C42D1C4EFC6900759119 /* OSX-Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -220,6 +357,13 @@
 						CreatedOnToolsVersion = 6.3.1;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
+					92E8C40A1C4EFAC800759119 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					92E8C42C1C4EFC6900759119 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 92E8C40A1C4EFAC800759119;
+					};
 				};
 			};
 			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "AmazonS3RequestManager" */;
@@ -235,8 +379,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				607FACCF1AFB9204008FA782 /* AmazonS3RequestManager_Example */,
-				607FACE41AFB9204008FA782 /* AmazonS3RequestManager_Tests */,
+				607FACCF1AFB9204008FA782 /* iOS-Example */,
+				607FACE41AFB9204008FA782 /* iOS-Tests */,
+				92E8C40A1C4EFAC800759119 /* OSX-Example */,
+				92E8C42C1C4EFC6900759119 /* OSX-Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -253,6 +399,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		607FACE31AFB9204008FA782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92E8C4091C4EFAC800759119 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92E8C4121C4EFAC900759119 /* Assets.xcassets in Resources */,
+				92E8C4151C4EFAC900759119 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92E8C42B1C4EFC6900759119 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -304,7 +466,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AmazonS3RequestManager_Example/Pods-AmazonS3RequestManager_Example-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOS-Example/Pods-iOS-Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		25F768C981BA390704AD51FA /* Copy Pods Resources */ = {
@@ -319,7 +481,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AmazonS3RequestManager_Tests/Pods-AmazonS3RequestManager_Tests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOS-Tests/Pods-iOS-Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		39727466AA5A206DF4DD5771 /* Embed Pods Frameworks */ = {
@@ -334,7 +496,82 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AmazonS3RequestManager_Tests/Pods-AmazonS3RequestManager_Tests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOS-Tests/Pods-iOS-Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3E2234A1A492AEA3A0F75C79 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OSX-Example/Pods-OSX-Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6E7BAC119E7BBEC27BA6EFC6 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8D27F6C894A63BA24AD12AC4 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9DC083B6C5E7637B446AEA54 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OSX-Tests/Pods-OSX-Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C7752FB278CB55FF4BA8FBFF /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OSX-Example/Pods-OSX-Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C97D89F363E1E89FF89CF8C4 /* Copy Pods Resources */ = {
@@ -349,7 +586,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AmazonS3RequestManager_Example/Pods-AmazonS3RequestManager_Example-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iOS-Example/Pods-iOS-Example-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D3D2DB2554CA70A36B0FE644 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OSX-Tests/Pods-OSX-Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -368,7 +620,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				92E8C3EF1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift in Sources */,
+				92E8C3ED1C4EF62400759119 /* AmazonS3ACLTests.swift in Sources */,
+				92E8C3EE1C4EF62400759119 /* AmazonS3RequestManagerTests.swift in Sources */,
+				92E8C3F01C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92E8C4071C4EFAC800759119 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92E8C4101C4EFAC900759119 /* ViewController.swift in Sources */,
+				92E8C40E1C4EFAC900759119 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		92E8C4291C4EFC6900759119 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				92E8C43A1C4EFD4A00759119 /* AmazonS3ResponseSerializationTests.swift in Sources */,
+				92E8C4371C4EFD4400759119 /* AmazonS3ACLTests.swift in Sources */,
+				92E8C4391C4EFD4800759119 /* AmazonS3RequestSerializerTests.swift in Sources */,
+				92E8C4381C4EFD4600759119 /* AmazonS3RequestManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,8 +652,13 @@
 /* Begin PBXTargetDependency section */
 		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* AmazonS3RequestManager_Example */;
+			target = 607FACCF1AFB9204008FA782 /* iOS-Example */;
 			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
+		};
+		92E8C4331C4EFC6900759119 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 92E8C40A1C4EFAC800759119 /* OSX-Example */;
+			targetProxy = 92E8C4321C4EFC6900759119 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -397,6 +677,14 @@
 				607FACDF1AFB9204008FA782 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		92E8C4131C4EFAC900759119 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				92E8C4141C4EFAC900759119 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -439,7 +727,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -477,7 +766,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -486,7 +776,7 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 335CB020C6752C1306142888 /* Pods-AmazonS3RequestManager_Example.debug.xcconfig */;
+			baseConfigurationReference = DC9388B5E029F0A19BFAD156 /* Pods-iOS-Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AmazonS3RequestManager/Info.plist;
@@ -494,12 +784,14 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A3CCE46F09EB7F84BC2351B4 /* Pods-AmazonS3RequestManager_Example.release.xcconfig */;
+			baseConfigurationReference = F63C1F90FFF008F3C3588032 /* Pods-iOS-Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AmazonS3RequestManager/Info.plist;
@@ -507,18 +799,17 @@
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 570FEF4262BE75160D95A42D /* Pods-AmazonS3RequestManager_Tests.debug.xcconfig */;
+			baseConfigurationReference = 11916EFEE85913DFEEFF12E8 /* Pods-iOS-Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -527,24 +818,92 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AmazonS3RequestManager_Example.app/AmazonS3RequestManager_Example";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AmazonS3RequestManager_Tests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS-Example.app/iOS-Example";
 			};
 			name = Debug;
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 688C4A3D26DCC9FB4046C32C /* Pods-AmazonS3RequestManager_Tests.release.xcconfig */;
+			baseConfigurationReference = 66BD00D4B8F1662240B1E27C /* Pods-iOS-Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AmazonS3RequestManager_Example.app/AmazonS3RequestManager_Example";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AmazonS3RequestManager_Tests-Bridging-Header.h";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS-Example.app/iOS-Example";
+			};
+			name = Release;
+		};
+		92E8C4181C4EFAC900759119 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 56588EBCE788A04E745FC6DA /* Pods-OSX-Example.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = "OSX-Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anthonymdev.OSX-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		92E8C4191C4EFAC900759119 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 979B336F31C39D658A7EDBC8 /* Pods-OSX-Example.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "OSX-Example/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anthonymdev.OSX-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		92E8C4351C4EFC6900759119 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0358A0E3E011074FF555499C /* Pods-OSX-Tests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anthonymdev.OSX-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OSX-Example.app/Contents/MacOS/OSX-Example";
+			};
+			name = Debug;
+		};
+		92E8C4361C4EFC6900759119 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E8014EE70C8CB23D8CC5CB28 /* Pods-OSX-Tests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Tests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.anthonymdev.OSX-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OSX-Example.app/Contents/MacOS/OSX-Example";
 			};
 			name = Release;
 		};
@@ -560,7 +919,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "AmazonS3RequestManager_Example" */ = {
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOS-Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,
@@ -569,11 +928,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "AmazonS3RequestManager_Tests" */ = {
+		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "iOS-Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF31AFB9204008FA782 /* Debug */,
 				607FACF41AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92E8C4171C4EFAC900759119 /* Build configuration list for PBXNativeTarget "OSX-Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92E8C4181C4EFAC900759119 /* Debug */,
+				92E8C4191C4EFAC900759119 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		92E8C4341C4EFC6900759119 /* Build configuration list for PBXNativeTarget "OSX-Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				92E8C4351C4EFC6900759119 /* Debug */,
+				92E8C4361C4EFC6900759119 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
