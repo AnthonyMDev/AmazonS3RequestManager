@@ -13,6 +13,6 @@ podfile: Example/Podfile
 #- gem install xcpretty --no-rdoc --no-ri --no-document --quiet
 
 script:
-- set -o pipefail && xcodebuild test -workspace Example/AmazonS3RequestManager.xcworkspace -scheme iOS -sdk iphonesimulator9.2 ONLY_ACTIVE_ARCH=NO | xcpretty -c
-- set -o pipefail && xcodebuild test -workspace Example/AmazonS3RequestManager.xcworkspace -scheme OSX -sdk macosx10.11 ONLY_ACTIVE_ARCH=NO | xcpretty -c
-- pod lib lint
+- set -o pipefail && xcodebuild test -workspace Example/AmazonS3RequestManager.xcworkspace -scheme iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty -c
+- set -o pipefail && xcodebuild test -workspace Example/AmazonS3RequestManager.xcworkspace -scheme OSX -sdk macosx ONLY_ACTIVE_ARCH=NO | xcpretty -c
+- pod lib lint --quick --allow-warnings
