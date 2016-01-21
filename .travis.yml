@@ -14,14 +14,14 @@ env:
   - IOS_DEVICE_NAME="iPhone 6S"
 
   matrix:
-    - DESTINATION="OS=9.2,name=$IOS_DEVICE_NAME"      SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"      POD_LINT="YES"
-    - DESTINATION="arch=x86_64"                       SCHEME="$OSX_FRAMEWORK_SCHEME"     SDK="$OSX_SDK"      POD_LINT="NO"
+    - DESTINATION="OS=9.2,name=$IOS_DEVICE_NAME"      SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"      POD_LINT="YES"     OPEN_SIMULATOR="YES"
+    - DESTINATION="arch=x86_64"                       SCHEME="$OSX_FRAMEWORK_SCHEME"     SDK="$OSX_SDK"      POD_LINT="NO"      OPEN_SIMULATOR="NO"
 
 before_install:
 - SIMULATOR_ID=$(xcrun instruments -s | grep -o "$IOS_DEVICE_NAME \(.*\) \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
 
 script:
-- if [ $SDK == "$IOS_SDK" ]; then
+- if [ $OPEN_SIMULATOR == "YES" ]; then
     echo $SIMULATOR_ID | open -b com.apple.iphonesimulator --args -CurrentDeviceUDID $SIMULATOR_ID;
   fi
     
