@@ -22,8 +22,7 @@ before_install:
 
 script:
 - if [ $SDK == $IOS_SDK ]; then
-    echo $SIMULATOR_ID;
-    open -b com.apple.iphonesimulator --args -CurrentDeviceUDID $SIMULATOR_ID;
+    echo $SIMULATOR_ID | open -b com.apple.iphonesimulator --args -CurrentDeviceUDID $SIMULATOR_ID;
   fi
     
 - set -o pipefail
