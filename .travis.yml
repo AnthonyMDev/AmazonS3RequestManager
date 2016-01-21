@@ -12,17 +12,18 @@ env:
   - IOS_SDK=iphonesimulator9.2
   - OSX_SDK=macosx10.11
   - IOS_DEVICE_NAME="iPhone 6S"
+  - IOS_DEVICE_VERSION="9.2"
 
   matrix:
-    - DESTINATION="OS=9.2,name=$IOS_DEVICE_NAME"      SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"      POD_LINT="YES"     OPEN_SIMULATOR="YES"
-    - DESTINATION="arch=x86_64"                       SCHEME="$OSX_FRAMEWORK_SCHEME"     SDK="$OSX_SDK"      POD_LINT="NO"      OPEN_SIMULATOR="NO"
+    - DESTINATION="OS=IOS_DEVICE_VERSION,name=$IOS_DEVICE_NAME"      SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"      POD_LINT="YES"     OPEN_SIMULATOR="YES"
+    - DESTINATION="arch=x86_64"                                      SCHEME="$OSX_FRAMEWORK_SCHEME"     SDK="$OSX_SDK"      POD_LINT="NO"      OPEN_SIMULATOR="NO"
 
 before_install:
-- SIMULATOR_ID=$(xcrun instruments -s | grep -o "iPhone 6S \(.*\) \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
+- SIMULATOR_ID=$(xcrun instruments -s | grep -o "$IOS_DEVICE_NAME ($IOS_DEVICE_VERSION) \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
 
 script:
 - if [ $OPEN_SIMULATOR == "YES" ]; then
-    echo $SIMULATOR_ID | open -b com.apple.iphonesimulator --args -CurrentDeviceUDID $SIMULATOR_ID;
+    echo "Opening Simulator" | echo $SIMULATOR_ID | open -b com.apple.iphonesimulator --args -CurrentDeviceUDID $SIMULATOR_ID;
   fi
     
 - set -o pipefail
