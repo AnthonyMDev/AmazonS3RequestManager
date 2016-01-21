@@ -2,7 +2,7 @@
 [![Version](https://img.shields.io/cocoapods/v/AmazonS3RequestManager.svg?style=flat)](http://cocoapods.org/pods/AmazonS3RequestManager)
 [![License](https://img.shields.io/cocoapods/l/AmazonS3RequestManager.svg?style=flat)](http://cocoapods.org/pods/AmazonS3RequestManager)
 [![Platform](https://img.shields.io/cocoapods/p/AmazonS3RequestManager.svg?style=flat)](http://cocoapods.org/pods/AmazonS3RequestManager)
-[![Status](https://travis-ci.org/AnthonyMDev/AmazonS3RequestManager.svg?branch=master)]
+![Status](https://travis-ci.org/AnthonyMDev/AmazonS3RequestManager.svg?branch=master)
 [![Contact me on Codementor](https://cdn.codementor.io/badges/contact_me_github.svg)](https://www.codementor.io/anthonymdev?utm_source=github&utm_medium=button&utm_term=anthonymdev&utm_campaign=github)
 
 An Alamofire based request manager that serializes requests to the AWS S3 (Amazon Simple Storage Solution).
