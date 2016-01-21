@@ -153,7 +153,11 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     
     // then
     XCTAssertNotNil(typeHeader, "Should have 'Content-Type' header field")
-    expect(typeHeader).to(equal("text/markdown"))
+    #if os(iOS) || os(watchOS) || os(tvOS)
+        expect(typeHeader).to(equal("application/octet-stream"))
+    #elseif os(OSX)
+        expect(typeHeader).to(equal("text/markdown"))
+    #endif
   }
   
   func test__amazonURLRequest__setsHTTPHeader_Date() {
