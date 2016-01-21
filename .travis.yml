@@ -18,7 +18,7 @@ env:
     - DESTINATION="arch=x86_64"                       SCHEME="$OSX_FRAMEWORK_SCHEME"     SDK="$OSX_SDK"      POD_LINT="NO"      OPEN_SIMULATOR="NO"
 
 before_install:
-- SIMULATOR_ID=$(xcrun instruments -s | grep -o "$IOS_DEVICE_NAME \(.*\) \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
+- SIMULATOR_ID=$(xcrun instruments -s | grep -o "iPhone 6S \(.*\) \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
 
 script:
 - if [ $OPEN_SIMULATOR == "YES" ]; then
