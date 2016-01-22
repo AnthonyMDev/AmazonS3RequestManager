@@ -143,9 +143,9 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     XCTAssertEqual(typeHeader!, "text/plain")
   }
   
-  func test__amazonURLRequest__givenNumbersPathExtension_setsHTTPHeader_ContentType() {
+  func test__amazonURLRequest__givenMarkDownPathExtension_setsHTTPHeader_ContentType() {
     // given
-    let request = sut.amazonURLRequest(.GET, path: "test.numbers")
+    let request = sut.amazonURLRequest(.GET, path: "test.md")
     
     // when
     let headers = request.allHTTPHeaderFields!
@@ -153,7 +153,11 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     
     // then
     XCTAssertNotNil(typeHeader, "Should have 'Content-Type' header field")
-    expect(typeHeader).to(equal("application/octet-stream"))
+    #if os(iOS) || os(watchOS) || os(tvOS)
+        expect(typeHeader).to(equal("application/octet-stream"))
+    #elseif os(OSX)
+        expect(typeHeader).to(equal("text/markdown"))
+    #endif
   }
   
   func test__amazonURLRequest__setsHTTPHeader_Date() {
