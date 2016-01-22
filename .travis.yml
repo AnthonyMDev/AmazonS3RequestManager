@@ -2,34 +2,10 @@ osx_image: xcode7.2
 language: objective-c
 podfile: Example/Podfile
 
-env:
-  global:
-  - LC_CTYPE=en_US.UTF-8
-  - LANG=en_US.UTF-8
-  - WORKSPACE=Example/AmazonS3RequestManager.xcworkspace
-  - IOS_FRAMEWORK_SCHEME="iOS"
-  - OSX_FRAMEWORK_SCHEME="OSX"
-  - IOS_SDK=iphonesimulator9.2
-  - OSX_SDK=macosx10.11
-  - IOS_DEVICE_NAME="iPhone 6S"
-  - IOS_DEVICE_VERSION="9.2"
+matrix:
+    include:
+        - xcode_sdk: iphonesimulator9.2
+          xcode_scheme: "iOS"
+        - xcode_sdk: macosx10.11
+          xcode_scheme: "OSX"
 
-  matrix:
-    - DESTINATION="OS=IOS_DEVICE_VERSION,name=$IOS_DEVICE_NAME"      SCHEME="$IOS_FRAMEWORK_SCHEME"     SDK="$IOS_SDK"      POD_LINT="YES"     OPEN_SIMULATOR="YES"
-    - DESTINATION="arch=x86_64"                                      SCHEME="$OSX_FRAMEWORK_SCHEME"     SDK="$OSX_SDK"      POD_LINT="NO"      OPEN_SIMULATOR="NO"
-
-before_install:
-- SIMULATOR_ID=$(xcrun instruments -s | grep -o "$IOS_DEVICE_NAME ($IOS_DEVICE_VERSION) \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
-
-script:
-- if [ $OPEN_SIMULATOR == "YES" ]; then
-    echo "Opening Simulator" | echo $SIMULATOR_ID | open -b com.apple.iphonesimulator --args -CurrentDeviceUDID $SIMULATOR_ID;
-  fi
-    
-- set -o pipefail
-
-- xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" ONLY_ACTIVE_ARCH=NO test | xcpretty -c
-
-- if [ $POD_LINT == "YES" ]; then
-    pod lib lint --quick --allow-warnings;
-  fi
