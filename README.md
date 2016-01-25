@@ -34,7 +34,8 @@ platform :ios, '8.0'
 use_frameworks!
 
 // For Swift 2.0
-pod 'AmazonS3RequestManager', '~> 0.8'
+pod 'AmazonS3RequestManager', '~> 0.10'
+```
 
 Then, run the following command:
 
@@ -45,37 +46,48 @@ $ pod install
 ## Usage
 First create an instance of the manager.
 
-    let amazonS3Manager = AmazonS3RequestManager(bucket: myAmazonS3Bucket,
-        region: .USStandard,
-        accessKey: myAmazonS3AccessKey,
-        secret: myAmazonS3Secret)
+```swift
+let amazonS3Manager = AmazonS3RequestManager(bucket: myAmazonS3Bucket,
+    region: .USStandard,
+    accessKey: myAmazonS3AccessKey,
+    secret: myAmazonS3Secret)
+```
 
 ### Get Objects
 
 Getting Objects as Response Objects:
 
-    amazonS3Manager.getObject("myFoler/fileName.jpg")
+```swift
+amazonS3Manager.getObject("myFolder/fileName.jpg")
+```
 
 Saving Objects To File:
 
-    let destination: NSURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-    amazonS3Manager.downloadObject("myFolder/fileName.jpg", saveToURL: destination)
+```swift
+let destination: NSURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+amazonS3Manager.downloadObject("myFolder/fileName.jpg", saveToURL: destination)
+```
     
 ### Upload Objects
-    let fileURL: NSURL = NSURL(fileURLWithPath: "pathToMyObject")
-    amazonS3Manager.putObject(fileURL, destinationPath: "pathToSaveObjectTo/fileName.jpg")
+```swift
+let fileURL: NSURL = NSURL(fileURLWithPath: "pathToMyObject")
+amazonS3Manager.putObject(fileURL, destinationPath: "pathToSaveObjectTo/fileName.jpg")
+```
     
 ### Delete Objects
-
-    amazonS3Manager.deleteObject("myFolder/fileName.jpg")
+```swift
+amazonS3Manager.deleteObject("myFolder/fileName.jpg")
+```
 
 ## Response Serialization
 `AmazonS3RequestManager` includes a custom data response serializer that parses errors from the Amazon S3 Service.
 
-    amazonS3Manager.getObject("myFoler/fileName.jpg")
-      .responseS3Data { (response) -> Void in
-        // Handle Response Data or Error
-    }
+```swift
+amazonS3Manager.getObject("myFolder/fileName.jpg")
+  .responseS3Data { (response) -> Void in
+    // Handle Response Data or Error
+}
+```
 
 ## Access Control Lists (ACL)
 
@@ -85,22 +97,30 @@ Saving Objects To File:
 
 You can retrieve the ACLs for the current bucket set on the request manager with a `GET` request:
 
-    amazonS3Manager.getBucketACL()
+```swift
+amazonS3Manager.getBucketACL()
+```
     
 or for an object in the bucket with a `GET` request:
 
-    amazonS3Manager.getACL(forObjectAtPath: "myFolder/fileName.jpg")
+```swift
+amazonS3Manager.getACL(forObjectAtPath: "myFolder/fileName.jpg")
+```
     
 ### Setting ACLs
 
 You can set the ACLs on the current bucket with a `PUT` request:
 
-    amazonS3Manager.setBucketACL(AmazonS3PredefinedACL.Public)
-    
+```swift
+amazonS3Manager.setBucketACL(AmazonS3PredefinedACL.Public)
+```
+
 or on an object in the bucket with a `PUT` request:
 
-    amazonS3Manager.setACL(forObjectAtPath: "myFolder/fileName.jpg", acl: AmazonS3PredefinedACL.Public)
-    
+```swift
+amazonS3Manager.setACL(forObjectAtPath: "myFolder/fileName.jpg", acl: AmazonS3PredefinedACL.Public)
+```
+
 The ACLs for an object can also be set while uploading by using the optional `acl` parameter.
 
 ### Creating Custom ACLs
@@ -114,13 +134,17 @@ If the predefined ACLs that the Amazon S3 Service provides do not give you enoug
 
 To give all users read access to the bucket:
 
-    let readPermission = AmazonS3ACLPermissionGrant(permission: .Read, grantee: .AllUsers)
-    amazonS3Manager.setBucketACL(readPermission)
-    
+```swift
+let readPermission = AmazonS3ACLPermissionGrant(permission: .Read, grantee: .AllUsers)
+amazonS3Manager.setBucketACL(readPermission)
+```
+
 To give all users read access to the bucket, authenticated users write access to the bucket, and two users with a given E-mail Address and given User ID full control:
 
-    let readPermission = AmazonS3ACLPermissionGrant(permission: .Read, grantee: .AllUsers)
-    let writePermission = AmazonS3ACLPermissionGrant(permission: .Write, grantee: .AuthenticatedUsers)
-    let fullControlPermission = AmazonS3ACLPermissionGrant(permission: .FullControl, grantees: [.EmailAddress("admin@myDomain.com"), .UserID("my-user-id")])
-    let customACL = AmazonS3CustomACL(grants: [readPermission, writePermission, fullControlPermission])
-    amazonS3Manager.setBucketACL(customACL)
+```swift
+let readPermission = AmazonS3ACLPermissionGrant(permission: .Read, grantee: .AllUsers)
+let writePermission = AmazonS3ACLPermissionGrant(permission: .Write, grantee: .AuthenticatedUsers)
+let fullControlPermission = AmazonS3ACLPermissionGrant(permission: .FullControl, grantees: [.EmailAddress("admin@myDomain.com"), .UserID("my-user-id")])
+let customACL = AmazonS3CustomACL(grants: [readPermission, writePermission, fullControlPermission])
+amazonS3Manager.setBucketACL(customACL)
+```
