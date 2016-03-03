@@ -34,4 +34,8 @@
                            timeStamp:(NSString *)timestamp
                               secret:(NSString *)key;
 
++ (NSData *)hash:(NSData *)dataToHash;
+
++ (NSString *)hexEncode:(NSString *)string;
+
 @end

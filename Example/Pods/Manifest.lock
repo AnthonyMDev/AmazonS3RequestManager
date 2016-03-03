@@ -1,12 +1,12 @@
 PODS:
-  - Alamofire (3.1.5)
-  - AmazonS3RequestManager (0.10.0):
+  - Alamofire (3.2.1)
+  - AmazonS3RequestManager (0.10.1):
     - Alamofire (~> 3.0)
     - SWXMLHash (~> 2.0)
   - Nimble (3.0.0)
   - Nocilla (0.10.0)
   - Quick (0.8.0)
-  - SWXMLHash (2.0.2)
+  - SWXMLHash (2.1.0)
 
 DEPENDENCIES:
   - AmazonS3RequestManager (from `../`)
@@ -18,12 +18,14 @@ EXTERNAL SOURCES:
   AmazonS3RequestManager:
     :path: "../"
 
+CHECKOUT OPTIONS: 
+
 SPEC CHECKSUMS:
-  Alamofire: 5f730ba29fd113b7ddd71c1e65d0c630acf5d7b0
-  AmazonS3RequestManager: 6a9c62d70d1a4a47334f6b2620165cdc73e7a1eb
+  Alamofire: f11d8624a05f5d39e0c99309b3e600a3ba64298a
+  AmazonS3RequestManager: 49d58c31cbe9a2972972b7ec632343a09d78fab1
   Nimble: 4c353d43735b38b545cbb4cb91504588eb5de926
   Nocilla: ae0a2b05f3087b473624ac2b25903695df51246a
   Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
-  SWXMLHash: 9e6bd7db2e8275eaf3d2082265623d6e749e169d
+  SWXMLHash: 7257a358b3ab2f7a209e0b4e4cf552e8b6df5f0f
 
 COCOAPODS: 0.39.0

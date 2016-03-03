@@ -117,4 +117,35 @@
   return [[NSString alloc] initWithData:mutableData encoding:NSASCIIStringEncoding];
 }
 
++ (NSData *)hash:(NSData *)dataToHash {
+    if ([dataToHash length] > UINT32_MAX) {
+        return nil;
+    }
+    
+    const void *cStr = [dataToHash bytes];
+    unsigned char result[CC_SHA256_DIGEST_LENGTH];
+    
+    CC_SHA256(cStr, (uint32_t)[dataToHash length], result);
+    
+    return [[NSData alloc] initWithBytes:result length:CC_SHA256_DIGEST_LENGTH];
+}
+
++ (NSString *)hexEncode:(NSString *)string {
+    NSUInteger len = [string length];
+    unichar *chars = malloc(len * sizeof(unichar));
+    
+    [string getCharacters:chars];
+    
+    NSMutableString *hexString = [NSMutableString new];
+    for (NSUInteger i = 0; i < len; i++) {
+        if ((int)chars[i] < 16) {
+            [hexString appendString:@"0"];
+        }
+        [hexString appendString:[NSString stringWithFormat:@"%x", chars[i]]];
+    }
+    free(chars);
+    
+    return hexString;
+}
+
 @end
