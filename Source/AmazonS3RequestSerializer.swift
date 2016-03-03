@@ -154,6 +154,10 @@ public class AmazonS3RequestSerializer {
     }
     return nil
   }
+    
+    private func setStorageClassHeaders(inout forRequest request: NSMutableURLRequest, storageClass: AmazonS3StorageClass) {
+        request.setValue(storageClass.rawValue, forHTTPHeaderField: "x-amz-storage-class")
+    }
   
   private func setAuthorizationHeaders(inout forRequest request: NSMutableURLRequest) {
     request.cachePolicy = .ReloadIgnoringLocalCacheData
@@ -172,10 +176,6 @@ public class AmazonS3RequestSerializer {
     request.setValue("AWS \(accessKey):\(signature)", forHTTPHeaderField: "Authorization")
     
   }
-	
-	private func setStorageClassHeaders(inout forRequest request: NSMutableURLRequest, storageClass: AmazonS3StorageClass) {
-		request.setValue(storageClass.rawValue, forHTTPHeaderField: "x-amz-storage-class")
-	}
   
   private func currentTimeStamp() -> String {
     return requestDateFormatter.stringFromDate(NSDate())

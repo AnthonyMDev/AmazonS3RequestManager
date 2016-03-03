@@ -257,6 +257,10 @@
 		905FD43F6EECA0B7D9B42004 /* Pods-iOS-Tests-Alamofire-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 39BBC65DE2A759737DC5C5FA /* Pods-iOS-Tests-Alamofire-dummy.m */; };
 		91D2DB145276591DA43F0664 /* Pods-OSX-Example-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3579E30D73D9339B35A22965 /* Pods-OSX-Example-dummy.m */; };
 		91D9DEEC18B4F15DFA108E28 /* LSHTTPRequestDiff.h in Headers */ = {isa = PBXBuildFile; fileRef = 6FBF5AD14A82BC160D5DD78E /* LSHTTPRequestDiff.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		923077CF1C87AE28008814C5 /* AWSV4SignatureCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923077CE1C87AE28008814C5 /* AWSV4SignatureCalculator.swift */; };
+		923077D01C87AE28008814C5 /* AWSV4SignatureCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923077CE1C87AE28008814C5 /* AWSV4SignatureCalculator.swift */; };
+		923077D11C87AE28008814C5 /* AWSV4SignatureCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923077CE1C87AE28008814C5 /* AWSV4SignatureCalculator.swift */; };
+		923077D21C87AE28008814C5 /* AWSV4SignatureCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923077CE1C87AE28008814C5 /* AWSV4SignatureCalculator.swift */; };
 		9235DFA439EC74CE1A3B3E70 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 143D9DCAC9D4DA46AAA98451 /* Alamofire.framework */; };
 		94CC5FA90CB660C3AB3B1F77 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162B659122A7FD1CB6247B24 /* Request.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		9551FFB1305374FD275ACBFB /* SourceLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124B3FDCC60D79B00DEB3543 /* SourceLocation.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -787,6 +791,7 @@
 		8F933DC40A36BA15C307C469 /* Pods-iOS-Tests-Quick-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "Pods-iOS-Tests-Quick-dummy.m"; path = "../Pods-iOS-Tests-Quick/Pods-iOS-Tests-Quick-dummy.m"; sourceTree = "<group>"; };
 		9088D230730BA0227C578C28 /* Pods-OSX-Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-OSX-Example.modulemap"; sourceTree = "<group>"; };
 		91AD0E38AEF1EE0C4200CB14 /* Pods-iOS-Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-iOS-Example-frameworks.sh"; sourceTree = "<group>"; };
+		923077CE1C87AE28008814C5 /* AWSV4SignatureCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSV4SignatureCalculator.swift; sourceTree = "<group>"; };
 		9302FEED7F612C5042A88E64 /* BeginWith.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeginWith.swift; path = Nimble/Matchers/BeginWith.swift; sourceTree = "<group>"; };
 		93BC992A8D78D66ECA0454A2 /* Stringers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stringers.swift; path = Nimble/Utils/Stringers.swift; sourceTree = "<group>"; };
 		941FEBE352D31B84CE0705BB /* Pods-OSX-Tests-Alamofire-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "Pods-OSX-Tests-Alamofire-umbrella.h"; path = "../Pods-OSX-Tests-Alamofire/Pods-OSX-Tests-Alamofire-umbrella.h"; sourceTree = "<group>"; };
@@ -1360,6 +1365,7 @@
 				AAA33FE14C4146542A09639C /* AmazonS3RequestManager.swift */,
 				FE46E0B80120B667241C72C0 /* AmazonS3RequestSerializer.swift */,
 				719692942D31DDE22E5EA985 /* AmazonS3ResponseSerialization.swift */,
+				923077CE1C87AE28008814C5 /* AWSV4SignatureCalculator.swift */,
 				307FAFEFC1BAE83F90E827E8 /* AmazonS3SignatureHelpers.h */,
 				1A9B9E214EDCEF2B0CFE4658 /* AmazonS3SignatureHelpers.m */,
 			);
@@ -2400,6 +2406,7 @@
 			files = (
 				9D17050EF32AACCEFD06E44F /* AmazonS3ACL.swift in Sources */,
 				A4665032B4E9E25A4F6CA0EE /* AmazonS3Error.swift in Sources */,
+				923077D11C87AE28008814C5 /* AWSV4SignatureCalculator.swift in Sources */,
 				EB4C59A4AF6E242243A92B5E /* AmazonS3RequestManager.swift in Sources */,
 				18B6A114E73D4045D48F30CE /* AmazonS3RequestSerializer.swift in Sources */,
 				0680D284C27DC5C054EF0B1F /* AmazonS3ResponseSerialization.swift in Sources */,
@@ -2524,6 +2531,7 @@
 			files = (
 				8AE8B970F1974A9877574ED8 /* AmazonS3ACL.swift in Sources */,
 				0CE010EA371F9ADBF5B214DC /* AmazonS3Error.swift in Sources */,
+				923077D01C87AE28008814C5 /* AWSV4SignatureCalculator.swift in Sources */,
 				7C4A18638E3ADFC319C7A29D /* AmazonS3RequestManager.swift in Sources */,
 				10CFA1B616D57B424C958D6A /* AmazonS3RequestSerializer.swift in Sources */,
 				EEF9E7166EC3AA066A970E10 /* AmazonS3ResponseSerialization.swift in Sources */,
@@ -2599,6 +2607,7 @@
 			files = (
 				AE1DDA4347AD4E2C5275DEE5 /* AmazonS3ACL.swift in Sources */,
 				D8CA0A250EEE79B3D81B8F35 /* AmazonS3Error.swift in Sources */,
+				923077CF1C87AE28008814C5 /* AWSV4SignatureCalculator.swift in Sources */,
 				956E5F2F2399777A9080DAF5 /* AmazonS3RequestManager.swift in Sources */,
 				6C28675F20ED8494D687CA1B /* AmazonS3RequestSerializer.swift in Sources */,
 				308FFFD9635FED8C155984AD /* AmazonS3ResponseSerialization.swift in Sources */,
@@ -2719,6 +2728,7 @@
 			files = (
 				F5F5F61F7782D4791587C4C4 /* AmazonS3ACL.swift in Sources */,
 				BF65DCCEA3F7CEF809AC31DD /* AmazonS3Error.swift in Sources */,
+				923077D21C87AE28008814C5 /* AWSV4SignatureCalculator.swift in Sources */,
 				D59D471E3FA361CAD04A9AF1 /* AmazonS3RequestManager.swift in Sources */,
 				28E04214F7F8DB79C4E7E4EC /* AmazonS3RequestSerializer.swift in Sources */,
 				E3906C8CDB1205796C78BA3E /* AmazonS3ResponseSerialization.swift in Sources */,
