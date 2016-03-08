@@ -172,6 +172,7 @@ public class AmazonS3RequestSerializer {
       timeStamp: timestamp,
       secret: secret)
     
+    // TODO: set header field "X-Amz-Date"
     request.setValue(timestamp ?? "", forHTTPHeaderField: "Date")
     request.setValue("AWS \(accessKey):\(signature)", forHTTPHeaderField: "Authorization")
     

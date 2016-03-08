@@ -44,18 +44,37 @@ The possible Amazon Web Service regions for the client.
 - APSoutheast1: Singapore
 - APSoutheast2: Sydney
 - APNortheast1: Toyko
+- APNortheast2: Seoul
 - SAEast1:      Sao Paulo
 */
 public enum AmazonS3Region: String {
-  case USStandard = "s3.amazonaws.com",
-  USWest1 = "s3-us-west-1.amazonaws.com",
-  USWest2 = "s3-us-west-2.amazonaws.com",
-  EUWest1 = "s3-eu-west-1.amazonaws.com",
-  EUCentral1 = "s3-eu-central-1.amazonaws.com",
-  APSoutheast1 = "s3-ap-southeast-1.amazonaws.com",
-  APSoutheast2 = "s3-ap-southeast-2.amazonaws.com",
-  APNortheast1 = "s3-ap-northeast-1.amazonaws.com",
-  SAEast1 = "s3-sa-east-1.amazonaws.com"
+
+    case USStandard = "us-east-1",
+    USWest1 = "us-west-1",
+    USWest2 = "us-west-2",
+    EUWest1 = "eu-west-1",
+    EUCentral1 = "eu-central-1",
+    APSoutheast1 = "ap-southeast-1",
+    APSoutheast2 = "ap-southeast-2",
+    APNortheast1 = "ap-northeast-1",
+    APNortheast2 = "ap-northeast-2",
+    SAEast1 = "sa-east-1"
+
+    
+    var endpoint: String {
+        switch self {
+        case USStandard: return "s3.amazonaws.com"
+        case USWest1: return "s3-us-west-1.amazonaws.com"
+        case USWest2: return "s3-us-west-2.amazonaws.com"
+        case EUWest1: return "s3-eu-west-1.amazonaws.com"
+        case EUCentral1: return "s3-eu-central-1.amazonaws.com"
+        case APSoutheast1: return "s3-ap-southeast-1.amazonaws.com"
+        case APSoutheast2: return "s3-ap-southeast-2.amazonaws.com"
+        case APNortheast1: return "s3-ap-northeast-1.amazonaws.com"
+        case APNortheast2: return "s3-ap-northeast-2.amazonaws.com"
+        case SAEast1: return "s3-sa-east-1.amazonaws.com"
+        }
+    }
 }
 
 /**

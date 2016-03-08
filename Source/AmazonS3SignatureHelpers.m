@@ -117,6 +117,21 @@
   return [[NSString alloc] initWithData:mutableData encoding:NSASCIIStringEncoding];
 }
 
+// NEW STUFF
+
++ (NSString *)AmazonS3URLPathForURL:(NSURL *)url {
+    NSString *cfPath = (NSString*)CFBridgingRelease(CFURLCopyPath((CFURLRef)url));
+    NSString *path = [cfPath AMS3_decodeURLEncoding];
+//    NSCharacterSet *unencodedCharacters = [NSCharacterSet characterSetWithCharactersInString:@"%/"];
+//    path = [path stringByAddingPercentEncodingWithAllowedCharacters:unencodedCharacters];
+    
+    if (path.length == 0) {
+        path = [NSString stringWithFormat:@"/"];
+    }
+    
+    return path;
+}
+
 + (NSData *)hash:(NSData *)dataToHash {
     if ([dataToHash length] > UINT32_MAX) {
         return nil;
@@ -146,6 +161,59 @@
     free(chars);
     
     return hexString;
+}
+
++ (NSString *)hashString:(NSString *)stringToHash {
+    return [[NSString alloc] initWithData:[self hash:[stringToHash dataUsingEncoding:NSUTF8StringEncoding]]
+                                 encoding:NSASCIIStringEncoding];
+}
+
++ (NSData *)sha256HMacForString:(NSString *)string withKey:(NSData *)key encoding:(NSUInteger)encoding {
+    NSData *data = [string dataUsingEncoding:encoding];
+    CCHmacContext context;
+    
+    CCHmacInit(&context, kCCHmacAlgSHA256, [key bytes], [key length]);
+    CCHmacUpdate(&context, [data bytes], [data length]);
+    
+    unsigned char digestRaw[CC_SHA256_DIGEST_LENGTH];
+    NSInteger digestLength = CC_SHA256_DIGEST_LENGTH;
+    
+    CCHmacFinal(&context, digestRaw);
+    
+    return [NSData dataWithBytes:digestRaw length:digestLength];
+}
+
+@end
+
+@implementation NSString (AMS3)
+
+- (NSString *)AMS3_stringWithURLEncodingPath {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    NSString *decodedString = [self AMS3_decodeURLEncoding];
+    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                                 (__bridge CFStringRef)decodedString,
+                                                                                 NULL,
+                                                                                 (CFStringRef)@"!*'\();:@&=+$,?%#[] ",
+                                                                                 kCFStringEncodingUTF8));
+#pragma clang diagnostic pop
+}
+
+- (NSString *)AMS3_stringWithURLEncodingQuery {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    NSString *decodedString = [self AMS3_decodeURLEncoding];
+    return (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                                 (__bridge CFStringRef)decodedString,
+                                                                                 NULL,
+                                                                                 (CFStringRef)@"!*'\/();:%^+@&=$,?%#[] ",
+                                                                                 kCFStringEncodingUTF8));
+#pragma clang diagnostic pop
+}
+
+- (NSString *)AMS3_decodeURLEncoding {
+    NSString *result = [self stringByRemovingPercentEncoding];
+    return result ? result : self;
 }
 
 @end

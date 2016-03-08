@@ -34,8 +34,24 @@
                            timeStamp:(NSString *)timestamp
                               secret:(NSString *)key;
 
++ (NSString *)AmazonS3URLPathForURL:(NSURL *)url;
+
 + (NSData *)hash:(NSData *)dataToHash;
 
 + (NSString *)hexEncode:(NSString *)string;
+
++ (NSString *)hashString:(NSString *)stringToHash;
+
++ (NSData *)sha256HMacForString:(NSString *)string withKey:(NSData *)key encoding:(NSUInteger)encoding;
+
+@end
+
+@interface NSString (AMS3)
+
+- (NSString *)AMS3_stringWithURLEncodingPath;
+
+- (NSString *)AMS3_stringWithURLEncodingQuery;
+
+- (NSString *)AMS3_decodeURLEncoding;
 
 @end
