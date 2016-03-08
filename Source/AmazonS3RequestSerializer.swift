@@ -96,11 +96,19 @@ public class AmazonS3RequestSerializer {
   - returns: An `NSURLRequest`, serialized for use with the Amazon S3 service.
   */
   public func amazonURLRequest(method: Alamofire.Method,
-    path: String,
+    path: String? = nil,
     subresource: String? = nil,
     acl: AmazonS3ACL? = nil,
 	storageClass: AmazonS3StorageClass = .Standard) -> NSURLRequest {
-      let url = endpointURL.URLByAppendingPathComponent(path).URLByAppendingS3Subresource(subresource)
+      var url = endpointURL
+    
+      if path != nil {
+        url = url.URLByAppendingPathComponent(path!)
+      }
+    
+      if subresource != nil {
+        url = url.URLByAppendingS3Subresource(subresource!)
+      }
       
       var mutableURLRequest = NSMutableURLRequest(URL: url)
       mutableURLRequest.HTTPMethod = method.rawValue
@@ -193,9 +201,9 @@ public class AmazonS3RequestSerializer {
 
 private extension NSURL {
   
-  private func URLByAppendingS3Subresource(subresource: String?) -> NSURL {
-    if subresource != nil && !subresource!.isEmpty {
-      let URLString = self.absoluteString.stringByAppendingString("?\(subresource!)")
+  private func URLByAppendingS3Subresource(subresource: String) -> NSURL {
+    if !subresource.isEmpty {
+      let URLString = self.absoluteString.stringByAppendingString("?\(subresource)")
       return NSURL(string: URLString)!
       
     }
