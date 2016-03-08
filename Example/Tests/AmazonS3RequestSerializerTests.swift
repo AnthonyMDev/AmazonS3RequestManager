@@ -68,6 +68,19 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     XCTAssertEqual(request.URL!, expectedURL)
   }
   
+  func test__amazonURLRequest__givenNoPath() {
+    // given
+    sut.bucket = "test"
+    
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/test")!
+    
+    // when
+    let request = sut.amazonURLRequest(.GET)
+    
+    // then
+    XCTAssertEqual(request.URL!, expectedURL)
+  }
+  
   func test__amazonURLRequest__givenUseSSL_false_setsURLWithEndpointURL_usingHTTP() {
     // given
     sut.useSSL = false
