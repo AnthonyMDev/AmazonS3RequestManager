@@ -160,17 +160,17 @@ class AmazonS3RequestSerializerTests: XCTestCase {
         #endif
     }
     
-    func test__amazonURLRequest__setsHTTPHeader_Date() {
+    func test__amazonURLRequest__setsHTTPHeader_x_amz_date() {
         // given
         let request = sut.amazonURLRequest(.GET, path: "test")
         
         // when
         let headers = request.allHTTPHeaderFields!
-        let dateHeader: String? = headers["Date"]
+        let dateHeader: String? = headers["x-amz-date"]
         
         // then
         XCTAssertNotNil(dateHeader, "Should have 'Date' header field")
-        XCTAssertTrue(dateHeader!.hasSuffix("GMT"))
+        XCTAssertTrue(dateHeader!.hasSuffix("Z"))
     }
     
     func test__amazonURLRequest__setsHTTPHeader_Authorization() {

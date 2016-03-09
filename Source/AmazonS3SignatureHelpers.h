@@ -29,11 +29,6 @@
 
 @interface AmazonS3SignatureHelpers : NSObject
 
-
-+ (NSString *)AWSSignatureForRequest:(NSURLRequest *)request
-                           timeStamp:(NSString *)timestamp
-                              secret:(NSString *)key;
-
 + (NSString *)AmazonS3URLPathForURL:(NSURL *)url;
 
 + (NSData *)hash:(NSData *)dataToHash;

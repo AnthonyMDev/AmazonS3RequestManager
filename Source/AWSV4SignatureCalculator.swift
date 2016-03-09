@@ -8,8 +8,27 @@
 
 import Foundation
 
+/**
+This class calculates a signature and creates an `Authorization` header for a request to the AWS S3 REST API using 
+the V4 signature.
+
+ - note: See `http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html` for more information.
+*/
 class AWSV4SignatureCalculator {
     
+    /**
+     Calculates an `Authorization` header for a request to the AWS S3 REST API using the V4 signature.
+     
+     - parameter request:   The `NSURLRequest` to calculate the `Authorization` header for.
+     - parameter accessKey: The Amazon S3 Access Key ID to sign the request with.
+     - parameter secret:    The Amazon S3 Secret to sign the request with.
+     - parameter region:    The Amazon S3 region for the request.
+     - parameter service:   The AWS service to sign the request for. Defaults to `s3`.
+     
+     - note: Currently, only the Amazon S3 `service` is supported.
+     
+     - returns: The `String` to set for the `Authorization` header on the given request.
+     */
     class func V4AuthorizationHeader(request: NSURLRequest,
         accessKey: String,
         secret: String,
@@ -82,20 +101,12 @@ class AWSV4SignatureCalculator {
         var headers = [String: String]()
         
         headers["host"] = request.URL!.host
-//
-//        if let contentType = request
-//            .valueForHTTPHeaderField("Content-Type")?
-//            .stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) {
-//                headers["content-type"] = contentType
-//        }
         
         request.allHTTPHeaderFields?.forEach {
-//            if $0.0.hasPrefix("x-amz-") {
             let parts = $0.1.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) as NSArray
             let nonWhitespace = parts.filteredArrayUsingPredicate(NSPredicate(format:"SELF != ''")) as! [String]
             
             headers[$0.0.lowercaseString] = nonWhitespace.joinWithSeparator(" ")
-//            }
         }
         
         return headers
@@ -107,14 +118,8 @@ class AWSV4SignatureCalculator {
     private class func canonicalHeaderList(request: NSURLRequest) -> String {
         var headers = ["host"]
         
-//        if request.valueForHTTPHeaderField("Content-Type") != nil {
-//            headers.append("content-type")
-//        }
-        
         request.allHTTPHeaderFields?.forEach {
-//            if $0.0.hasPrefix("x-amz-") {
                 headers.append($0.0.lowercaseString)
-//            }
         }
         
         return headers

@@ -168,14 +168,13 @@ public class AmazonS3RequestSerializer {
     
     let timestamp = currentTimeStamp()
     
-    let signature = AmazonS3SignatureHelpers.AWSSignatureForRequest(request,
-      timeStamp: timestamp,
-      secret: secret)
+    let signature = AWSV4SignatureCalculator.V4AuthorizationHeader(request,
+        accessKey: accessKey,
+        secret: secret,
+        region: region)
     
-    // TODO: set header field "X-Amz-Date"
-    request.setValue(timestamp ?? "", forHTTPHeaderField: "Date")
-    request.setValue("AWS \(accessKey):\(signature)", forHTTPHeaderField: "Authorization")
-    
+    request.setValue(timestamp ?? "", forHTTPHeaderField: "x-amz-date")
+    request.setValue("AWS \(accessKey):\(signature)", forHTTPHeaderField: "Authorization")    
   }
   
   private func currentTimeStamp() -> String {
@@ -185,7 +184,7 @@ public class AmazonS3RequestSerializer {
   private lazy var requestDateFormatter: NSDateFormatter = {
     let dateFormatter = NSDateFormatter()
     dateFormatter.timeZone = NSTimeZone(name: "GMT")
-    dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss z"
+    dateFormatter.dateFormat = "yyyymmdd'T'HHMMSS'Z'"
     dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
     
     return dateFormatter
