@@ -45,7 +45,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     func test__amazonURLRequest__setsURLWithEndpointURL() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/\(path)")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/\(path)")!
         
         // when
         let request = sut.amazonURLRequest(.GET, path: path)
@@ -59,7 +59,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
         sut.bucket = nil
         
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(path)")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(path)")!
         
         // when
         let request = sut.amazonURLRequest(.GET, path: path)
@@ -73,7 +73,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
         sut.useSSL = false
         
         let path = "TestPath"
-        let expectedURL = NSURL(string: "http://\(region.rawValue)/\(bucket)/\(path)")!
+        let expectedURL = NSURL(string: "http://\(region.endpoint)/\(bucket)/\(path)")!
         
         // when
         let request = sut.amazonURLRequest(.GET, path: path)
@@ -160,6 +160,32 @@ class AmazonS3RequestSerializerTests: XCTestCase {
         #endif
     }
     
+    func test__amazonURLRequest__setsHTTPHeader_host() {
+        // given
+        let request = sut.amazonURLRequest(.GET, path: "test")
+        
+        // when
+        let headers = request.allHTTPHeaderFields!
+        let hostHeader: String? = headers["Host"]
+        
+        // then
+        XCTAssertNotNil(hostHeader, "Should have 'Host' header field")
+        expect(hostHeader).to(equal(request.URL?.host))
+    }
+    
+    func test__amazonURLRequest__setsHTTPHeader_x_amz_content_sha256() {
+        // given
+        let request = sut.amazonURLRequest(.GET, path: "test")
+        
+        // when
+        let headers = request.allHTTPHeaderFields!
+        let contentHashHeader: String? = headers["x-amz-content-sha256"]
+        
+        // then
+        XCTAssertNotNil(contentHashHeader, "Should have 'x-amz-content-sha256' header field")
+        expect(contentHashHeader).to(equal(AWSV4SignatureCalculator.payloadHash(request: request)))
+    }
+    
     func test__amazonURLRequest__setsHTTPHeader_x_amz_date() {
         // given
         let request = sut.amazonURLRequest(.GET, path: "test")
@@ -169,7 +195,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
         let dateHeader: String? = headers["x-amz-date"]
         
         // then
-        XCTAssertNotNil(dateHeader, "Should have 'Date' header field")
+        XCTAssertNotNil(dateHeader, "Should have 'x-amz-date' header field")
         XCTAssertTrue(dateHeader!.hasSuffix("Z"))
     }
     
@@ -183,7 +209,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
         
         // then
         XCTAssertNotNil(authHeader, "Should have 'Authorization' header field")
-        XCTAssertTrue(authHeader!.hasPrefix("AWS \(accessKey):"), "Authorization header should begin with 'AWS [accessKey]'.")
+        XCTAssertTrue(authHeader!.hasPrefix("AWS4-HMAC-SHA256 "), "Authorization header should begin with 'AWS4-HMAC-SHA256 '.")
     }
     
     func test__amazonURLRequest__givenACL__setsHTTPHeader_ACL() {

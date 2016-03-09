@@ -15,8 +15,6 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		923077CC1C87AA99008814C5 /* SignatureCalculationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923077CB1C87AA99008814C5 /* SignatureCalculationTests.swift */; };
-		923077CD1C87AA99008814C5 /* SignatureCalculationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923077CB1C87AA99008814C5 /* SignatureCalculationTests.swift */; };
 		92A2B7071C51857200CA1967 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92A2B7061C51857200CA1967 /* Default-568h@2x.png */; };
 		92A88B061C8E334E005B0AED /* get-header-key-duplicate.authz in Resources */ = {isa = PBXBuildFile; fileRef = 92A88A4D1C8E334E005B0AED /* get-header-key-duplicate.authz */; };
 		92A88B071C8E334E005B0AED /* get-header-key-duplicate.authz in Resources */ = {isa = PBXBuildFile; fileRef = 92A88A4D1C8E334E005B0AED /* get-header-key-duplicate.authz */; };
@@ -308,7 +306,6 @@
 		688C4A3D26DCC9FB4046C32C /* Pods-AmazonS3RequestManager_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AmazonS3RequestManager_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AmazonS3RequestManager_Tests/Pods-AmazonS3RequestManager_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		6DD6F62109D0DE5209FB1D76 /* Pods_OSX_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OSX_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		884ACA65B311A8F4DEF52C37 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		923077CB1C87AA99008814C5 /* SignatureCalculationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignatureCalculationTests.swift; sourceTree = "<group>"; };
 		92A2B7061C51857200CA1967 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		92A88A4D1C8E334E005B0AED /* get-header-key-duplicate.authz */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "get-header-key-duplicate.authz"; sourceTree = "<group>"; };
 		92A88A4E1C8E334E005B0AED /* get-header-key-duplicate.creq */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "get-header-key-duplicate.creq"; sourceTree = "<group>"; };
@@ -552,7 +549,6 @@
 				92E8C3EA1C4EF62400759119 /* AmazonS3RequestManagerTests.swift */,
 				92E8C3EB1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift */,
 				92E8C3EC1C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift */,
-				923077CB1C87AA99008814C5 /* SignatureCalculationTests.swift */,
 				92A88C3C1C8E33A9005B0AED /* AWSSignature V4 Tests */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				92E8C3E81C4EF62300759119 /* AmazonS3RequestManager_Tests-Bridging-Header.h */,
@@ -1548,7 +1544,6 @@
 				92E8C3EF1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift in Sources */,
 				92E8C3ED1C4EF62400759119 /* AmazonS3ACLTests.swift in Sources */,
 				92A88C3E1C8E33C0005B0AED /* AWSSignatureV4TestCase.swift in Sources */,
-				923077CC1C87AA99008814C5 /* SignatureCalculationTests.swift in Sources */,
 				92E8C3EE1C4EF62400759119 /* AmazonS3RequestManagerTests.swift in Sources */,
 				92E8C3F01C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift in Sources */,
 			);
@@ -1570,7 +1565,6 @@
 				92E8C43A1C4EFD4A00759119 /* AmazonS3ResponseSerializationTests.swift in Sources */,
 				92E8C4371C4EFD4400759119 /* AmazonS3ACLTests.swift in Sources */,
 				92A88C3F1C8E33C0005B0AED /* AWSSignatureV4TestCase.swift in Sources */,
-				923077CD1C87AA99008814C5 /* SignatureCalculationTests.swift in Sources */,
 				92E8C4391C4EFD4800759119 /* AmazonS3RequestSerializerTests.swift in Sources */,
 				92E8C4381C4EFD4600759119 /* AmazonS3RequestManagerTests.swift in Sources */,
 			);

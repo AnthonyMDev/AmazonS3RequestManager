@@ -61,7 +61,7 @@ public enum AmazonS3Region: String {
     SAEast1 = "sa-east-1"
 
     
-    var endpoint: String {
+    public var endpoint: String {
         switch self {
         case USStandard: return "s3.amazonaws.com"
         case USWest1: return "s3-us-west-1.amazonaws.com"

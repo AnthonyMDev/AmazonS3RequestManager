@@ -9,12 +9,37 @@
 import Foundation
 
 /**
-This class calculates a signature and creates an `Authorization` header for a request to the AWS S3 REST API using 
-the V4 signature.
-
+ This class calculates a signature and creates an `Authorization` header for a request to the AWS S3 REST API using
+ the V4 signature.
+ 
  - note: See `http://docs.aws.amazon.com/general/latest/gr/signature-version-4.html` for more information.
-*/
+ */
 class AWSV4SignatureCalculator {
+    
+    private struct Constants {
+        static let EmptyStringASCIIData = "".dataUsingEncoding(NSASCIIStringEncoding)!
+    }
+    
+    /**
+     Calculates the hash of the request's `HTTPBody`.
+     
+     - note: This hash should be set as the value for the `x-amz-content-sha256` HTTP Header Field.
+     
+     - parameter request: The request to calculate the payload hash for.
+     
+     - returns: The hashed string of the request's payload.
+     */
+    class func payloadHash(request request: NSURLRequest) -> String {
+        let contentBody = request.HTTPBody ?? Constants.EmptyStringASCIIData
+        
+        return payloadHash(HTTPBody: contentBody)
+    }
+    
+    private class func payloadHash(HTTPBody body: NSData) -> String {
+        let encodedBody = String(data: AmazonS3SignatureHelpers.hash(body), encoding: NSASCIIStringEncoding)
+        
+        return AmazonS3SignatureHelpers.hexEncode(encodedBody)
+    }
     
     /**
      Calculates an `Authorization` header for a request to the AWS S3 REST API using the V4 signature.
@@ -49,7 +74,7 @@ class AWSV4SignatureCalculator {
                 "SignedHeaders=\(signedHeaders)" + ", " +
                 "Signature=\(signature)"
     }
-
+    
     /*
     *  MARK: Canonical Request
     */
@@ -63,11 +88,11 @@ class AWSV4SignatureCalculator {
         let contentHash = self.canonicalContentHash(request)
         
         let canonicalRequest = HTTPMethod + "\n" +
-        path + "\n" +
-        query + "\n" +
-        headers + "\n" +
-        headersList + "\n" +
-        contentHash
+            path + "\n" +
+            query + "\n" +
+            headers + "\n" +
+            headersList + "\n" +
+            contentHash
         
         return canonicalRequest
     }
@@ -94,14 +119,12 @@ class AWSV4SignatureCalculator {
             return (key as NSString).AMS3_stringWithURLEncodingQuery() + "=" +
                 ((value ?? "") as NSString).AMS3_stringWithURLEncodingQuery()
             
-        }.joinWithSeparator("&")
+            }.joinWithSeparator("&")
     }
     
     private class func canonicalHeaders(request: NSURLRequest) -> String {
         var headers = [String: String]()
-        
-        headers["host"] = request.URL!.host
-        
+    
         request.allHTTPHeaderFields?.forEach {
             let parts = $0.1.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet()) as NSArray
             let nonWhitespace = parts.filteredArrayUsingPredicate(NSPredicate(format:"SELF != ''")) as! [String]
@@ -116,10 +139,10 @@ class AWSV4SignatureCalculator {
     }
     
     private class func canonicalHeaderList(request: NSURLRequest) -> String {
-        var headers = ["host"]
+        var headers = [String]()
         
         request.allHTTPHeaderFields?.forEach {
-                headers.append($0.0.lowercaseString)
+            headers.append($0.0.lowercaseString)
         }
         
         return headers
@@ -128,11 +151,7 @@ class AWSV4SignatureCalculator {
     }
     
     private class func canonicalContentHash(request: NSURLRequest) -> String {
-        let contentBody = request.HTTPBody ?? "".dataUsingEncoding(NSASCIIStringEncoding)
-        
-        let encodedBody = String(data: AmazonS3SignatureHelpers.hash(contentBody), encoding: NSASCIIStringEncoding)
-        
-        return AmazonS3SignatureHelpers.hexEncode(encodedBody)
+        return request.valueForHTTPHeaderField("x-amz-content-sha256") ?? payloadHash(request: request)
     }
     
     /*
@@ -144,9 +163,9 @@ class AWSV4SignatureCalculator {
         service: String,
         canonicalRequest: String) -> String {
             return "AWS4-HMAC-SHA256" + "\n" +
-            requestDate(request) + "\n" +
-            credentialScope(request, region: region, service: service) + "\n" +
-            AmazonS3SignatureHelpers.hexEncode(AmazonS3SignatureHelpers.hashString(canonicalRequest))
+                requestDate(request) + "\n" +
+                credentialScope(request, region: region, service: service) + "\n" +
+                AmazonS3SignatureHelpers.hexEncode(AmazonS3SignatureHelpers.hashString(canonicalRequest))
     }
     
     private class func requestDate(request: NSURLRequest) -> String {
@@ -158,13 +177,13 @@ class AWSV4SignatureCalculator {
         return date + "/" +
             region.rawValue + "/" +
             service + "/" +
-            "aws4_request"
+        "aws4_request"
     }
     
     private class func requestDateWithoutTime(request: NSURLRequest) -> String {
         return requestDate(request).componentsSeparatedByString("T").first!
     }
-
+    
     /*
     *  MARK: Signature
     */
@@ -178,7 +197,7 @@ class AWSV4SignatureCalculator {
             let kSignature = AmazonS3SignatureHelpers.sha256HMacForString(stringToSign, withKey:signingKey, encoding: NSUTF8StringEncoding)
             return AmazonS3SignatureHelpers.hexEncode(NSString(data: kSignature, encoding: NSASCIIStringEncoding)! as String)
     }
-
+    
     private class func signingKey(request: NSURLRequest,
         secret: String,
         region: AmazonS3Region,
@@ -200,5 +219,5 @@ class AWSV4SignatureCalculator {
                 withKey:kService,
                 encoding: NSUTF8StringEncoding)
     }
-
+    
 }

@@ -182,6 +182,7 @@ private struct AWSTestRequestData {
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = method
         request.HTTPBody = body?.dataUsingEncoding(NSASCIIStringEncoding)
+        request.setValue(host, forHTTPHeaderField: "Host")
         request.setValue(contentType, forHTTPHeaderField: "Content-Type")
         request.setValue(timestamp, forHTTPHeaderField: "X-Amz-Date")
         
