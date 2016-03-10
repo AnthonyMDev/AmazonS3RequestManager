@@ -19,7 +19,7 @@ class AWSSignatureV4TestCase: XCTestCase {
     let region = AmazonS3Region.USStandard
     let service = "service"
     
-    let tests = [
+    let testNames = [
         "get-header-key-duplicate", "get-header-value-order",
         "get-header-value-trim", "get-space", "get-unreserved", "get-utf8", "get-vanilla",
         "get-vanilla-empty-query-key", "get-vanilla-query", "get-vanilla-query-order-key",
@@ -27,8 +27,6 @@ class AWSSignatureV4TestCase: XCTestCase {
         "post-header-key-case", "post-header-key-sort", "post-header-value-case", "post-vanilla",
         "post-vanilla-empty-query-value", "post-vanilla-query",
         "post-vanilla-query-space", "post-x-www-form-urlencoded", "post-x-www-form-urlencoded-parameters"]
-    
-//    let tests = ["post-vanilla-query-nonunreserved"]
     
     // Instance properties
     
@@ -59,7 +57,7 @@ class AWSSignatureV4TestCase: XCTestCase {
     */
     
     func test_V4Signature_canonicalRequest() {
-        for test in tests {
+        for test in testNames {
             // given
             let expected = self.expectedCanonicalRequest(test)
             let request = AWSTestRequestData(requestInfo: actualRequestInfo(test)).urlRequest()
@@ -73,7 +71,7 @@ class AWSSignatureV4TestCase: XCTestCase {
     }
     
     func test_V4Signature_stringToSign() {
-        for test in tests {
+        for test in testNames {
             // given
             let expected = self.expectedStringToSign(test)
             let request = AWSTestRequestData(requestInfo: actualRequestInfo(test)).urlRequest()
@@ -91,7 +89,7 @@ class AWSSignatureV4TestCase: XCTestCase {
     
     func test_V4Signature_authorizationHeader() {
         // given
-        for test in tests {
+        for test in testNames {
             let expected = self.expectedAuthorizationHeaderString(test)
             let request = AWSTestRequestData(requestInfo: actualRequestInfo(test)).urlRequest()
             
