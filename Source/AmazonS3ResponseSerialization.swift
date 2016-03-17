@@ -14,6 +14,25 @@ import SWXMLHash
 extension Request {
   
   /**
+   Creates a response serializer that parses XML data and returns an XML indexer.
+   
+   - returns: A XML indexer
+   */
+  public static func XMLResponseSerializer() -> ResponseSerializer<XMLIndexer, NSError> {
+    return ResponseSerializer { request, response, data, error in
+      guard error == nil else { return .Failure(error!) }
+      
+      guard let validData = data else {
+        let failureReason = "Data could not be serialized. Input data was nil."
+        let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+        return .Failure(error)
+      }
+      let xml = SWXMLHash.parse(validData)
+      return .Success(xml)
+    }
+  }
+    
+  /**
   Creates a response serializer that parses any errors from the Amazon S3 Service and returns the associated data.
   
   - returns: A data response serializer

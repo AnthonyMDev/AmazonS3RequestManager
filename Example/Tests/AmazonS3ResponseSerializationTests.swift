@@ -91,5 +91,22 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
     // then
     expect(result.error).to(equal(expectedError))
   }
+    
+  func test__XMLResponseSerializer__givenXMLString_returnsXMLIndexer() {
+    // given    
+    let xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+      "<XMLData>" +
+        "<XMLElement>test</XMLElement>" +
+      "</XMLData>"
+    let data = xml.dataUsingEncoding(NSUTF8StringEncoding)
+    
+    // when
+    let result = Request.XMLResponseSerializer().serializeResponse(nil, nil, data, nil)
+    let testContent = result.value!["XMLData"]["XMLElement"].element?.text
+    
+    // then
+    expect(result.error).to(beNil())
+    expect(testContent).to(equal("test"))
+  }
   
 }
