@@ -65,4 +65,36 @@ extension Request {
     return response(responseSerializer: Request.s3DataResponseSerializer(), completionHandler: completionHandler)
   }
   
+  /**
+   Adds a handler to be called once the request has finished.
+   The handler passes the result data as a populated object determined by the generic response type paramter.
+   
+   - parameter completionHandler: The code to be executed once the request has finished.
+   
+   - returns: The request.
+   */
+  public func responseS3Object<T: ResponseObjectSerializable>(completionHandler: Response<T, NSError> -> Void) -> Self {
+    let responseSerializer = ResponseSerializer<T, NSError> { request, response, data, error in
+      guard error == nil else { return .Failure(error!) }
+      
+      let XMLResponseSerializer = Request.XMLResponseSerializer()
+      let result = XMLResponseSerializer.serializeResponse(request, response, data, error)
+      
+      switch result {
+      case .Success(let value):
+        if let response = response, responseObject = T(response: response, representation: value) {
+          return .Success(responseObject)
+        } else {
+          let failureReason = "XML could not be serialized into response object: \(value)"
+          let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+          return .Failure(error)
+        }
+      case .Failure(let error):
+        return .Failure(error)
+      }
+    }
+    
+    return response(responseSerializer: responseSerializer, completionHandler: completionHandler)
+  }
+  
 }
