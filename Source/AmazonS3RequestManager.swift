@@ -207,6 +207,14 @@ public class AmazonS3RequestManager {
         
     return requestManager.request(listRequest)
   }
+    
+  // MARK: HEAD Object Request
+    
+  public func headObject(path:String) -> Request {
+    let headRequest = requestSerializer.amazonURLRequest(.HEAD, path: path)
+        
+    return requestManager.request(headRequest)
+  }
   
   // MARK: ACL Requests
   
