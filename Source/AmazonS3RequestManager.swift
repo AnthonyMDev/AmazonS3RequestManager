@@ -199,6 +199,14 @@ public class AmazonS3RequestManager {
     
     return requestManager.request(deleteRequest)
   }
+    
+  // MARK: LIST Bucket Request
+    
+  public func listBucket() -> Request {
+    let listRequest = requestSerializer.amazonURLRequest(.GET)
+        
+    return requestManager.request(listRequest)
+  }
   
   // MARK: ACL Requests
   
