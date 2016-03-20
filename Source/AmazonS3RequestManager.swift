@@ -155,12 +155,13 @@ public class AmazonS3RequestManager {
   
   - parameter fileURL:         The local `NSURL` of the file to upload
   - parameter destinationPath: The desired destination path, including the file name and extension, in the Amazon S3 bucket
+  - parameter metaData:        An optional dictionary of meta data that should be assigned to the object to be uploaded.
   - parameter acl:             The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
   
   - returns: An upload request for the object
   */
-  public func putObject(fileURL: NSURL, destinationPath: String, acl: AmazonS3ACL? = nil, storageClass: AmazonS3StorageClass = .Standard) -> Request {
-    let putRequest = requestSerializer.amazonURLRequest(.PUT, path: destinationPath, acl: acl, storageClass: storageClass)
+  public func putObject(fileURL: NSURL, destinationPath: String, metaData:[String : String] = [:], acl: AmazonS3ACL? = nil, storageClass: AmazonS3StorageClass = .Standard) -> Request {
+    let putRequest = requestSerializer.amazonURLRequest(.PUT, path: destinationPath, acl: acl, storageClass: storageClass, metaData: metaData)
     
     return requestManager.upload(putRequest, file: fileURL)
   }
@@ -172,13 +173,14 @@ public class AmazonS3RequestManager {
   
   - parameter data:            The `NSData` for the object to upload
   - parameter destinationPath: The desired destination path, including the file name and extension, in the Amazon S3 bucket
+  - parameter metaData:        An optional dictionary of meta data that should be assigned to the object to be uploaded.
   - parameter acl:             The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
   - parameter storageClass:    The optional storage class to use for the object to upload. If none is specified, standard is used. For more information see `AmazonS3StorageClass`.
   
   - returns: An upload request for the object
   */
-  public func putObject(data: NSData, destinationPath: String, acl: AmazonS3ACL? = nil, storageClass: AmazonS3StorageClass = .Standard) -> Request {
-    let putRequest = requestSerializer.amazonURLRequest(.PUT, path: destinationPath, acl: acl, storageClass: storageClass)
+  public func putObject(data: NSData, destinationPath: String, metaData:[String : String] = [:], acl: AmazonS3ACL? = nil, storageClass: AmazonS3StorageClass = .Standard) -> Request {
+    let putRequest = requestSerializer.amazonURLRequest(.PUT, path: destinationPath, acl: acl, storageClass: storageClass, metaData: metaData)
     
     return requestManager.upload(putRequest, data: data)
   }
