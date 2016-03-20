@@ -14,6 +14,19 @@ import Alamofire
 
 class AmazonS3ResponseObjectTests: XCTestCase {
 
+    func test__responseS3Object_givenMetaData_returnsS3MetaDataResult() {
+        // given
+        let headers = ["x-amz-meta-test1" : "foo", "x-amz-meta-test2" : "bar"]
+        let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: headers)
+        
+        // when
+        let metaDataResult = S3MetaDataResult(response:response!, representation:"")!
+        
+        // then
+        expect(metaDataResult.metaData["test1"]).to(equal("foo"))
+        expect(metaDataResult.metaData["test2"]).to(equal("bar"))
+    }
+    
     func test__responseS3Object_givenXMLString_returnsS3ListBucketResult() {
         // given
         let dateFormatter = NSDateFormatter()
