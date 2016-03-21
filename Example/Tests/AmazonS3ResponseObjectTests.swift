@@ -66,7 +66,7 @@ class AmazonS3ResponseObjectTests: XCTestCase {
         expect(bucketContents.truncated).to(equal(true))
         expect(bucketContents.maxKeys).to(equal(3))
         
-        expect(s3File.name).to(equal("demo.txt"))
+        expect(s3File.path).to(equal("demo.txt"))
         expect(s3File.modified).to(equal(expectedModifiedDate))
         expect(s3File.size).to(equal(6))
         expect(s3File.storageClass).to(equal(AmazonS3StorageClass.Standard))

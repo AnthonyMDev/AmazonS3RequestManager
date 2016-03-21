@@ -20,7 +20,7 @@ public protocol ResponseObjectSerializable {
  Struct for holding attributes of a file representation returned by an S3 instance.
  */
 public struct S3File {
-    public let name: String
+    public let path: String
     public let modified: NSDate
     public let size:Int
     public let storageClass:AmazonS3StorageClass?
@@ -64,7 +64,7 @@ public final class S3ListBucketResult: ResponseObjectSerializable {
         for element in xml {
             
             let file = S3File(
-                name: (element["Key"].element?.text)!,
+                path: (element["Key"].element?.text)!,
                 modified: dateFromS3Date((element["LastModified"].element?.text)!)!,
                 size: Int((element["Size"].element?.text)!)!,
                 storageClass: AmazonS3StorageClass(rawValue: (element["StorageClass"].element?.text)!),
