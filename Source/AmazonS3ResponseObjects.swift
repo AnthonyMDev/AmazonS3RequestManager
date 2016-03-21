@@ -13,32 +13,35 @@ import SWXMLHash
  Protocol for serializable object classes.
  */
 public protocol ResponseObjectSerializable {
-    init?(response: NSHTTPURLResponse, representation: Any)
+    
+    /// The type of the data that represents the object.
+    typealias RepresentationType
+    
+    init?(response: NSHTTPURLResponse, representation: RepresentationType)
 }
 
 /**
  Struct for holding attributes of a file representation returned by an S3 instance.
  */
+// TODO: Document properties
 public struct S3File {
     public let path: String
     public let modified: NSDate
-    public let size:Int
-    public let storageClass:AmazonS3StorageClass?
-    public let owner:(id:String,name:String)?
+    public let size: Int
+    public let storageClass: AmazonS3StorageClass?
+    public let owner: (id: String, name: String)?
 }
 
 /**
  Class for representing the result data of a LIST operation on an S3 instance.
  */
 public final class S3ListBucketResult: ResponseObjectSerializable {
-    public var files:[S3File] = []
-    public var bucket:String?
-    public var truncated:Bool?
-    public var maxKeys:Int?
+    public var files: [S3File] = []
+    public var bucket: String?
+    public var truncated: Bool?
+    public var maxKeys: Int?
     
-    public init?(response: NSHTTPURLResponse, representation: Any) {
-        guard let xml = representation as? XMLIndexer else { return nil }
-        
+    public init?(response: NSHTTPURLResponse, representation xml: XMLIndexer) {
         bucket = xml["ListBucketResult"]["Name"].element?.text
         
         if let isTruncated = xml["ListBucketResult"]["IsTruncated"].element?.text {
@@ -52,7 +55,7 @@ public final class S3ListBucketResult: ResponseObjectSerializable {
         parseContents(xml["ListBucketResult"]["Contents"])
     }
     
-    private func dateFromS3Date(rawDate:String) -> NSDate? {
+    private func dateFromS3Date(rawDate: String) -> NSDate? {
         let dateFormatter = NSDateFormatter()
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
@@ -60,9 +63,9 @@ public final class S3ListBucketResult: ResponseObjectSerializable {
         return dateFormatter.dateFromString(rawDate)
     }
     
-    private func parseContents(xml:XMLIndexer) {
+    private func parseContents(xml: XMLIndexer) {
         for element in xml {
-            
+            // TODO: Remove explicit unwraps
             let file = S3File(
                 path: (element["Key"].element?.text)!,
                 modified: dateFromS3Date((element["LastModified"].element?.text)!)!,
@@ -70,6 +73,7 @@ public final class S3ListBucketResult: ResponseObjectSerializable {
                 storageClass: AmazonS3StorageClass(rawValue: (element["StorageClass"].element?.text)!),
                 owner: ((element["Owner"]["ID"].element?.text)!,(element["Owner"]["DisplayName"].element?.text)!)
             )
+            
             files.append(file)
         }
     }

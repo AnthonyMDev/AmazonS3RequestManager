@@ -202,6 +202,7 @@ public class AmazonS3RequestManager {
     
   // MARK: LIST Bucket Request
     
+  // TODO: Document and test
   public func listBucket() -> Request {
     let listRequest = requestSerializer.amazonURLRequest(.GET)
         

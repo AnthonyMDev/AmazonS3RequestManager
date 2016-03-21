@@ -27,6 +27,8 @@ extension Request {
         let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
         return .Failure(error)
       }
+      
+      // TODO: Check for parse error
       let xml = SWXMLHash.parse(validData)
       return .Success(xml)
     }
@@ -73,7 +75,8 @@ extension Request {
    
    - returns: The request.
    */
-  public func responseS3Object<T: ResponseObjectSerializable>(completionHandler: Response<T, NSError> -> Void) -> Self {
+  // TODO: Refactor into new serializer
+  public func responseS3Object<T: ResponseObjectSerializable where T.RepresentationType == XMLIndexer>(completionHandler: Response<T, NSError> -> Void) -> Self {
     let responseSerializer = ResponseSerializer<T, NSError> { request, response, data, error in
       guard error == nil else { return .Failure(error!) }
       
