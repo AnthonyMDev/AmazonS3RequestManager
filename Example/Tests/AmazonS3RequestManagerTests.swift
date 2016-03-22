@@ -228,6 +228,33 @@ class AmazonS3RequestManagerTests: XCTestCase {
     // then
     XCTAssertEqual(request.request!.URL!, expectedURL)
   }
+    
+  /*
+  *  MARK: - LIST Bucket Request - Tests
+  */
+  
+  func test__listBucket_setsHTTPMethod() {
+    // given
+    let expected = "GET"
+    
+    // when
+    let request = sut.listBucket()
+    
+    // then
+    XCTAssertEqual(request.request!.HTTPMethod!, expected)
+  }
+  
+  func test__listObject_setsURLWithEndpoint_withPrefix() {
+    // given
+    let path = "TestPath"
+    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)?prefix=TestPath")!
+    
+    // when
+    let request = sut.listBucket(path)
+    
+    // then
+    XCTAssertEqual(request.request!.URL!, expectedURL)
+  }
   
   /*
   *  MARK: - ACL Request - Tests

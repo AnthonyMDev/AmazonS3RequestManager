@@ -202,8 +202,14 @@ public class AmazonS3RequestManager {
     
   // MARK: LIST Bucket Request
     
-  public func listBucket() -> Request {
-    let listRequest = requestSerializer.amazonURLRequest(.GET)
+  public func listBucket(prefix:String? = nil) -> Request {
+    var subresource:String? = nil
+        
+    if let prefix = prefix {
+      subresource = "prefix=" + prefix
+    }
+        
+    let listRequest = requestSerializer.amazonURLRequest(.GET, path: nil, subresource: subresource)
         
     return requestManager.request(listRequest)
   }
