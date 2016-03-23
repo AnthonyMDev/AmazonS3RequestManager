@@ -113,9 +113,11 @@ public final class S3BucketObjectList: ResponseObjectSerializable {
 }
 
 /**
-Class for representing the result data of a HEAD operation on an S3 instance.
+Class for representing the meta data values for an object from the Amazon S3 Service.
 */
 public final class S3ObjectMetaData: ResponseObjectSerializable {
+    
+    /// A dictionary of the meta data values for the object.
     public var metaData: [String : String] = [:]
     
     public init?(response: NSHTTPURLResponse, representation: Any) {
