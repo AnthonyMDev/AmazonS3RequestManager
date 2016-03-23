@@ -29,6 +29,8 @@
 		92E8C4391C4EFD4800759119 /* AmazonS3RequestSerializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E8C3EB1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift */; };
 		92E8C43A1C4EFD4A00759119 /* AmazonS3ResponseSerializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E8C3EC1C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift */; };
 		CC41F8986EEDCF29E9B5CB4D /* Pods_OSX_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0914547996879F9181CB5CD /* Pods_OSX_Tests.framework */; };
+		F3229E3F1C9D28D600848C84 /* AmazonS3ResponseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3229E3E1C9D28D500848C84 /* AmazonS3ResponseObjectTests.swift */; };
+		F3229E401C9D28D600848C84 /* AmazonS3ResponseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3229E3E1C9D28D500848C84 /* AmazonS3ResponseObjectTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,7 +81,7 @@
 		92E8C3E91C4EF62400759119 /* AmazonS3ACLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3ACLTests.swift; sourceTree = "<group>"; };
 		92E8C3EA1C4EF62400759119 /* AmazonS3RequestManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManagerTests.swift; sourceTree = "<group>"; };
 		92E8C3EB1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestSerializerTests.swift; sourceTree = "<group>"; };
-		92E8C3EC1C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3ResponseSerializationTests.swift; sourceTree = "<group>"; };
+		92E8C3EC1C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AmazonS3ResponseSerializationTests.swift; sourceTree = "<group>"; };
 		92E8C40B1C4EFAC800759119 /* OSX-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OSX-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92E8C40D1C4EFAC900759119 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92E8C40F1C4EFAC900759119 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 		E8014EE70C8CB23D8CC5CB28 /* Pods-OSX-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSX-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-OSX-Tests/Pods-OSX-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		EB60E86E5E26A196521F36DB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0914547996879F9181CB5CD /* Pods_OSX_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OSX_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3229E3E1C9D28D500848C84 /* AmazonS3ResponseObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3ResponseObjectTests.swift; sourceTree = "<group>"; };
 		F63C1F90FFF008F3C3588032 /* Pods-iOS-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-Example/Pods-iOS-Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -202,6 +205,7 @@
 				92E8C3EC1C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				92E8C3E81C4EF62300759119 /* AmazonS3RequestManager_Tests-Bridging-Header.h */,
+				F3229E3E1C9D28D500848C84 /* AmazonS3ResponseObjectTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -624,6 +628,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92E8C3EF1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift in Sources */,
+				F3229E3F1C9D28D600848C84 /* AmazonS3ResponseObjectTests.swift in Sources */,
 				92E8C3ED1C4EF62400759119 /* AmazonS3ACLTests.swift in Sources */,
 				92E8C3EE1C4EF62400759119 /* AmazonS3RequestManagerTests.swift in Sources */,
 				92E8C3F01C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift in Sources */,
@@ -644,6 +649,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92E8C43A1C4EFD4A00759119 /* AmazonS3ResponseSerializationTests.swift in Sources */,
+				F3229E401C9D28D600848C84 /* AmazonS3ResponseObjectTests.swift in Sources */,
 				92E8C4371C4EFD4400759119 /* AmazonS3ACLTests.swift in Sources */,
 				92E8C4391C4EFD4800759119 /* AmazonS3RequestSerializerTests.swift in Sources */,
 				92E8C4381C4EFD4600759119 /* AmazonS3RequestManagerTests.swift in Sources */,

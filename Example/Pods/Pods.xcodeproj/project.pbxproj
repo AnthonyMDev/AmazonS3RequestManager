@@ -407,6 +407,10 @@
 		F17EB2307CA64C2B1665977C /* NSURLRequest+DSL.h in Headers */ = {isa = PBXBuildFile; fileRef = 0891CAF6FA487888398CE7E7 /* NSURLRequest+DSL.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		F23800823BC079F4631EC28B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA74C7BA89AB9CCF1D015371 /* Cocoa.framework */; };
 		F29A0A1E8768E3CE7D104778 /* LSHTTPResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = E3AC438C30732EE478243CF1 /* LSHTTPResponse.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		F3229E3A1C9B438A00848C84 /* AmazonS3ResponseObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3229E381C9B434500848C84 /* AmazonS3ResponseObjects.swift */; };
+		F3229E3B1C9B438B00848C84 /* AmazonS3ResponseObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3229E381C9B434500848C84 /* AmazonS3ResponseObjects.swift */; };
+		F3229E3C1C9B438C00848C84 /* AmazonS3ResponseObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3229E381C9B434500848C84 /* AmazonS3ResponseObjects.swift */; };
+		F3229E3D1C9B438D00848C84 /* AmazonS3ResponseObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3229E381C9B434500848C84 /* AmazonS3ResponseObjects.swift */; };
 		F350548CDCEC3A3C366C3897 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51243367FEF7EB0471E10CC8 /* Match.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		F4E81C5F1E5139896AA106F3 /* DSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6BFC4E1B9807A1305E16C04 /* DSL.swift */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		F58D4ECFA6272A232CF99399 /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DCEF06EA08C339B950798325 /* SWXMLHash.framework */; };
@@ -747,7 +751,7 @@
 		6EA168ECAF7A0FB3C6D562D4 /* SuiteHooks.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SuiteHooks.swift; path = Quick/Hooks/SuiteHooks.swift; sourceTree = "<group>"; };
 		6F7258A6A644DDC63C816E31 /* Functional.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Functional.swift; path = Nimble/Utils/Functional.swift; sourceTree = "<group>"; };
 		6FBF5AD14A82BC160D5DD78E /* LSHTTPRequestDiff.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LSHTTPRequestDiff.h; path = Nocilla/Diff/LSHTTPRequestDiff.h; sourceTree = "<group>"; };
-		719692942D31DDE22E5EA985 /* AmazonS3ResponseSerialization.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AmazonS3ResponseSerialization.swift; sourceTree = "<group>"; };
+		719692942D31DDE22E5EA985 /* AmazonS3ResponseSerialization.swift */ = {isa = PBXFileReference; includeInIndex = 1; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AmazonS3ResponseSerialization.swift; sourceTree = "<group>"; };
 		72B3FB455DAE52F3EAD2927D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = "../Pods-iOS-Tests-Quick/Info.plist"; sourceTree = "<group>"; };
 		730DA671CA25DBD8FF0FCD23 /* Error.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Error.swift; path = Source/Error.swift; sourceTree = "<group>"; };
 		73190DC40A5B3D7A64E6AD4E /* Pods-OSX-Example-SWXMLHash-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-OSX-Example-SWXMLHash-prefix.pch"; sourceTree = "<group>"; };
@@ -927,6 +931,7 @@
 		F209D75630A61F8D0EA6A34B /* Pods-OSX-Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-OSX-Example-umbrella.h"; sourceTree = "<group>"; };
 		F25D1B6D8BDB2CD0F9F27596 /* Pods-OSX-Tests-Nimble.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-OSX-Tests-Nimble.modulemap"; sourceTree = "<group>"; };
 		F28CD9F77E8AA7CBBAA733C6 /* Pods-OSX-Example-AmazonS3RequestManager.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-OSX-Example-AmazonS3RequestManager.xcconfig"; sourceTree = "<group>"; };
+		F3229E381C9B434500848C84 /* AmazonS3ResponseObjects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3ResponseObjects.swift; sourceTree = "<group>"; };
 		F34B5A25AE26FCDCB2A161FF /* Pods-iOS-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iOS-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		F48F75F918FB529909ACA881 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F66A7D5F60CD28C292AF323C /* ExampleMetadata.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExampleMetadata.swift; path = Quick/ExampleMetadata.swift; sourceTree = "<group>"; };
@@ -1360,6 +1365,7 @@
 				AAA33FE14C4146542A09639C /* AmazonS3RequestManager.swift */,
 				FE46E0B80120B667241C72C0 /* AmazonS3RequestSerializer.swift */,
 				719692942D31DDE22E5EA985 /* AmazonS3ResponseSerialization.swift */,
+				F3229E381C9B434500848C84 /* AmazonS3ResponseObjects.swift */,
 				307FAFEFC1BAE83F90E827E8 /* AmazonS3SignatureHelpers.h */,
 				1A9B9E214EDCEF2B0CFE4658 /* AmazonS3SignatureHelpers.m */,
 			);
@@ -2344,7 +2350,7 @@
 		824287F7107F0B1A75BA2BC0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0700;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0700;
 			};
 			buildConfigurationList = 8DBBE147C4AD334B2CF563AC /* Build configuration list for PBXProject "Pods" */;
@@ -2403,6 +2409,7 @@
 				EB4C59A4AF6E242243A92B5E /* AmazonS3RequestManager.swift in Sources */,
 				18B6A114E73D4045D48F30CE /* AmazonS3RequestSerializer.swift in Sources */,
 				0680D284C27DC5C054EF0B1F /* AmazonS3ResponseSerialization.swift in Sources */,
+				F3229E3C1C9B438C00848C84 /* AmazonS3ResponseObjects.swift in Sources */,
 				7F3258E65DDD3A28EE42971B /* AmazonS3SignatureHelpers.m in Sources */,
 				3E9E477179AE0DCCDA113E25 /* Pods-OSX-Example-AmazonS3RequestManager-dummy.m in Sources */,
 			);
@@ -2527,6 +2534,7 @@
 				7C4A18638E3ADFC319C7A29D /* AmazonS3RequestManager.swift in Sources */,
 				10CFA1B616D57B424C958D6A /* AmazonS3RequestSerializer.swift in Sources */,
 				EEF9E7166EC3AA066A970E10 /* AmazonS3ResponseSerialization.swift in Sources */,
+				F3229E3B1C9B438B00848C84 /* AmazonS3ResponseObjects.swift in Sources */,
 				7BFE0C8C1B290869BE4951D5 /* AmazonS3SignatureHelpers.m in Sources */,
 				820AA138F03F097E60FC2181 /* Pods-iOS-Tests-AmazonS3RequestManager-dummy.m in Sources */,
 			);
@@ -2602,6 +2610,7 @@
 				956E5F2F2399777A9080DAF5 /* AmazonS3RequestManager.swift in Sources */,
 				6C28675F20ED8494D687CA1B /* AmazonS3RequestSerializer.swift in Sources */,
 				308FFFD9635FED8C155984AD /* AmazonS3ResponseSerialization.swift in Sources */,
+				F3229E3A1C9B438A00848C84 /* AmazonS3ResponseObjects.swift in Sources */,
 				EDAF0119175EA194899C626D /* AmazonS3SignatureHelpers.m in Sources */,
 				0B4ACCBBCE752E3A0400F4DA /* Pods-iOS-Example-AmazonS3RequestManager-dummy.m in Sources */,
 			);
@@ -2722,6 +2731,7 @@
 				D59D471E3FA361CAD04A9AF1 /* AmazonS3RequestManager.swift in Sources */,
 				28E04214F7F8DB79C4E7E4EC /* AmazonS3RequestSerializer.swift in Sources */,
 				E3906C8CDB1205796C78BA3E /* AmazonS3ResponseSerialization.swift in Sources */,
+				F3229E3D1C9B438D00848C84 /* AmazonS3ResponseObjects.swift in Sources */,
 				E504204E8A883EDB9290FC28 /* AmazonS3SignatureHelpers.m in Sources */,
 				E152D6AD1C517E84ED3E54B8 /* Pods-OSX-Tests-AmazonS3RequestManager-dummy.m in Sources */,
 			);
@@ -3789,6 +3799,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1D75A653685F91A63F54ECC6 /* Pods-iOS-Example.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -3879,6 +3890,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9556084FE4CB386143481A2B /* Pods-iOS-Example.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
