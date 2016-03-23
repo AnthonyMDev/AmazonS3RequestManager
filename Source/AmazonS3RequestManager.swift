@@ -192,8 +192,14 @@ public class AmazonS3RequestManager {
     
     // MARK: HEAD Object Request
     
-    // TODO: Document
-    public func headObject(path:String) -> Request {
+    /**
+    Retrieves metadata from an object without returning the object itself. This operation is useful if you are interested only in an object's metadata. To use HEAD, you must have READ access to the object.
+    
+    - parameter path: The object path
+    
+    - returns: A HEAD request for the object
+    */
+    public func headObject(path: String) -> Request {
         let headRequest = requestSerializer.amazonURLRequest(.HEAD, path: path)
         
         return requestManager.request(headRequest)

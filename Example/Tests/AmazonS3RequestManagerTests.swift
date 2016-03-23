@@ -269,7 +269,18 @@ class AmazonS3RequestManagerTests: XCTestCase {
         // then
         XCTAssertEqual(request.request!.HTTPMethod!, expected)
     }
-    // TODO: Add missing test for path
+    
+    func test__headObject__setsURLWithEndpoint() {
+        // given
+        let path = "TestPath"
+        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+        
+        // when
+        let request = sut.headObject(path)
+        
+        // then
+        XCTAssertEqual(request.request!.URL!, expectedURL)
+    }
     
     /*
     *  MARK: - ACL Request - Tests
