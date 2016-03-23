@@ -89,9 +89,11 @@ public class AmazonS3RequestSerializer {
      
      :discussion: The `NSURLRequest`s returned from this method may be used with `Alamofire`, `NSURLSession` or any other network request manager.
      
-     - parameter method: The HTTP method for the request. For more information see `Alamofire.Method`.
-     - parameter path:   The desired path, including the file name and extension, in the Amazon S3 Bucket.
-     - parameter acl:    The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
+     - parameter method:        The HTTP method for the request. For more information see `Alamofire.Method`.
+     - parameter path:          The desired path, including the file name and extension, in the Amazon S3 Bucket.
+     - parameter acl:           The optional access control list to set the acl headers for the request. For more information see `AmazonS3ACL`.
+     - parameter metaData:      An optional dictionary of meta data that should be assigned to the object to be uploaded.
+     - parameter storageClass:  The optional storage class to use for the object to upload. If none is specified, standard is used. For more information see `AmazonS3StorageClass`.
      
      - returns: An `NSURLRequest`, serialized for use with the Amazon S3 service.
      */
@@ -99,8 +101,8 @@ public class AmazonS3RequestSerializer {
         path: String? = nil,
         subresource: String? = nil,
         acl: AmazonS3ACL? = nil,
-        storageClass: AmazonS3StorageClass = .Standard,
-        metaData:[String : String]? = nil) -> NSURLRequest {
+        metaData:[String : String]? = nil,
+        storageClass: AmazonS3StorageClass = .Standard) -> NSURLRequest {
             let url = requestURL(path, subresource: subresource)
             
             var mutableURLRequest = NSMutableURLRequest(URL: url)
