@@ -67,8 +67,9 @@ class AmazonS3ResponseObjectTests: XCTestCase {
         expect(bucketContents.maxKeys).to(equal(3))
         
         expect(s3File.path).to(equal("demo.txt"))
-        expect(s3File.modified).to(equal(expectedModifiedDate))
+        expect(s3File.lastModifiedDate).to(equal(expectedModifiedDate))
         expect(s3File.size).to(equal(6))
+        expect(s3File.entityTag).to(equal("\"2016-03-03 14:54:27.043:75b650fa317e55090741576852a79562\""))
         expect(s3File.storageClass).to(equal(AmazonS3StorageClass.Standard))
         expect(s3File.owner!.id).to(equal("61646d696e00000000"))
         expect(s3File.owner!.name).to(equal("admin"))

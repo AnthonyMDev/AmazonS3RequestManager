@@ -66,12 +66,19 @@ public enum AmazonS3Region: String {
  For more information about these classes and when you might want to use one over the other, including the pros and cons of each selection, see
  https://aws.amazon.com/blogs/aws/new-amazon-s3-reduced-redundancy-storage-rrs/
  
- - Standard:				Default storage class for all uploads. "If you store 10,000 objects with us, on average we may lose one of them every 10 million years or so. This storage is designed in such a way that we can sustain the concurrent loss of data in two separate storage facilities."
- - ReducedRedundancy:    Reduced Redundancy storage class. "If you store 10,000 objects with us, on average we may lose one of them every year. RRS is designed to sustain the loss of data in a single facility."
+ - Standard:                    Default storage class for all uploads. "If you store 10,000 objects with us, on average we may lose one of them every 10 million years or so. This storage is designed in such a way that we can sustain the concurrent loss of data in two separate storage facilities."
+
+ - StandardInfrequentAccess:    Infrequent Access storage class. Used for "data that is accessed less frequently, but requires rapid access when needed. Standard - IA offers the high durability, throughput, and low latency of Amazon S3 Standard, with a low per GB storage price and per GB retrieval fee. This combination of low cost and high performance make Standard - IA ideal for long-term storage, backups, and as a data store for disaster recovery. The Standard - IA storage class is set at the object level and can exist in the same bucket as Standard, allowing you to use lifecycle policies to automatically transition objects between storage classes without any application changes."
+ 
+ - ReducedRedundancy:           Reduced Redundancy storage class. "If you store 10,000 objects with us, on average we may lose one of them every year. RRS is designed to sustain the loss of data in a single facility."
+ 
+ - Glacier:                     Amazon Glacier service storage class. "Amazon Glacier is a secure, durable, and extremely low-cost storage service for data archiving. You can reliably store any amount of data at costs that are competitive with or cheaper than on-premises solutions. To keep costs low, Amazon Glacier is optimized for data that is rarely accessed and a retrieval time of several hours is suitable. Amazon Glacier supports lifecycle policies for automatic migration between storage classes. Please see the Amazon Glacier page for more details. "
  */
 public enum AmazonS3StorageClass: String {
     case Standard = "STANDARD",
-    ReducedRedundancy = "REDUCED_REDUNDANCY"
+    StandardInfrequentAccess = "STANDARD_IA",
+    ReducedRedundancy = "REDUCED_REDUNDANCY",
+    Glacier = "GLACIER"
 }
 
 /**
