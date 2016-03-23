@@ -211,5 +211,18 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     // then
     XCTAssertNotNil(aclHeader, "Should have ACL header field")
   }
+    
+  func test__amazonURLRequest__givenMetaData__setsHTTPHeader_amz_meta() {
+    // given
+    let metaData = ["demo" : "foo"]
+    let request = sut.amazonURLRequest(.HEAD, path: "test", acl: nil, metaData: metaData)
+    
+    // when
+    let headers = request.allHTTPHeaderFields!
+    let metaDataHeader: String? = headers["x-amz-meta-demo"]
+    
+    // then
+    XCTAssertEqual(metaDataHeader, "foo", "Meta data header field is not set correctly.")
+  }
   
 }

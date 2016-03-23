@@ -99,7 +99,8 @@ public class AmazonS3RequestSerializer {
         path: String? = nil,
         subresource: String? = nil,
         acl: AmazonS3ACL? = nil,
-        storageClass: AmazonS3StorageClass = .Standard) -> NSURLRequest {
+        storageClass: AmazonS3StorageClass = .Standard,
+        metaData:[String : String]? = nil) -> NSURLRequest {
             let url = requestURL(path, subresource: subresource)
             
             var mutableURLRequest = NSMutableURLRequest(URL: url)
@@ -107,9 +108,8 @@ public class AmazonS3RequestSerializer {
             
             setContentType(forRequest: &mutableURLRequest)
             acl?.setACLHeaders(forRequest: &mutableURLRequest)
-            
-            setStorageClassHeaders(forRequest: &mutableURLRequest, storageClass: storageClass)
-            
+            setStorageClassHeaders(storageClass, forRequest: &mutableURLRequest)
+            setMetaDataHeaders(metaData, forRequest: &mutableURLRequest)
             setAuthorizationHeaders(forRequest: &mutableURLRequest)
             
             return mutableURLRequest
@@ -185,8 +185,16 @@ public class AmazonS3RequestSerializer {
         
     }
     
-    private func setStorageClassHeaders(inout forRequest request: NSMutableURLRequest, storageClass: AmazonS3StorageClass) {
+    private func setStorageClassHeaders(storageClass: AmazonS3StorageClass, inout forRequest request: NSMutableURLRequest) {
         request.setValue(storageClass.rawValue, forHTTPHeaderField: "x-amz-storage-class")
+    }
+    
+    private func setMetaDataHeaders(metaData:[String : String]?, inout forRequest request: NSMutableURLRequest) {
+        guard let metaData = metaData else { return }
+        
+        for (key, value) in metaData {
+            request.setValue(value, forHTTPHeaderField: "x-amz-meta-" + key)
+        }
     }
     
     private func currentTimeStamp() -> String {

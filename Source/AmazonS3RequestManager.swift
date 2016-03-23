@@ -190,6 +190,15 @@ public class AmazonS3RequestManager {
         return requestManager.upload(putRequest, data: data)
     }
     
+    // MARK: HEAD Object Request
+    
+    // TODO: Document
+    public func headObject(path:String) -> Request {
+        let headRequest = requestSerializer.amazonURLRequest(.HEAD, path: path)
+        
+        return requestManager.request(headRequest)
+    }
+    
     // MARK: DELETE Object Request
     
     /**

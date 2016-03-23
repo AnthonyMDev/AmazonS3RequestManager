@@ -256,6 +256,22 @@ class AmazonS3RequestManagerTests: XCTestCase {
     }
     
     /*
+    *  MARK: - HEAD Object Request - Tests
+    */
+    
+    func test__headObject_setsHTTPMethod() {
+        // given
+        let expected = "HEAD"
+        
+        // when
+        let request = sut.headObject("test")
+        
+        // then
+        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+    }
+    // TODO: Add missing test for path
+    
+    /*
     *  MARK: - ACL Request - Tests
     */
     

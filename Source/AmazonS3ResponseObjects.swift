@@ -111,3 +111,24 @@ public final class S3BucketObjectList: ResponseObjectSerializable {
     }
     
 }
+
+/**
+Class for representing the result data of a HEAD operation on an S3 instance.
+*/
+public final class S3ObjectMetaData: ResponseObjectSerializable {
+    public var metaData: [String : String] = [:]
+    
+    public init?(response: NSHTTPURLResponse, representation: Any) {
+        if let headers = response.allHeaderFields as? [String : String] {
+            
+            for (header,value) in headers {
+                let prefix = "x-amz-meta-"
+                if header.hasPrefix(prefix) {
+                    let trimmedHeaderName = header.substringFromIndex(prefix.startIndex.advancedBy(prefix.characters.count))
+                    metaData[trimmedHeaderName] = value
+                }
+            }
+            
+        }
+    }
+}
