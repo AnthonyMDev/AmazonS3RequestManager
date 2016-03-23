@@ -14,7 +14,7 @@ import Alamofire
 
 class AmazonS3ResponseObjectTests: XCTestCase {
 
-    func test__responseS3Object_givenXMLString_returnsS3ListBucketResult() {
+    func test__responseS3Object_givenXMLString_returnsS3BucketObjectList() {
         // given
         let dateFormatter = NSDateFormatter()
         dateFormatter.timeZone = NSTimeZone.localTimeZone()
@@ -57,7 +57,7 @@ class AmazonS3ResponseObjectTests: XCTestCase {
         // when
         let result = Request.XMLResponseSerializer().serializeResponse(nil, nil, data, nil)
         let xmlIndexer = result.value!
-        let bucketContents = S3ListBucketResult(response:NSHTTPURLResponse(), representation:xmlIndexer)!
+        let bucketContents = S3BucketObjectList(response:NSHTTPURLResponse(), representation:xmlIndexer)!
         let s3File = bucketContents.files.first!
         
         // then

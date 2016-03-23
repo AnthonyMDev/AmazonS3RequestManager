@@ -35,7 +35,7 @@ public struct S3File {
 /**
  Class for representing the result data of a LIST operation on an S3 instance.
  */
-public final class S3ListBucketResult: ResponseObjectSerializable {
+public final class S3BucketObjectList: ResponseObjectSerializable {
     public var files: [S3File] = []
     public var bucket: String?
     public var truncated: Bool?
