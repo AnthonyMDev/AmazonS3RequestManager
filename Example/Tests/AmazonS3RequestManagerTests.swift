@@ -49,7 +49,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     */
     
     func test__getObject__setsHTTPMethod() {
-        // given
+        // given      
         let expected = "GET"
         
         // when
