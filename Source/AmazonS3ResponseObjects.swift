@@ -15,7 +15,7 @@ import SWXMLHash
 public protocol ResponseObjectSerializable {
     
     /// The type of the data that represents the object.
-    typealias RepresentationType
+    associatedtype RepresentationType
     
     init?(response: NSHTTPURLResponse, representation: RepresentationType)
 }
