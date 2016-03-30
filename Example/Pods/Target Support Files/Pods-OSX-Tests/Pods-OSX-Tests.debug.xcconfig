@@ -1,10 +1,9 @@
 CODE_SIGN_IDENTITY =
 EMBEDDED_CONTENT_CONTAINS_SWIFT = YES
-FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_FRAMEWORK_BUILD_PATH"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$CONFIGURATION_BUILD_DIR/Alamofire-OSX" "$CONFIGURATION_BUILD_DIR/AmazonS3RequestManager-OSX" "$CONFIGURATION_BUILD_DIR/Nimble-OSX" "$CONFIGURATION_BUILD_DIR/Nocilla-OSX" "$CONFIGURATION_BUILD_DIR/Quick-OSX" "$CONFIGURATION_BUILD_DIR/SWXMLHash-OSX"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/../Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$PODS_FRAMEWORK_BUILD_PATH/Alamofire.framework/Headers" -iquote "$PODS_FRAMEWORK_BUILD_PATH/AmazonS3RequestManager.framework/Headers" -iquote "$PODS_FRAMEWORK_BUILD_PATH/Nimble.framework/Headers" -iquote "$PODS_FRAMEWORK_BUILD_PATH/Nocilla.framework/Headers" -iquote "$PODS_FRAMEWORK_BUILD_PATH/Quick.framework/Headers" -iquote "$PODS_FRAMEWORK_BUILD_PATH/SWXMLHash.framework/Headers"
+OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/Alamofire-OSX/Alamofire.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/AmazonS3RequestManager-OSX/AmazonS3RequestManager.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/Nimble-OSX/Nimble.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/Nocilla-OSX/Nocilla.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/Quick-OSX/Quick.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/SWXMLHash-OSX/SWXMLHash.framework/Headers"
 OTHER_LDFLAGS = $(inherited) -framework "Alamofire" -framework "AmazonS3RequestManager" -framework "Nimble" -framework "Nocilla" -framework "Quick" -framework "SWXMLHash"
 OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
-PODS_FRAMEWORK_BUILD_PATH = $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Pods-OSX-Tests
 PODS_ROOT = ${SRCROOT}/Pods

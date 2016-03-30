@@ -45,7 +45,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
   func test__amazonURLRequest__setsURLWithEndpointURL() {
     // given
     let path = "TestPath"
-    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/\(path)")!
+    let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/\(path)")!
     
     // when
     let request = sut.amazonURLRequest(.GET, path: path)
@@ -59,7 +59,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     sut.bucket = nil
     
     let path = "TestPath"
-    let expectedURL = NSURL(string: "https://\(region.rawValue)/\(path)")!
+    let expectedURL = NSURL(string: "https://\(region.endpoint)/\(path)")!
     
     // when
     let request = sut.amazonURLRequest(.GET, path: path)
@@ -72,7 +72,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     // given
     sut.bucket = "test"
     
-    let expectedURL = NSURL(string: "https://\(region.rawValue)/test")!
+    let expectedURL = NSURL(string: "https://\(region.endpoint)/test")!
     
     // when
     let request = sut.amazonURLRequest(.GET)
@@ -86,7 +86,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     sut.useSSL = false
     
     let path = "TestPath"
-    let expectedURL = NSURL(string: "http://\(region.rawValue)/\(bucket)/\(path)")!
+    let expectedURL = NSURL(string: "http://\(region.endpoint)/\(bucket)/\(path)")!
     
     // when
     let request = sut.amazonURLRequest(.GET, path: path)

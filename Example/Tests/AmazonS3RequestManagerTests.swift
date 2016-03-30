@@ -11,7 +11,7 @@ import Nimble
 import Nocilla
 
 import Alamofire
-import AmazonS3RequestManager
+@testable import AmazonS3RequestManager
 
 class AmazonS3RequestManagerTests: XCTestCase {
     
@@ -62,7 +62,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     func test__getObject__setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
         let request = sut.getObject(path)
@@ -97,7 +97,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     func test__downloadObject_path_saveToURL_setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
         let request = sut.downloadObject(path, saveToURL: NSURL())
@@ -123,7 +123,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     func test__listBucketObjects__setsURL() {
         // given
-        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)")!
         
         // when
         let request = sut.listBucketObjects()
@@ -158,7 +158,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     func test__putObject_fileURL_destinationPath_setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
         let request = sut.putObject(NSURL(), destinationPath: path)
@@ -204,7 +204,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     func test__putObject_data_destinationPath__setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
         let request = sut.putObject(NSData(), destinationPath: path)
@@ -246,7 +246,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     func test__deleteObject_setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
         let request = sut.deleteObject(path)
@@ -273,7 +273,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     func test__headObject__setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/TestPath")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
         let request = sut.headObject(path)
@@ -299,7 +299,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     func test__getObject__setsURL_withACLSubresource() {
         // given
-        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/?acl")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/?acl")!
         
         // when
         let request = sut.getBucketACL()
@@ -323,7 +323,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     func test__setBucketACL_setsURLWithEndpoint() {
         // given
-        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/?acl")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/?acl")!
         
         let acl = AmazonS3PredefinedACL.Public
         
@@ -362,7 +362,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     func test__getACL_forObjectAtPath__setsURL_withACLSubresource() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/\(path)?acl")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/\(path)?acl")!
         
         // when
         let request = sut.getACL(forObjectAtPath: path)
@@ -390,7 +390,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
         let path = "TestPath"
         let acl = AmazonS3PredefinedACL.Public
         
-        let expectedURL = NSURL(string: "https://\(region.rawValue)/\(bucket)/\(path)?acl")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/\(path)?acl")!
         
         // when
         let request = sut.setACL(forObjectAtPath: path, acl: acl)

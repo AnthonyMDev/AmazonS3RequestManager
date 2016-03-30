@@ -4,6 +4,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![CocoaPods](https://img.shields.io/cocoapods/v/SWXMLHash.svg)](https://cocoapods.org/pods/SWXMLHash)
 [![Join the chat at https://gitter.im/drmohundro/SWXMLHash](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/drmohundro/SWXMLHash?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![codebeat](https://codebeat.co/badges/893cc640-c5d9-45b2-a3ff-426e6e6b7b80)](https://codebeat.co/projects/github-com-drmohundro-swxmlhash)
 
 SWXMLHash is a relatively simple way to parse XML in Swift. If you're familiar with `NSXMLParser`, this library is a simple wrapper around it. Conceptually, it provides a translation from XML to a dictionary of arrays (aka hash).
 
@@ -11,6 +12,7 @@ The API takes a lot of inspiration from [SwiftyJSON](https://github.com/SwiftyJS
 
 ## Contents
 
+* [Requirements](#requirements)
 * [Installation](#installation)
 * [Getting Started](#getting-started)
 * [Configuration](#configuration)
@@ -18,6 +20,11 @@ The API takes a lot of inspiration from [SwiftyJSON](https://github.com/SwiftyJS
 * [Changelog](#changelog)
 * [Contributing](#contributing)
 * [License](#license)
+
+## Requirements
+
+- iOS 8.0+ / Mac OS X 10.9+ / tvOS 9.0+ / watchOS 2.0+
+- Xcode 7.1+
 
 ## Installation
 
@@ -37,7 +44,7 @@ Then create a `Podfile` with the following contents:
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
-pod 'SWXMLHash', '~> 2.0.0'
+pod 'SWXMLHash', '~> 2.1.0'
 ```
 
 Finally, run the following command to install it:
@@ -58,7 +65,7 @@ $ brew install carthage
 Then add the following line to your `Cartfile`:
 
 ```
-github "drmohundro/SWXMLHash" ~> 2.0
+github "drmohundro/SWXMLHash" ~> 2.1
 ```
 
 ### Manual Installation
@@ -273,17 +280,74 @@ case .XMLError(let error):
 
 Note that error handling as shown above will not work with lazy loaded XML. The lazy parsing doesn't actually occur until the `element` or `all` method are called - as a result, there isn't any way to know prior to asking for an element if it exists or not.
 
+### Types conversion
+
+Given:
+
+```xml
+<root>
+  <books>
+    <book>
+      <title>Book A</title>
+      <price>12.5</price>
+      <year>2015</year>
+    </book>
+    <book>
+      <title>Book B</title>
+      <price>10</price>
+      <year>1988</year>
+    </book>
+    <book>
+      <title>Book C</title>
+      <price>8.33</price>
+      <year>1990</year>
+      <amount>10</amount>
+    </book>
+  <books>
+</root>
+```
+with `Book` struct implementing `XMLIndexerDeserializable`:
+
+```swift
+struct Book: XMLIndexerDeserializable {
+    let title: String
+    let price: Double
+    let year: Int
+    let amount: Int?
+    
+    static func deserialize(node: XMLIndexer) throws -> Book {
+        return try Book(
+            title: node["title"].value(),
+            price: node["price"].value(),
+            year: node["year"].value(),
+            amount: node["amount"].value()
+        )
+    }
+}
+```
+
+The below will return array of `Book` structs:
+
+```swift
+let books: [Book] = try xml["root"]["books"]["book"].value()
+```
+
+<img src="https://raw.githubusercontent.com/ncreated/SWXMLHash/assets/types-conversion%402x.png" width="600" alt="Types Conversion" />
+
+Build-in, leaf-nodes converters support `Int`, `Double`, `Float` and `String` values (both non- and -optional variants). Custom converters can be added by implementing `XMLElementDeserializable`.
+
+You can convert any XML to your custom type by implementing `XMLIndexerDeserializable`.
+
+Types conversion supports error handling, optionals and arrays. For more examples, look into `SWXMLHashTests.swift` or play with types conversion directly in the Swift playground.
+
+
 ## Changelog
 
 See [CHANGELOG](CHANGELOG.md) for a list of all changes and their corresponding versions.
 
 ## Contributing
 
-This framework uses [Quick](https://github.com/Quick/Quick) and [Nimble](https://github.com/Quick/Nimble) for its tests. To get these dependencies, you'll need to have [Carthage](https://github.com/Carthage/Carthage) installed. Once it is installed, you should be able to just run `carthage update`.
-
-To run the tests, you can either run them from within Xcode or you can run `rake test`.
-
-The code loosely follows GitHub's [Swift Styleguide](https://github.com/github/swift-style-guide). The line length recommendations aren't strictly followed and the codebase is currently using spaces over tabs. I'm using [SwiftLint](https://github.com/realm/SwiftLint) to catch issues with style.
+See [CONTRIBUTING](CONTRIBUTING.md) for guidelines to contribute back to SWXMLHash.
 
 ## License
 

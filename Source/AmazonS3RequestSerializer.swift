@@ -142,10 +142,10 @@ public class AmazonS3RequestSerializer {
         let scheme = self.useSSL ? "https" : "http"
         
         if bucket != nil {
-            URLString = "\(scheme)://\(region.rawValue)/\(bucket!)"
+            URLString = "\(scheme)://\(region.endpoint)/\(bucket!)"
             
         } else {
-            URLString = "\(scheme)://\(region.rawValue)"
+            URLString = "\(scheme)://\(region.endpoint)"
         }
         
         return NSURL(string: URLString)!

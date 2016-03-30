@@ -16,7 +16,7 @@ install_framework()
     local source="$1"
   fi
 
-  local destination="${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}"
+  local destination="${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}"
 
   if [ -L "${source}" ]; then
       echo "Symlinked..."
@@ -84,12 +84,12 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-iOS-Example/Alamofire.framework"
-  install_framework "Pods-iOS-Example/AmazonS3RequestManager.framework"
-  install_framework "Pods-iOS-Example/SWXMLHash.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Alamofire-iOS/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/AmazonS3RequestManager-iOS/AmazonS3RequestManager.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SWXMLHash-iOS/SWXMLHash.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-iOS-Example/Alamofire.framework"
-  install_framework "Pods-iOS-Example/AmazonS3RequestManager.framework"
-  install_framework "Pods-iOS-Example/SWXMLHash.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Alamofire-iOS/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/AmazonS3RequestManager-iOS/AmazonS3RequestManager.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SWXMLHash-iOS/SWXMLHash.framework"
 fi

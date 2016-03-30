@@ -16,7 +16,7 @@ install_framework()
     local source="$1"
   fi
 
-  local destination="${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}"
+  local destination="${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}"
 
   if [ -L "${source}" ]; then
       echo "Symlinked..."
@@ -84,18 +84,18 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-OSX-Tests/Alamofire.framework"
-  install_framework "Pods-OSX-Tests/AmazonS3RequestManager.framework"
-  install_framework "Pods-OSX-Tests/SWXMLHash.framework"
-  install_framework "Pods-OSX-Tests/Nimble.framework"
-  install_framework "Pods-OSX-Tests/Nocilla.framework"
-  install_framework "Pods-OSX-Tests/Quick.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Alamofire-OSX/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/AmazonS3RequestManager-OSX/AmazonS3RequestManager.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SWXMLHash-OSX/SWXMLHash.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Nimble-OSX/Nimble.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Nocilla-OSX/Nocilla.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Quick-OSX/Quick.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-OSX-Tests/Alamofire.framework"
-  install_framework "Pods-OSX-Tests/AmazonS3RequestManager.framework"
-  install_framework "Pods-OSX-Tests/SWXMLHash.framework"
-  install_framework "Pods-OSX-Tests/Nimble.framework"
-  install_framework "Pods-OSX-Tests/Nocilla.framework"
-  install_framework "Pods-OSX-Tests/Quick.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Alamofire-OSX/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/AmazonS3RequestManager-OSX/AmazonS3RequestManager.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SWXMLHash-OSX/SWXMLHash.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Nimble-OSX/Nimble.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Nocilla-OSX/Nocilla.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Quick-OSX/Quick.framework"
 fi
