@@ -58,7 +58,8 @@ public enum AmazonS3Region {
   APSoutheast2,
   APNortheast1,
   APNortheast2,
-  SAEast1
+  SAEast1,
+  Custom(hostName: String, endpoint: String)
   
   var hostName: String {
     switch self {
@@ -72,6 +73,7 @@ public enum AmazonS3Region {
     case APNortheast1: return "ap-northeast-1"
     case APNortheast2: return "ap-northeast-2"
     case SAEast1: return "sa-east-1"
+    case .Custom(let hostName, _): return hostName
     }
   }
   
@@ -87,6 +89,7 @@ public enum AmazonS3Region {
     case APNortheast1: return "s3-ap-northeast-1.amazonaws.com"
     case APNortheast2: return "s3-ap-northeast-2.amazonaws.com"
     case SAEast1: return "s3-sa-east-1.amazonaws.com"
+    case .Custom(_, let endpoint): return endpoint
     }
   }
 }

@@ -35,7 +35,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     expect(self.sut.accessKey).to(equal(self.accessKey))
     expect(self.sut.secret).to(equal(self.secret))
     expect(self.sut.bucket).to(equal(self.bucket))
-    expect(self.sut.region).to(equal(self.region))
+    expect(self.sut.region.hostName).to(equal(self.region.hostName))
   }
   
   /*
@@ -46,6 +46,21 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     // given
     let path = "TestPath"
     let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/\(path)")!
+    
+    // when
+    let request = sut.amazonURLRequest(.GET, path: path)
+    
+    // then
+    XCTAssertEqual(request.URL!, expectedURL)
+  }
+  
+  func test__amazonURLRequest__givenCustomRegion_setsURLWithEndpointURL() {
+    // given
+    let path = "TestPath"
+    let expectedEndpoint = "test.endpoint.com"
+    let region = AmazonS3Region.Custom(hostName: "", endpoint: expectedEndpoint)
+    sut.region = region
+    let expectedURL = NSURL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)")!
     
     // when
     let request = sut.amazonURLRequest(.GET, path: path)

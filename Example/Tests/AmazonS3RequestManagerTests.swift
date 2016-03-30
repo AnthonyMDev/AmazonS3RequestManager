@@ -41,7 +41,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
         expect(self.sut.requestSerializer.accessKey).to(equal(self.accessKey))
         expect(self.sut.requestSerializer.secret).to(equal(self.secret))
         expect(self.sut.requestSerializer.bucket).to(equal(self.bucket))
-        expect(self.sut.requestSerializer.region).to(equal(self.region))
+        expect(self.sut.requestSerializer.region.hostName).to(equal(self.region.hostName))
     }
     
     /*
