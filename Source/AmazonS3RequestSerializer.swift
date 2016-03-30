@@ -136,7 +136,7 @@ public class AmazonS3RequestSerializer {
     /**
      A readonly endpoint URL created for the specified bucket, region, and SSL use preference. `AmazonS3RequestManager` uses this as the baseURL for all requests.
      */
-    private var endpointURL: NSURL {
+    public var endpointURL: NSURL {
         var URLString = ""
         
         let scheme = self.useSSL ? "https" : "http"
