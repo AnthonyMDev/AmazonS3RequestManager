@@ -5,7 +5,7 @@ xcode_workspace: Example/AmazonS3RequestManager.xcworkspace
 
 matrix:
     include:
-        - xcode_sdk: iphonesimulator9.2
+        - xcode_sdk: iphonesimulator9.3
           xcode_scheme: "iOS"
         - xcode_sdk: macosx10.11
           xcode_scheme: "OSX"
