@@ -34,4 +34,6 @@
                            timeStamp:(NSString *)timestamp
                               secret:(NSString *)key;
 
++ (NSString *)canonicalizedResourceFromURL:(NSURL *)url;
+
 @end
