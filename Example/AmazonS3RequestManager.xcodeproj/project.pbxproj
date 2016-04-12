@@ -31,6 +31,8 @@
 		92E8C43A1C4EFD4A00759119 /* AmazonS3ResponseSerializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E8C3EC1C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift */; };
 		F3229E3F1C9D28D600848C84 /* AmazonS3ResponseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3229E3E1C9D28D500848C84 /* AmazonS3ResponseObjectTests.swift */; };
 		F3229E401C9D28D600848C84 /* AmazonS3ResponseObjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3229E3E1C9D28D500848C84 /* AmazonS3ResponseObjectTests.swift */; };
+		F3DD8F0F1CBD1036008E8EB4 /* AmazonS3SignatureHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DD8F0E1CBD1036008E8EB4 /* AmazonS3SignatureHelpersTests.swift */; };
+		F3DD8F101CBD103C008E8EB4 /* AmazonS3SignatureHelpersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DD8F0E1CBD1036008E8EB4 /* AmazonS3SignatureHelpersTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,7 +75,7 @@
 		92E8C3E81C4EF62300759119 /* AmazonS3RequestManager_Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AmazonS3RequestManager_Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		92E8C3E91C4EF62400759119 /* AmazonS3ACLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3ACLTests.swift; sourceTree = "<group>"; };
 		92E8C3EA1C4EF62400759119 /* AmazonS3RequestManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManagerTests.swift; sourceTree = "<group>"; };
-		92E8C3EB1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestSerializerTests.swift; sourceTree = "<group>"; };
+		92E8C3EB1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestSerializerTests.swift; sourceTree = "<group>"; };
 		92E8C3EC1C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AmazonS3ResponseSerializationTests.swift; sourceTree = "<group>"; };
 		92E8C40B1C4EFAC800759119 /* OSX-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OSX-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92E8C40D1C4EFAC900759119 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 		E396FE314E31F937E620C9AA /* Pods-iOS-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOS-Example/Pods-iOS-Example.release.xcconfig"; sourceTree = "<group>"; };
 		EB60E86E5E26A196521F36DB /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3229E3E1C9D28D500848C84 /* AmazonS3ResponseObjectTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3ResponseObjectTests.swift; sourceTree = "<group>"; };
+		F3DD8F0E1CBD1036008E8EB4 /* AmazonS3SignatureHelpersTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AmazonS3SignatureHelpersTests.swift; sourceTree = "<group>"; };
 		F46BDD70BF9914C03C8E0DE5 /* Pods-OSX-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OSX-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-OSX-Tests/Pods-OSX-Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -211,6 +214,7 @@
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				92E8C3E81C4EF62300759119 /* AmazonS3RequestManager_Tests-Bridging-Header.h */,
 				F3229E3E1C9D28D500848C84 /* AmazonS3ResponseObjectTests.swift */,
+				F3DD8F0E1CBD1036008E8EB4 /* AmazonS3SignatureHelpersTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -613,6 +617,7 @@
 			files = (
 				92E8C3EF1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift in Sources */,
 				F3229E3F1C9D28D600848C84 /* AmazonS3ResponseObjectTests.swift in Sources */,
+				F3DD8F0F1CBD1036008E8EB4 /* AmazonS3SignatureHelpersTests.swift in Sources */,
 				92E8C3ED1C4EF62400759119 /* AmazonS3ACLTests.swift in Sources */,
 				92E8C3EE1C4EF62400759119 /* AmazonS3RequestManagerTests.swift in Sources */,
 				92E8C3F01C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift in Sources */,
@@ -634,6 +639,7 @@
 			files = (
 				92E8C43A1C4EFD4A00759119 /* AmazonS3ResponseSerializationTests.swift in Sources */,
 				F3229E401C9D28D600848C84 /* AmazonS3ResponseObjectTests.swift in Sources */,
+				F3DD8F101CBD103C008E8EB4 /* AmazonS3SignatureHelpersTests.swift in Sources */,
 				92E8C4371C4EFD4400759119 /* AmazonS3ACLTests.swift in Sources */,
 				92E8C4391C4EFD4800759119 /* AmazonS3RequestSerializerTests.swift in Sources */,
 				92E8C4381C4EFD4600759119 /* AmazonS3RequestManagerTests.swift in Sources */,
