@@ -76,7 +76,7 @@
 		92E8C3E91C4EF62400759119 /* AmazonS3ACLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3ACLTests.swift; sourceTree = "<group>"; };
 		92E8C3EA1C4EF62400759119 /* AmazonS3RequestManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestManagerTests.swift; sourceTree = "<group>"; };
 		92E8C3EB1C4EF62400759119 /* AmazonS3RequestSerializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AmazonS3RequestSerializerTests.swift; sourceTree = "<group>"; };
-		92E8C3EC1C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AmazonS3ResponseSerializationTests.swift; sourceTree = "<group>"; };
+		92E8C3EC1C4EF62400759119 /* AmazonS3ResponseSerializationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = AmazonS3ResponseSerializationTests.swift; sourceTree = "<group>"; };
 		92E8C40B1C4EFAC800759119 /* OSX-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OSX-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92E8C40D1C4EFAC900759119 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92E8C40F1C4EFAC900759119 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };

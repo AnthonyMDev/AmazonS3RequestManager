@@ -18,8 +18,8 @@ import SWXMLHash
 class AmazonS3ResponseSerializationTests: XCTestCase {
     
     /*
-    *  MARK: - Utilities
-    */
+     *  MARK: - Utilities
+     */
     
     class MockResponseObject: ResponseObjectSerializable {
         
@@ -30,8 +30,8 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
     }
     
     /*
-    *  MARK: XMLResponseSerializer
-    */
+     *  MARK: XMLResponseSerializer
+     */
     
     func test__XMLResponseSerializer__givenNilData_returnsFailure() {
         // when
@@ -59,12 +59,25 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
     }
     
     /*
-    *  MARK: - S3DataResponseSerializer
-    */
+     *  MARK: - S3DataResponseSerializer
+     */
     
     func test__s3DataResponseSerializer__givenPreviousError_returnsError() {
         // given
+        let data = NSData(base64EncodedString: "", options: .IgnoreUnknownCharacters)
         let expectedError = NSError(domain: "test", code: 0, userInfo: nil)
+        
+        // when
+        let result = Request.s3DataResponseSerializer().serializeResponse(nil, nil, data, expectedError)
+        
+        // then
+        expect(result.error).to(equal(expectedError))
+    }
+    
+    func test__s3DataResponseSerializer__givenNoData_returnsError() {
+        // given
+        let failureReason = "The response did not include any data."
+        let expectedError = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
         
         // when
         let result = Request.s3DataResponseSerializer().serializeResponse(nil, nil, nil, expectedError)
@@ -139,8 +152,8 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
     }
     
     /*
-    *  MARK: - S3ObjectResponseSerializer
-    */
+     *  MARK: - S3ObjectResponseSerializer
+     */
     
     func test__s3ObjectResponseSerializer__givenPreviousError_returnsError() {
         // given
@@ -227,46 +240,59 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
         // then
         expect(result.error).to(equal(expectedError))
     }
-  
-  /*
-   *  MARK: - S3MetaDataResponseSerializer
-   */
-  
-  func test__s3MetaDataResponseSerializer__givenPreviousError_returnsError() {
-    // given
-    let expectedError = NSError(domain: "test", code: 0, userInfo: nil)
     
-    // when
-    let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, nil, nil, expectedError)
+    /*
+     *  MARK: - S3MetaDataResponseSerializer
+     */
     
-    // then
-    expect(result.error).to(equal(expectedError))
-  }
-  
-  func test__s3MetaDataResponseSerializer__givenNoError_noResponse_returnsError() {
-    // given
-    let failureReason = "No response data was found."
-    let expectedError = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+    func test__s3MetaDataResponseSerializer__givenPreviousError_returnsError() {
+        // given
+        let expectedError = NSError(domain: "test", code: 0, userInfo: nil)
+        
+        // when
+        let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, nil, nil, expectedError)
+        
+        // then
+        expect(result.error).to(equal(expectedError))
+    }
     
-    // when
-    let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, nil, nil, nil)
+    func test__s3MetaDataResponseSerializer__givenNoError_noResponse_returnsError() {
+        // given
+        let failureReason = "No response data was found."
+        let expectedError = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+        
+        // when
+        let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, nil, nil, nil)
+        
+        // then
+        expect(result.error).to(equal(expectedError))
+    }
     
-    // then
-    expect(result.error).to(equal(expectedError))
-  }
-  
-  func test__s3MetaDataResponseSerializer__givenResponse_returnsSuccessWithMetaData() {
-    // given
-    let headers = ["x-amz-meta-test1" : "foo", "x-amz-meta-test2" : "bar"]
-    let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: headers)
+    func test__s3MetaDataResponseSerializer__givenResponse_returnsSuccessWithMetaData() {
+        // given
+        let headers = ["x-amz-meta-test1" : "foo", "x-amz-meta-test2" : "bar"]
+        let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: headers)
+        
+        // whenS
+        let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, response, nil, nil)
+        let metaDataObject = result.value
+        
+        // then
+        expect(metaDataObject?.metaData["test1"]).to(equal("foo"))
+        expect(metaDataObject?.metaData["test2"]).to(equal("bar"))
+    }
     
-    // whenS
-    let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, response, nil, nil)
-    let metaDataObject = result.value
+    func test__s3MetaDataResponseSerializer__givenResponseWithNoHeaders_returnsError() {
+        // given
+        let failureReason = "No meta data was found."
+        let expectedError = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+        let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: nil)
+        
+        // whenS
+        let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, response, nil, nil)
+        
+        // then
+        expect(result.error).to(equal(expectedError))
+    }
     
-    // then
-    expect(metaDataObject??.metaData["test1"]).to(equal("foo"))
-    expect(metaDataObject??.metaData["test2"]).to(equal("bar"))
-  }
-  
 }

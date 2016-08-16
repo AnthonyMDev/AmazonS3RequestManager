@@ -74,7 +74,7 @@ extension Request {
      
      - returns: The request.
      */
-    public func responseS3Data(completionHandler: Response<NSData?, NSError> -> Void) -> Self {
+    public func responseS3Data(completionHandler: Response<NSData, NSError> -> Void) -> Self {
         return response(responseSerializer: Request.s3DataResponseSerializer(), completionHandler: completionHandler)
     }
     
@@ -83,18 +83,21 @@ extension Request {
      
      - returns: A data response serializer
      */
-    static func s3DataResponseSerializer() -> ResponseSerializer<NSData?, NSError> {
+    static func s3DataResponseSerializer() -> ResponseSerializer<NSData, NSError> {
         return ResponseSerializer { request, response, data, error in
-            if let data = data {
+            guard let data = data else {
+                let failureReason = "The response did not include any data."
+                let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+                return .Failure(error)
+            }
+            
+            let result = XMLResponseSerializer().serializeResponse(request, response, data, nil)
+            
+            switch result {
+            case .Success(let xml):
+                if let error = amazonS3ResponseError(forXML: xml) { return .Failure(error) }
                 
-                let result = XMLResponseSerializer().serializeResponse(request, response, data, nil)
-                
-                switch result {
-                case .Success(let xml):
-                    if let error = amazonS3ResponseError(forXML: xml) { return .Failure(error) }
-                    
-                case .Failure(let error): return .Failure(error)
-                }
+            case .Failure(let error): return .Failure(error)
             }
             
             guard error == nil else { return .Failure(error!) }
@@ -131,7 +134,7 @@ extension Request {
      
      - returns: The request.
      */
-    public func responseS3MetaData(completionHandler: Response<S3ObjectMetaData?, NSError> -> Void) -> Self {
+    public func responseS3MetaData(completionHandler: Response<S3ObjectMetaData, NSError> -> Void) -> Self {
         return response(responseSerializer: Request.s3MetaDataResponseSerializer(), completionHandler: completionHandler)
     }
     
@@ -140,7 +143,7 @@ extension Request {
      
      - returns: A metadata response serializer
      */
-    static func s3MetaDataResponseSerializer() -> ResponseSerializer<S3ObjectMetaData?, NSError> {
+    static func s3MetaDataResponseSerializer() -> ResponseSerializer<S3ObjectMetaData, NSError> {
         return ResponseSerializer { request, response, data, error in
             guard error == nil else { return .Failure(error!) }
             
@@ -150,7 +153,11 @@ extension Request {
                 return .Failure(error)
             }
             
-            let metaData = S3ObjectMetaData(response: response)
+            guard let metaData = S3ObjectMetaData(response: response) else {
+                let failureReason = "No meta data was found."
+                let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+                return .Failure(error)
+            }
             
             return .Success(metaData)
         }

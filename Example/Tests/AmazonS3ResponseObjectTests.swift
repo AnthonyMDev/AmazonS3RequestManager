@@ -14,7 +14,7 @@ import Alamofire
 
 class AmazonS3ResponseObjectTests: XCTestCase {
     
-    func test__responseS3Object_givenMetaData_returnsS3MetaDataResult() {
+    func test__S3ObjectMetaData_givenMetaData_setsMetaData() {
         // given
         let headers = ["x-amz-meta-test1" : "foo", "x-amz-meta-test2" : "bar"]
         let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: headers)
@@ -25,6 +25,17 @@ class AmazonS3ResponseObjectTests: XCTestCase {
         // then
         expect(metaDataResult.metaData["test1"]).to(equal("foo"))
         expect(metaDataResult.metaData["test2"]).to(equal("bar"))
+    }
+    
+    func test__S3ObjectMetaData_givenNoHeaders_returnsNil() {
+        // given
+        let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: nil)
+        
+        // when
+        let metaDataResult = S3ObjectMetaData(response:response!)
+        
+        // then
+        expect(metaDataResult).to(beNil())
     }
     
     func test__responseS3Object_givenXMLString_returnsS3ListBucketResult() {

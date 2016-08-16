@@ -121,16 +121,14 @@ public final class S3ObjectMetaData: ResponseObjectSerializable {
     public var metaData: [String : String] = [:]
     
     public init?(response: NSHTTPURLResponse, representation: Any? = nil) {
-        if let headers = response.allHeaderFields as? [String : String] {
+        guard let headers = response.allHeaderFields as? [String : String] where headers.count > 0 else { return nil }
             
-            for (header,value) in headers {
-                let prefix = "x-amz-meta-"
-                if header.hasPrefix(prefix) {
-                    let trimmedHeaderName = header.substringFromIndex(prefix.startIndex.advancedBy(prefix.characters.count))
-                    metaData[trimmedHeaderName] = value
-                }
+        for (header,value) in headers {
+            let prefix = "x-amz-meta-"
+            if header.hasPrefix(prefix) {
+                let trimmedHeaderName = header.substringFromIndex(prefix.startIndex.advancedBy(prefix.characters.count))
+                metaData[trimmedHeaderName] = value
             }
-            
         }
     }
 }
