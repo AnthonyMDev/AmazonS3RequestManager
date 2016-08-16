@@ -240,4 +240,19 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     XCTAssertEqual(metaDataHeader, "foo", "Meta data header field is not set correctly.")
   }
   
+  func test__amazonURLRequest__givenCustomParameters_setsURLWithEndpointURL() {
+    // given
+    let path = "TestPath"
+    let expectedEndpoint = "test.endpoint.com"
+    let region = AmazonS3Region.Custom(hostName: "", endpoint: expectedEndpoint)
+    sut.region = region
+    let expectedURL = NSURL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)?custom-param=custom%20value!/")!
+    
+    // when
+    let request = sut.amazonURLRequest(.GET, path: path, customParameters: ["custom-param" : "custom value!/"])
+    
+    // then
+    XCTAssertEqual(request.URL!, expectedURL)
+  }
+  
 }
