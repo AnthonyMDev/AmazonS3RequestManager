@@ -53,6 +53,19 @@ let amazonS3Manager = AmazonS3RequestManager(bucket: myAmazonS3Bucket,
     secret: myAmazonS3Secret)
 ```
 
+### List Bucket Objects
+Gets a list of object in a bucket:
+
+```swift
+amazonS3Manager.listBucketObjects().responseS3Object { (response: Response<S3BucketObjectList, NSError>) in
+    if let files = response.result.value?.files {
+        for file in files {
+            print(file.path)
+        }
+    }
+}
+```
+
 ### Get Objects
 
 Getting Objects as Response Objects:
@@ -68,6 +81,19 @@ let destination: NSURL = NSFileManager.defaultManager().URLsForDirectory(.Docume
 amazonS3Manager.downloadObject("myFolder/fileName.jpg", saveToURL: destination)
 ```
     
+### Head Objects
+Retrieve metadata from an object without returning the object itself:
+
+```swift
+amazonS3Manager.headObject("fileName.txt").responseS3MetaData { (response: Response<S3ObjectMetaData, NSError>) in
+    if let metaData = response.result.value?.metaData {
+        for objectMetaData in metaData {
+            print(objectMetaData)
+        }
+    }
+}
+```
+
 ### Upload Objects
 ```swift
 let fileURL: NSURL = NSURL(fileURLWithPath: "pathToMyObject")
