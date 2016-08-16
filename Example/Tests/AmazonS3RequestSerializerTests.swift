@@ -246,10 +246,25 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     let expectedEndpoint = "test.endpoint.com"
     let region = AmazonS3Region.Custom(hostName: "", endpoint: expectedEndpoint)
     sut.region = region
-    let expectedURL = NSURL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)?custom-param=custom%20value!/")!
+    let expectedURL = NSURL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)?custom-param=custom%20value%21%2F")!
     
     // when
     let request = sut.amazonURLRequest(.GET, path: path, customParameters: ["custom-param" : "custom value!/"])
+    
+    // then
+    XCTAssertEqual(request.URL!, expectedURL)
+  }
+  
+  func test__amazonURLRequest__givenCustomParameters_setsURLWithEndpointURL_ContinuationToken() {
+    // given
+    let path = "TestPath"
+    let expectedEndpoint = "test.endpoint.com"
+    let region = AmazonS3Region.Custom(hostName: "", endpoint: expectedEndpoint)
+    sut.region = region
+    let expectedURL = NSURL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)?continuation-token=1%2FkCRyYIP%2BApo2oop%2FGa8%2FnVMR6hC7pDH%2FlL6JJrSZ3blAYaZkzJY%2FRVMcJ")!
+    
+    // when
+    let request = sut.amazonURLRequest(.GET, path: path, customParameters: ["continuation-token" : "1/kCRyYIP+Apo2oop/Ga8/nVMR6hC7pDH/lL6JJrSZ3blAYaZkzJY/RVMcJ"])
     
     // then
     XCTAssertEqual(request.URL!, expectedURL)

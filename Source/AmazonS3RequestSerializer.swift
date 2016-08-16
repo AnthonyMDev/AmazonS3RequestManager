@@ -242,10 +242,9 @@ private extension NSURL {
             return self
         }
         
+        guard let encodedValue = value.stringByAddingPercentEncodingWithAllowedCharacters(.alphanumericCharacterSet()) else { return NSURL() }
         var URLString = self.absoluteString
-        let parameter:NSString = key + "=" + value
-        guard let encodedParameter = parameter.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet()) else { return NSURL() }
-        URLString = URLString + (URLString.rangeOfString("?") == nil ? "?" : "&") + encodedParameter
+        URLString = URLString + (URLString.rangeOfString("?") == nil ? "?" : "&") + key + "=" + encodedValue
         
         return NSURL(string: URLString)!
     }
