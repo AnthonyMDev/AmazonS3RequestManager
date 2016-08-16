@@ -286,7 +286,7 @@ public class AmazonS3RequestManager {
     - note: This request returns meta data about the objects in the bucket. It does not return all of the bucket's object data.
     
     - parameter delimiter: A delimiter is a character you use to group keys.
-    - parameter encodingType: Requests Amazon S3 to encode the response and specifies the encoding method to use.
+    - parameter urlEncodeKeys: Requests Amazon S3 to URL encode the response.
     - parameter maxKeys: Sets the maximum number of keys returned in the response body. If you want to retrieve fewer than the default 1,000 keys, you can add this to your request.
     - parameter prefix: Limits the response to keys that begin with the specified prefix. You can use prefixes to separate a bucket into different groupings of keys. (You can think of using prefix to make groups in the same way you'd use a folder in a file system.)
     - parameter continuationToken: When the Amazon S3 response to this API call is truncated (that is, IsTruncated response element value is true), the response also includes the NextContinuationToken element, the value of which you can use in the next request as the continuation-token to list the next set of objects.
@@ -296,11 +296,11 @@ public class AmazonS3RequestManager {
     - returns: The get bucket object list request
     */
     public func listBucketObjects(delimiter: String? = nil,
-                                    encodingType: String? = nil,
-                                    maxKeys: String? = nil,
+                                    urlEncodeKeys: Bool? = nil,
+                                    maxKeys: UInt? = nil,
                                     prefix: String? = nil,
                                     continuationToken: String? = nil,
-                                    fetchOwner: String? = nil,
+                                    fetchOwner: Bool? = nil,
                                     startAfter: String? = nil) -> Request {
         
         var requestParameters: [String : String] = [:]
@@ -312,12 +312,12 @@ public class AmazonS3RequestManager {
             requestParameters["delimiter"] = delimiter
         }
         
-        if let encodingType = encodingType {
-            requestParameters["encoding-type"] = encodingType
+        if let urlEncodeKeys = urlEncodeKeys {
+            requestParameters["encoding-type"] = urlEncodeKeys ? "url" : ""
         }
         
         if let maxKeys = maxKeys {
-            requestParameters["max-keys"] = maxKeys
+            requestParameters["max-keys"] = "\(maxKeys)"
         }
         
         if let prefix = prefix {
@@ -329,7 +329,7 @@ public class AmazonS3RequestManager {
         }
         
         if let fetchOwner = fetchOwner {
-            requestParameters["fetch-owner"] = fetchOwner
+            requestParameters["fetch-owner"] = fetchOwner ? "true" : "false"
         }
         
         if let startAfter = startAfter {
