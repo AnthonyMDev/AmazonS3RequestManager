@@ -260,7 +260,7 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
     let headers = ["x-amz-meta-test1" : "foo", "x-amz-meta-test2" : "bar"]
     let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: headers)
     
-    // when
+    // whenS
     let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, response, nil, nil)
     let metaDataObject = result.value
     

@@ -125,13 +125,14 @@ extension Request {
     
     /**
      Adds a handler to be called once the request has finished.
+     The handler passes the AmazonS3 meta data from the response's headers.
      
      - parameter completionHandler: The code to be executed once the request has finished.
      
      - returns: The request.
      */
-    public func responseS3MetaData(completionHandler: Response<NSData?, NSError> -> Void) -> Self {
-        return response(responseSerializer: Request.s3DataResponseSerializer(), completionHandler: completionHandler)
+    public func responseS3MetaData(completionHandler: Response<S3ObjectMetaData?, NSError> -> Void) -> Self {
+        return response(responseSerializer: Request.s3MetaDataResponseSerializer(), completionHandler: completionHandler)
     }
     
     /**
