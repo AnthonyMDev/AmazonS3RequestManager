@@ -99,6 +99,14 @@ amazonS3Manager.headObject("fileName.txt").responseS3MetaData { (response: Respo
 let fileURL: NSURL = NSURL(fileURLWithPath: "pathToMyObject")
 amazonS3Manager.putObject(fileURL, destinationPath: "pathToSaveObjectTo/fileName.jpg")
 ```
+
+### Copy Objects
+```swift
+amazonS3Manager.copyObject("demo.txt", destinationPath: "copy.txt").response { request, response, data, error in    
+    print(response)    
+    print(error)
+}
+```
     
 ### Delete Objects
 ```swift
