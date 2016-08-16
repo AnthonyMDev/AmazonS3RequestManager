@@ -9,6 +9,7 @@
 import XCTest
 import Nimble
 import Alamofire
+import SWXMLHash
 
 @testable import AmazonS3RequestManager
 
@@ -20,7 +21,8 @@ class AmazonS3ResponseObjectTests: XCTestCase {
         let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: headers)
         
         // when
-        let metaDataResult = S3ObjectMetaData(response:response!, representation:"")!
+        let representation = SWXMLHash.parse("")
+        let metaDataResult = S3ObjectMetaData(response:response!, representation:representation)!
         
         // then
         expect(metaDataResult.metaData["test1"]).to(equal("foo"))
