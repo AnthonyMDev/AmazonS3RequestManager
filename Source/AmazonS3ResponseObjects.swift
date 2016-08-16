@@ -120,7 +120,7 @@ public final class S3ObjectMetaData: ResponseObjectSerializable {
     /// A dictionary of the meta data values for the object.
     public var metaData: [String : String] = [:]
     
-    public init?(response: NSHTTPURLResponse, representation: Any) {
+    public init?(response: NSHTTPURLResponse, representation xml: XMLIndexer) {
         if let headers = response.allHeaderFields as? [String : String] {
             
             for (header,value) in headers {
