@@ -239,8 +239,51 @@ class AmazonS3RequestManagerTests: XCTestCase {
         XCTAssertNotNil(aclHeader, "Should have ACL header field")
     }
     
+     /*
+     *  MARK: - COPY Object Request - Tests
+     */
+    
+    func test__copyObject_setsHTTPMethod() {
+        // given
+        let expected = "PUT"
+        
+        // when
+        let request = sut.copyObject("test", destinationPath: "demo")
+        
+        // then
+        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+    }
+    
+    func test__copyObject_givenDestinationPath_setsHTTPHeader_amz_copy() {
+        // given
+        let sourcePath = "TestSourcePath"
+        let targetPath = "TestTargetPath"
+        let expectedCompleteSourcePath = "/" + bucket + "/" + sourcePath
+        
+        let request = sut.copyObject(sourcePath, destinationPath: targetPath)
+        
+        // when
+        let headers = request.request!.allHTTPHeaderFields!
+        let copyHeader: String = headers["x-amz-copy-source"]!
+        
+        // then
+        XCTAssertEqual(copyHeader, expectedCompleteSourcePath, "AMZ copy header is not set correctly")
+    }
+    
+    func test__copyObject_fileURL_destinationPath_setsURLWithEndpoint() {
+        // given
+        let path = "TestPath"
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
+        
+        // when
+        let request = sut.copyObject("sourcePath", destinationPath: path)
+        
+        // then
+        XCTAssertEqual(request.request!.URL!, expectedURL)
+    }
+    
     /*
-    *  MARK: DELETE Object Request - Tests
+    *  MARK: - DELETE Object Request - Tests
     */
     
     func test__deleteObject_setsHTTPMethod() {
