@@ -281,14 +281,23 @@ public class AmazonS3RequestManager {
     // MARK: GET Bucket Objects List Request
     
     /**
-    Gets a list of object in a bucket. Returns up to 1000 objects.
+    Gets a list of objects in a bucket. Use continue token if you have more than 1000 objects.
     
     - note: This request returns meta data about the objects in the bucket. It does not return all of the bucket's object data.
+    - note: Continuation token sometimes include + characters, which doesn't pass and returns a mismatch error.
+    - note: Must encode the token with alphanumericCharacterSet instead of URLQueryAllowedCharacterSet.
     
     - returns: The get bucket object list request
     */
-    public func listBucketObjects() -> Request {
-        let listRequest = requestSerializer.amazonURLRequest(.GET)
+    public func listBucketObjects(continueToken: String? = nil) -> Request {
+        var subResource = "list-type=2"
+        
+        if continueToken != nil {
+            let token = continueToken!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.alphanumericCharacterSet())!
+            subResource = subResource.stringByAppendingString("&continuation-token=\(token)")
+        }
+        
+        let listRequest = requestSerializer.amazonURLRequest(.GET, subresource: subResource)
         
         return requestManager.request(listRequest)
     }
