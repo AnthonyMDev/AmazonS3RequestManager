@@ -109,7 +109,7 @@ amazonS3Manager.getACL(forObjectAtPath: "myFolder/fileName.jpg")
     
 ### Setting ACLs
 
-You can set the ACLs on the current bucket with a `PUT` request:
+You can set the ACLs on the current bucket with a `PUT` request: 
 
 ```swift
 amazonS3Manager.setBucketACL(AmazonS3PredefinedACL.Public)
