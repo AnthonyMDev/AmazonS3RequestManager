@@ -13,6 +13,9 @@ import SWXMLHash
 
 extension Request {
     
+    /// The domain used for creating all Alamofire errors.
+    public static let S3ErrorDomain = "org.cocoapods.AmazonS3RequestManager.Error"
+    
     
     /**
      Adds a handler to be called once the request has finished.
@@ -58,7 +61,8 @@ extension Request {
                     
                 } else {
                     let failureReason = "XML could not be serialized into response object: \(xml)"
-                    let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+                    let userInfo: [NSObject: AnyObject] = [NSLocalizedFailureReasonErrorKey: failureReason]
+                    let error = NSError(domain: S3ErrorDomain, code: Error.Code.DataSerializationFailed.rawValue, userInfo: userInfo)
                     return .Failure(error)
                 }
                 
@@ -87,7 +91,8 @@ extension Request {
         return ResponseSerializer { request, response, data, error in
             guard let data = data else {
                 let failureReason = "The response did not include any data."
-                let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+                let userInfo: [NSObject: AnyObject] = [NSLocalizedFailureReasonErrorKey: failureReason]
+                let error = NSError(domain: S3ErrorDomain, code: Error.Code.DataSerializationFailed.rawValue, userInfo: userInfo)
                 return .Failure(error)
             }
             
@@ -117,7 +122,8 @@ extension Request {
             
             guard let validData = data else {
                 let failureReason = "Data could not be serialized. Input data was nil."
-                let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+                let userInfo: [NSObject: AnyObject] = [NSLocalizedFailureReasonErrorKey: failureReason]
+                let error = NSError(domain: S3ErrorDomain, code: Error.Code.DataSerializationFailed.rawValue, userInfo: userInfo)
                 return .Failure(error)
             }
             
@@ -149,13 +155,15 @@ extension Request {
             
             guard let response = response else {
                 let failureReason = "No response data was found."
-                let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+                let userInfo: [NSObject: AnyObject] = [NSLocalizedFailureReasonErrorKey: failureReason]
+                let error = NSError(domain: S3ErrorDomain, code: Error.Code.DataSerializationFailed.rawValue, userInfo: userInfo)
                 return .Failure(error)
             }
             
             guard let metaData = S3ObjectMetaData(response: response) else {
                 let failureReason = "No meta data was found."
-                let error = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+                let userInfo: [NSObject: AnyObject] = [NSLocalizedFailureReasonErrorKey: failureReason]
+                let error = NSError(domain: S3ErrorDomain, code: Error.Code.DataSerializationFailed.rawValue, userInfo: userInfo)
                 return .Failure(error)
             }
             
