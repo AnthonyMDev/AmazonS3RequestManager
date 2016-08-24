@@ -77,7 +77,8 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
     func test__s3DataResponseSerializer__givenNoData_returnsError() {
         // given
         let failureReason = "The response did not include any data."
-        let expectedError = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+        let userInfo: [NSObject: AnyObject] = [NSLocalizedFailureReasonErrorKey: failureReason]
+        let expectedError = NSError(domain: Request.S3ErrorDomain, code: Error.Code.DataSerializationFailed.rawValue, userInfo: userInfo)
         
         // when
         let result = Request.s3DataResponseSerializer().serializeResponse(nil, nil, nil, expectedError)
@@ -259,7 +260,8 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
     func test__s3MetaDataResponseSerializer__givenNoError_noResponse_returnsError() {
         // given
         let failureReason = "No response data was found."
-        let expectedError = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+        let userInfo: [NSObject: AnyObject] = [NSLocalizedFailureReasonErrorKey: failureReason]
+        let expectedError = NSError(domain: Request.S3ErrorDomain, code: Error.Code.DataSerializationFailed.rawValue, userInfo: userInfo)
         
         // when
         let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, nil, nil, nil)
@@ -273,7 +275,7 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
         let headers = ["x-amz-meta-test1" : "foo", "x-amz-meta-test2" : "bar"]
         let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: headers)
         
-        // whenS
+        // when
         let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, response, nil, nil)
         let metaDataObject = result.value
         
@@ -285,7 +287,9 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
     func test__s3MetaDataResponseSerializer__givenResponseWithNoHeaders_returnsError() {
         // given
         let failureReason = "No meta data was found."
-        let expectedError = Error.errorWithCode(.DataSerializationFailed, failureReason: failureReason)
+        
+        let userInfo: [NSObject: AnyObject] = [NSLocalizedFailureReasonErrorKey: failureReason]
+        let expectedError = NSError(domain: Request.S3ErrorDomain, code: Error.Code.DataSerializationFailed.rawValue, userInfo: userInfo)
         let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: nil)
         
         // whenS
