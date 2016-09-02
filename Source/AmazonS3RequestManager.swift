@@ -285,10 +285,58 @@ public class AmazonS3RequestManager {
     
     - note: This request returns meta data about the objects in the bucket. It does not return all of the bucket's object data.
     
+    - parameter delimiter: A delimiter is a character you use to group keys.
+    - parameter urlEncodeKeys: Requests Amazon S3 to URL encode the response.
+    - parameter maxKeys: Sets the maximum number of keys returned in the response body. If you want to retrieve fewer than the default 1,000 keys, you can add this to your request.
+    - parameter prefix: Limits the response to keys that begin with the specified prefix. You can use prefixes to separate a bucket into different groupings of keys. (You can think of using prefix to make groups in the same way you'd use a folder in a file system.)
+    - parameter continuationToken: When the Amazon S3 response to this API call is truncated (that is, IsTruncated response element value is true), the response also includes the NextContinuationToken element, the value of which you can use in the next request as the continuation-token to list the next set of objects.
+    - parameter fetchOwner: By default, the API does not return the Owner information in the response. If you want the owner information in the response, you can specify this parameter with the value set to true.
+    - parameter startAfter: If you want the API to return key names after a specific object key in your key space, you can add this parameter. Amazon S3 lists objects in UTF-8 character encoding in lexicographical order.
+     
     - returns: The get bucket object list request
     */
-    public func listBucketObjects() -> Request {
-        let listRequest = requestSerializer.amazonURLRequest(.GET)
+    public func listBucketObjects(delimiter: String? = nil,
+                                    urlEncodeKeys: Bool? = nil,
+                                    maxKeys: UInt? = nil,
+                                    prefix: String? = nil,
+                                    continuationToken: String? = nil,
+                                    fetchOwner: Bool? = nil,
+                                    startAfter: String? = nil) -> Request {
+        
+        var requestParameters: [String : String] = [:]
+        
+        //Version 2 of the API requires this parameter and you must set its value to 2.
+        requestParameters["list-type"] = "2"
+        
+        if let delimiter = delimiter {
+            requestParameters["delimiter"] = delimiter
+        }
+        
+        if let urlEncodeKeys = urlEncodeKeys {
+            requestParameters["encoding-type"] = urlEncodeKeys ? "url" : ""
+        }
+        
+        if let maxKeys = maxKeys {
+            requestParameters["max-keys"] = "\(maxKeys)"
+        }
+        
+        if let prefix = prefix {
+            requestParameters["prefix"] = prefix
+        }
+        
+        if let continuationToken = continuationToken {
+            requestParameters["continuation-token"] = continuationToken
+        }
+        
+        if let fetchOwner = fetchOwner {
+            requestParameters["fetch-owner"] = fetchOwner ? "true" : "false"
+        }
+        
+        if let startAfter = startAfter {
+            requestParameters["start-after"] = startAfter
+        }
+        
+        let listRequest = requestSerializer.amazonURLRequest(.GET, path: nil, subresource: nil, customParameters: requestParameters)
         
         return requestManager.request(listRequest)
     }

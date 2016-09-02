@@ -106,8 +106,9 @@ public class AmazonS3RequestSerializer {
         subresource: String? = nil,
         acl: AmazonS3ACL? = nil,
         metaData:[String : String]? = nil,
-        storageClass: AmazonS3StorageClass = .Standard) -> NSURLRequest {
-            let url = requestURL(path, subresource: subresource)
+        storageClass: AmazonS3StorageClass = .Standard,
+        customParameters:[String : String]? = nil) -> NSURLRequest {
+            let url = requestURL(path, subresource: subresource, customParameters: customParameters)
             
             var mutableURLRequest = NSMutableURLRequest(URL: url)
             mutableURLRequest.HTTPMethod = method.rawValue
@@ -121,7 +122,7 @@ public class AmazonS3RequestSerializer {
             return mutableURLRequest
     }
     
-    private func requestURL(path: String?, subresource: String?) -> NSURL {
+    private func requestURL(path: String?, subresource: String?, customParameters:[String : String]? = nil) -> NSURL {
         var url = endpointURL
         if let path = path {
             url = url.URLByAppendingPathComponent(path)
@@ -130,6 +131,13 @@ public class AmazonS3RequestSerializer {
         if let subresource = subresource {
             url = url.URLByAppendingS3Subresource(subresource)
         }
+        
+        if let customParameters = customParameters {
+            for (key, value) in customParameters {
+                url = url.URLByAppendingRequestParameter(key, value: value)
+            }
+        }
+        
         return url
     }
     
@@ -226,6 +234,19 @@ private extension NSURL {
             
         }
         return self
+    }
+    
+    private func URLByAppendingRequestParameter(key: String, value: String) -> NSURL {
+        
+        if key.isEmpty || value.isEmpty {
+            return self
+        }
+        
+        guard let encodedValue = value.stringByAddingPercentEncodingWithAllowedCharacters(.alphanumericCharacterSet()) else { return NSURL() }
+        var URLString = self.absoluteString
+        URLString = URLString + (URLString.rangeOfString("?") == nil ? "?" : "&") + key + "=" + encodedValue
+        
+        return NSURL(string: URLString)!
     }
     
 }

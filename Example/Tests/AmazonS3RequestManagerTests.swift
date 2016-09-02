@@ -123,10 +123,21 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     func test__listBucketObjects__setsURL() {
         // given
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)")!
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)?list-type=2")!
         
         // when
         let request = sut.listBucketObjects()
+        
+        // then
+        XCTAssertEqual(request.request!.URL!, expectedURL)
+    }
+    
+    func test__listBucketObjectsWithCustomParameters__setsURL() {
+        // given
+        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)?list-type=2&max-keys=100&prefix=TestPath")!
+        
+        // when
+        let request = sut.listBucketObjects(maxKeys: 100, prefix: "TestPath")
         
         // then
         XCTAssertEqual(request.request!.URL!, expectedURL)
