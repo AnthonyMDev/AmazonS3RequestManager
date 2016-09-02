@@ -285,13 +285,20 @@ public class AmazonS3RequestManager {
     
     - note: This request returns meta data about the objects in the bucket. It does not return all of the bucket's object data.
     
+    - parameter prefix: Limits the response to keys that begin with the specified prefix. 
+     
     - returns: The get bucket object list request
     */
-    public func listBucketObjects() -> Request {
-        let listRequest = requestSerializer.amazonURLRequest(.GET)
+    public func listBucketObjects(prefix: String? = nil) -> Request {
+        var listRequest = requestSerializer.amazonURLRequest(.GET)
+        
+        if let prefix = prefix {
+            listRequest = requestSerializer.amazonURLRequest(.GET, path: nil, subresource: "prefix=" + prefix)
+        }
         
         return requestManager.request(listRequest)
     }
+    
     
     // MARK: ACL Requests
     
