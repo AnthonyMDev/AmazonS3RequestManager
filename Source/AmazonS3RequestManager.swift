@@ -261,6 +261,30 @@ public class AmazonS3RequestManager {
         return requestManager.request(headRequest)
     }
     
+    // MARK: COPY Object Request
+    
+    /**
+     Copies an object to a target destination while preserving the object's meta data.
+     
+     - parameter sourcePath: The object's source path
+     - parameter destinationPath: The object's target destination path on the bucket.
+     
+     - returns: The put request
+     */
+    public func copyObject(sourcePath: String, destinationPath: String) -> Request {
+        
+        var completeSourcePath = "/"
+        
+        if let bucket = requestSerializer.bucket {
+            completeSourcePath += bucket
+            completeSourcePath += (sourcePath.hasPrefix("/") ? "" : "/") + sourcePath
+        }
+        
+        let putRequest = requestSerializer.amazonURLRequest(.PUT, path: destinationPath, customHeaders: ["x-amz-copy-source" : completeSourcePath])
+        
+        return requestManager.request(putRequest)
+    }
+    
     // MARK: DELETE Object Request
     
     /**

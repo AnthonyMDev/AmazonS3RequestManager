@@ -270,4 +270,20 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     XCTAssertEqual(request.URL!, expectedURL)
   }
   
+  func test_amazonURLRequest__givenCustomHeaders() {
+    // given
+    let headers = ["header-demo" : "foo", "header-test" : "bar"]
+    let request = sut.amazonURLRequest(.HEAD, path: "test", customHeaders: headers)
+    
+    // when
+    let httpHeaders = request.allHTTPHeaderFields!
+    let header1: String? = httpHeaders["header-demo"]
+    let header2: String? = httpHeaders["header-test"]
+    
+    // then
+    XCTAssertEqual(header1, "foo", "Meta data header field is not set correctly.")
+    XCTAssertEqual(header2, "bar", "Meta data header field is not set correctly.")
+  }
+
+  
 }
