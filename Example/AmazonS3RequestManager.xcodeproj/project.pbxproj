@@ -786,7 +786,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BC6FB0ECAAFF3E2559974573 /* Pods-iOS-Example.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "iOS-Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -803,7 +802,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E396FE314E31F937E620C9AA /* Pods-iOS-Example.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "iOS-Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -820,7 +818,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0680D3D24BE67FEDA1EC7996 /* Pods-iOS-Tests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -842,7 +839,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C4B9B05E3E793204AA44A7DC /* Pods-iOS-Tests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
@@ -859,7 +855,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 54F114E238385B6BDB61CB26 /* Pods-OSX-Example.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -878,7 +873,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 02727C1A32FF9467F6726C11 /* Pods-OSX-Example.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -896,7 +890,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C3E90E04E7DB02EAE2348E8F /* Pods-OSX-Tests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -916,7 +909,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F46BDD70BF9914C03C8E0DE5 /* Pods-OSX-Tests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
