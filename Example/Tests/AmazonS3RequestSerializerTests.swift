@@ -19,7 +19,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
   let accessKey = "key"
   let secret = "secret"
   let bucket = "bucket"
-  let region = AmazonS3Region.USWest1
+  let region = Region.USWest1
   
   override func setUp() {
     super.setUp()
@@ -45,28 +45,28 @@ class AmazonS3RequestSerializerTests: XCTestCase {
   func test__amazonURLRequest__setsURLWithEndpointURL() {
     // given
     let path = "TestPath"
-    let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/\(path)")!
+    let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)/\(path)")!
     
     // when
-    let request = sut.amazonURLRequest(.GET, path: path)
+    let request = sut.amazonURLRequest(method: .get, path: path)
     
     // then
-    XCTAssertEqual(request.URL!, expectedURL)
+    XCTAssertEqual(request.url!, expectedURL)
   }
   
   func test__amazonURLRequest__givenCustomRegion_setsURLWithEndpointURL() {
     // given
     let path = "TestPath"
     let expectedEndpoint = "test.endpoint.com"
-    let region = AmazonS3Region.Custom(hostName: "", endpoint: expectedEndpoint)
+    let region = Region.custom(hostName: "", endpoint: expectedEndpoint)
     sut.region = region
-    let expectedURL = NSURL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)")!
+    let expectedURL = URL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)")!
     
     // when
-    let request = sut.amazonURLRequest(.GET, path: path)
+    let request = sut.amazonURLRequest(method: .get, path: path)
     
     // then
-    XCTAssertEqual(request.URL!, expectedURL)
+    XCTAssertEqual(request.url!, expectedURL)
   }
   
   func test__amazonURLRequest__givenNoBucket__setsURLWithEndpointURL() {
@@ -74,26 +74,26 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     sut.bucket = nil
     
     let path = "TestPath"
-    let expectedURL = NSURL(string: "https://\(region.endpoint)/\(path)")!
+    let expectedURL = URL(string: "https://\(region.endpoint)/\(path)")!
     
     // when
-    let request = sut.amazonURLRequest(.GET, path: path)
+    let request = sut.amazonURLRequest(method: .get, path: path)
     
     // then
-    XCTAssertEqual(request.URL!, expectedURL)
+    XCTAssertEqual(request.url!, expectedURL)
   }
   
   func test__amazonURLRequest__givenNoPath() {
     // given
     sut.bucket = "test"
     
-    let expectedURL = NSURL(string: "https://\(region.endpoint)/test")!
+    let expectedURL = URL(string: "https://\(region.endpoint)/test")!
     
     // when
-    let request = sut.amazonURLRequest(.GET)
+    let request = sut.amazonURLRequest(method: .get)
     
     // then
-    XCTAssertEqual(request.URL!, expectedURL)
+    XCTAssertEqual(request.url!, expectedURL)
   }
   
   func test__amazonURLRequest__givenUseSSL_false_setsURLWithEndpointURL_usingHTTP() {
@@ -101,13 +101,13 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     sut.useSSL = false
     
     let path = "TestPath"
-    let expectedURL = NSURL(string: "http://\(region.endpoint)/\(bucket)/\(path)")!
+    let expectedURL = URL(string: "http://\(region.endpoint)/\(bucket)/\(path)")!
     
     // when
-    let request = sut.amazonURLRequest(.GET, path: path)
+    let request = sut.amazonURLRequest(method: .get, path: path)
     
     // then
-    XCTAssertEqual(request.URL!, expectedURL)
+    XCTAssertEqual(request.url!, expectedURL)
   }
   
   func test__amazonURLRequest__setsHTTPMethod() {
@@ -115,18 +115,18 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     let expected = "GET"
     
     // when
-    let request = sut.amazonURLRequest(.GET, path: "test")
+    let request = sut.amazonURLRequest(method: .get, path: "test")
     
     // then
-    XCTAssertEqual(request.HTTPMethod!, expected)
+    XCTAssertEqual(request.httpMethod!, expected)
   }
   
   func test__amazonURLRequest__setsCachePolicy() {
     // given
-    let expected = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+    let expected = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
     
     // when
-    let request = sut.amazonURLRequest(.GET, path: "test")
+    let request = sut.amazonURLRequest(method: .get, path: "test")
     
     // then
     XCTAssertEqual(request.cachePolicy, expected)
@@ -134,7 +134,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
   
   func test__amazonURLRequest__givenNoPathExtension_setsHTTPHeader_ContentType() {
     // given
-    let request = sut.amazonURLRequest(.GET, path: "test")
+    let request = sut.amazonURLRequest(method: .get, path: "test")
     
     // when
     let headers = request.allHTTPHeaderFields!
@@ -147,7 +147,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
   
   func test__amazonURLRequest__givenJPGPathExtension_setsHTTPHeader_ContentType() {
     // given
-    let request = sut.amazonURLRequest(.GET, path: "test.jpg")
+    let request = sut.amazonURLRequest(method: .get, path: "test.jpg")
     
     // when
     let headers = request.allHTTPHeaderFields!
@@ -160,7 +160,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
   
   func test__amazonURLRequest__givenTXTPathExtension_setsHTTPHeader_ContentType() {
     // given
-    let request = sut.amazonURLRequest(.GET, path: "test.txt")
+    let request = sut.amazonURLRequest(method: .get, path: "test.txt")
     
     // when
     let headers = request.allHTTPHeaderFields!
@@ -173,7 +173,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
   
   func test__amazonURLRequest__givenMarkDownPathExtension_setsHTTPHeader_ContentType() {
     // given
-    let request = sut.amazonURLRequest(.GET, path: "test.md")
+    let request = sut.amazonURLRequest(method: .get, path: "test.md")
     
     // when
     let headers = request.allHTTPHeaderFields!
@@ -190,7 +190,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
   
   func test__amazonURLRequest__setsHTTPHeader_Date() {
     // given
-    let request = sut.amazonURLRequest(.GET, path: "test")
+    let request = sut.amazonURLRequest(method: .get, path: "test")
     
     // when
     let headers = request.allHTTPHeaderFields!
@@ -203,7 +203,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
   
   func test__amazonURLRequest__setsHTTPHeader_Authorization() {
     // given
-    let request = sut.amazonURLRequest(.GET, path: "test")
+    let request = sut.amazonURLRequest(method: .get, path: "test")
     
     // when
     let headers = request.allHTTPHeaderFields!
@@ -216,8 +216,8 @@ class AmazonS3RequestSerializerTests: XCTestCase {
   
   func test__amazonURLRequest__givenACL__setsHTTPHeader_ACL() {
     // given
-    let acl = AmazonS3PredefinedACL.Public
-    let request = sut.amazonURLRequest(.GET, path: "test", acl: acl)
+    let acl = PredefinedACL.publicReadWrite
+    let request = sut.amazonURLRequest(method: .get, path: "test", acl: acl)
     
     // when
     let headers = request.allHTTPHeaderFields!
@@ -230,7 +230,7 @@ class AmazonS3RequestSerializerTests: XCTestCase {
   func test__amazonURLRequest__givenMetaData__setsHTTPHeader_amz_meta() {
     // given
     let metaData = ["demo" : "foo"]
-    let request = sut.amazonURLRequest(.HEAD, path: "test", acl: nil, metaData: metaData)
+    let request = sut.amazonURLRequest(method: .head, path: "test", acl: nil, metaData: metaData)
     
     // when
     let headers = request.allHTTPHeaderFields!
@@ -244,36 +244,36 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     // given
     let path = "TestPath"
     let expectedEndpoint = "test.endpoint.com"
-    let region = AmazonS3Region.Custom(hostName: "", endpoint: expectedEndpoint)
+    let region = Region.custom(hostName: "", endpoint: expectedEndpoint)
     sut.region = region
-    let expectedURL = NSURL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)?custom-param=custom%20value%21%2F")!
+    let expectedURL = URL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)?custom-param=custom%20value%21%2F")!
     
     // when
-    let request = sut.amazonURLRequest(.GET, path: path, customParameters: ["custom-param" : "custom value!/"])
+    let request = sut.amazonURLRequest(method: .get, path: path, customParameters: ["custom-param" : "custom value!/"])
     
     // then
-    XCTAssertEqual(request.URL!, expectedURL)
+    XCTAssertEqual(request.url!, expectedURL)
   }
   
   func test__amazonURLRequest__givenCustomParameters_setsURLWithEndpointURL_ContinuationToken() {
     // given
     let path = "TestPath"
     let expectedEndpoint = "test.endpoint.com"
-    let region = AmazonS3Region.Custom(hostName: "", endpoint: expectedEndpoint)
+    let region = Region.custom(hostName: "", endpoint: expectedEndpoint)
     sut.region = region
-    let expectedURL = NSURL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)?continuation-token=1%2FkCRyYIP%2BApo2oop%2FGa8%2FnVMR6hC7pDH%2FlL6JJrSZ3blAYaZkzJY%2FRVMcJ")!
+    let expectedURL = URL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)?continuation-token=1%2FkCRyYIP%2BApo2oop%2FGa8%2FnVMR6hC7pDH%2FlL6JJrSZ3blAYaZkzJY%2FRVMcJ")!
     
     // when
-    let request = sut.amazonURLRequest(.GET, path: path, customParameters: ["continuation-token" : "1/kCRyYIP+Apo2oop/Ga8/nVMR6hC7pDH/lL6JJrSZ3blAYaZkzJY/RVMcJ"])
+    let request = sut.amazonURLRequest(method: .get, path: path, customParameters: ["continuation-token" : "1/kCRyYIP+Apo2oop/Ga8/nVMR6hC7pDH/lL6JJrSZ3blAYaZkzJY/RVMcJ"])
     
     // then
-    XCTAssertEqual(request.URL!, expectedURL)
+    XCTAssertEqual(request.url!, expectedURL)
   }
   
   func test_amazonURLRequest__givenCustomHeaders() {
     // given
     let headers = ["header-demo" : "foo", "header-test" : "bar"]
-    let request = sut.amazonURLRequest(.HEAD, path: "test", customHeaders: headers)
+    let request = sut.amazonURLRequest(method: .head, path: "test", customHeaders: headers)
     
     // when
     let httpHeaders = request.allHTTPHeaderFields!

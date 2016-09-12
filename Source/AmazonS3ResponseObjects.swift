@@ -17,7 +17,7 @@ public protocol ResponseObjectSerializable {
     /// The type of the data that represents the object.
     associatedtype RepresentationType
     
-    init?(response: NSHTTPURLResponse, representation: RepresentationType)
+    init?(response: HTTPURLResponse, representation: RepresentationType)
 }
 
 /**
@@ -29,7 +29,7 @@ public struct S3File {
     public let path: String
     
     /// The date the file was last modified.
-    public let lastModifiedDate: NSDate
+    public let lastModifiedDate: Date
     
     /// The size in bytes of the object
     public let size: Float
@@ -37,8 +37,8 @@ public struct S3File {
     /// An MD5 hash of the object. This only reflects changes to the contents of an object, not its metadata.
     public let entityTag: String?
     
-    /// The `AmazonS3StorageClass` of the file.
-    public let storageClass: AmazonS3StorageClass?
+    /// The `StorageClass` of the file.
+    public let storageClass: StorageClass?
     
     /// The owner of the file as a tuple containing the owner's Display Name and ID.
     public let owner: (id: String, name: String)?
@@ -53,7 +53,7 @@ public final class S3BucketObjectList: ResponseObjectSerializable {
     public var truncated: Bool?
     public var maxKeys: Int?
     
-    public init?(response: NSHTTPURLResponse, representation xml: XMLIndexer) {
+    public init?(response: HTTPURLResponse, representation xml: XMLIndexer) {
         bucket = xml["ListBucketResult"]["Name"].element?.text
         
         if let isTruncated = xml["ListBucketResult"]["IsTruncated"].element?.text {
@@ -67,7 +67,7 @@ public final class S3BucketObjectList: ResponseObjectSerializable {
         parseContents(xml["ListBucketResult"]["Contents"])
     }
     
-    private func parseContents(xml: XMLIndexer) {
+    fileprivate func parseContents(_ xml: XMLIndexer) {
         for element in xml {
             if let file = parseFile(element) {
                 files.append(file)
@@ -75,21 +75,21 @@ public final class S3BucketObjectList: ResponseObjectSerializable {
         }
     }
     
-    private func parseFile(xml: XMLIndexer) -> S3File? {
+    fileprivate func parseFile(_ xml: XMLIndexer) -> S3File? {
         guard let path = xml["Key"].element?.text,
-            dateString = xml["LastModified"].element?.text,
-            date =  dateFromS3Date(dateString),
-            sizeString = xml["Size"].element?.text,
-            size = Float(sizeString) else { return nil }
+            let dateString = xml["LastModified"].element?.text,
+            let date =  dateFromS3Date(dateString),
+            let sizeString = xml["Size"].element?.text,
+            let size = Float(sizeString) else { return nil }
 
-        var storageClass: AmazonS3StorageClass?
+        var storageClass: StorageClass?
         if let storageClassString = xml["StorageClass"].element?.text {
-            storageClass = AmazonS3StorageClass(rawValue: storageClassString)
+            storageClass = StorageClass(rawValue: storageClassString)
         }
         
         var owner: (String, String)?
         if let ownerId = xml["Owner"]["ID"].element?.text,
-            ownerName = xml["Owner"]["DisplayName"].element?.text {
+            let ownerName = xml["Owner"]["DisplayName"].element?.text {
                 owner = (ownerId, ownerName)
         }
         
@@ -102,12 +102,12 @@ public final class S3BucketObjectList: ResponseObjectSerializable {
             owner: owner)
     }
     
-    private func dateFromS3Date(rawDate: String) -> NSDate? {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+    fileprivate func dateFromS3Date(_ rawDate: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        return dateFormatter.dateFromString(rawDate)
+        return dateFormatter.date(from: rawDate)
     }
     
 }
@@ -120,13 +120,13 @@ public final class S3ObjectMetaData: ResponseObjectSerializable {
     /// A dictionary of the meta data values for the object.
     public var metaData: [String : String] = [:]
     
-    public init?(response: NSHTTPURLResponse, representation: Any? = nil) {
-        guard let headers = response.allHeaderFields as? [String : String] where headers.count > 0 else { return nil }
+    public init?(response: HTTPURLResponse, representation: Any? = nil) {
+        guard let headers = response.allHeaderFields as? [String : String] , headers.count > 0 else { return nil }
             
         for (header,value) in headers {
             let prefix = "x-amz-meta-"
             if header.hasPrefix(prefix) {
-                let trimmedHeaderName = header.substringFromIndex(prefix.startIndex.advancedBy(prefix.characters.count))
+                let trimmedHeaderName = header.substring(from: prefix.characters.index(prefix.startIndex, offsetBy: prefix.characters.count))
                 metaData[trimmedHeaderName] = value
             }
         }

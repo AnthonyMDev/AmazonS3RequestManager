@@ -14,10 +14,12 @@ import Alamofire
 
 class AmazonS3ResponseObjectTests: XCTestCase {
     
+    let mockURL = URL(string: "http://www.test.com")!
+    
     func test__S3ObjectMetaData_givenMetaData_setsMetaData() {
         // given
         let headers = ["x-amz-meta-test1" : "foo", "x-amz-meta-test2" : "bar"]
-        let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: headers)
+        let response = HTTPURLResponse(url: mockURL, statusCode: 200, httpVersion: nil, headerFields: headers)
         
         // when
         let metaDataResult = S3ObjectMetaData(response:response!)!
@@ -29,7 +31,7 @@ class AmazonS3ResponseObjectTests: XCTestCase {
     
     func test__S3ObjectMetaData_givenNoHeaders_returnsNil() {
         // given
-        let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: nil)
+        let response = HTTPURLResponse(url: mockURL, statusCode: 200, httpVersion: nil, headerFields: nil)
         
         // when
         let metaDataResult = S3ObjectMetaData(response:response!)
@@ -40,10 +42,10 @@ class AmazonS3ResponseObjectTests: XCTestCase {
     
     func test__responseS3Object_givenXMLString_returnsS3ListBucketResult() {
         // given
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone.localTimeZone()
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.autoupdatingCurrent
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSSZ"
-        let expectedModifiedDate = dateFormatter.dateFromString("2016-03-03 14:54:27.000Z")
+        let expectedModifiedDate = dateFormatter.date(from: "2016-03-03 14:54:27.000Z")
         
         let xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
             "<ListBucketResult xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\">" +
@@ -76,12 +78,12 @@ class AmazonS3ResponseObjectTests: XCTestCase {
             "</Owner>" +
             "</Contents>" +
         "</ListBucketResult>"
-        let data = xml.dataUsingEncoding(NSUTF8StringEncoding)
+        let data = xml.data(using: String.Encoding.utf8)
         
         // when
-        let result = Request.XMLResponseSerializer().serializeResponse(nil, nil, data, nil)
+        let result = DataRequest.XMLResponseSerializer().serializeResponse(nil, nil, data, nil)
         let xmlIndexer = result.value!
-        let bucketContents = S3BucketObjectList(response:NSHTTPURLResponse(), representation:xmlIndexer)!
+        let bucketContents = S3BucketObjectList(response:HTTPURLResponse(), representation:xmlIndexer)!
         let s3File = bucketContents.files.first!
         
         // then
@@ -94,7 +96,7 @@ class AmazonS3ResponseObjectTests: XCTestCase {
         expect(s3File.lastModifiedDate).to(equal(expectedModifiedDate))
         expect(s3File.size).to(equal(6))
         expect(s3File.entityTag).to(equal("\"2016-03-03 14:54:27.043:75b650fa317e55090741576852a79562\""))
-        expect(s3File.storageClass).to(equal(AmazonS3StorageClass.Standard))
+        expect(s3File.storageClass).to(equal(StorageClass.standard))
         expect(s3File.owner!.id).to(equal("61646d696e00000000"))
         expect(s3File.owner!.name).to(equal("admin"))
     }

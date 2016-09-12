@@ -21,14 +21,14 @@ import Alamofire
  
  `AmazonS3RequestSerializer` serializes `NSURLRequest` objects for requests to the Amazon S3 service
  */
-public class AmazonS3RequestSerializer {
+open class AmazonS3RequestSerializer {
     
     // MARK: - Instance Properties
     
     /**
     The Amazon S3 Bucket for the client
     */
-    public var bucket: String?
+    open var bucket: String?
     
     /**
      The Amazon S3 region for the client. `AmazonS3Region.USStandard` by default.
@@ -37,31 +37,31 @@ public class AmazonS3RequestSerializer {
      
      :see: `AmazonS3Region` for defined regions.
      */
-    public var region: AmazonS3Region = .USStandard
+    open var region: Region = .USStandard
     
     /**
      The Amazon S3 Access Key ID used to generate authorization headers and pre-signed queries
      
      :dicussion: This can be found on the AWS control panel: http://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key
      */
-    public var accessKey: String
+    open var accessKey: String
     
     /**
      The Amazon S3 Secret used to generate authorization headers and pre-signed queries
      
      :dicussion: This can be found on the AWS control panel: http://aws-portal.amazon.com/gp/aws/developer/account/index.html?action=access-key
      */
-    public var secret: String
+    open var secret: String
     
     /**
      Whether to connect over HTTPS. `true` by default.
      */
-    public var useSSL: Bool = true
+    open var useSSL: Bool = true
     
     /**
      The AWS STS session token. `nil` by default.
      */
-    public var sessionToken: String?
+    open var sessionToken: String?
     
     // MARK: - Initialization
     
@@ -75,7 +75,7 @@ public class AmazonS3RequestSerializer {
     
     - returns: An `AmazonS3RequestSerializer` with the given Amazon S3 credentials
     */
-    public init(accessKey: String, secret: String, region: AmazonS3Region, bucket: String? = nil) {
+    public init(accessKey: String, secret: String, region: Region, bucket: String? = nil) {
         self.accessKey = accessKey
         self.secret = secret
         self.region = region
@@ -87,47 +87,46 @@ public class AmazonS3RequestSerializer {
      
      This method serializes a request for the Amazon S3 service with the given method and path.
      
-     :discussion: The `NSURLRequest`s returned from this method may be used with `Alamofire`, `NSURLSession` or any other network request manager.
+     :discussion: The `URLRequest`s returned from this method may be used with `Alamofire`, `NSURLSession` or any other network request manager.
      
      - parameter method:        The HTTP method for the request. For more information see `Alamofire.Method`.
      - parameter path:          The desired path, including the file name and extension, in the Amazon S3 Bucket.
      - parameter subresource:   The subresource to be added to the request's query. A subresource can be used to access
                                 options or properties of a resource.
      - parameter acl:           The optional access control list to set the acl headers for the request. For more 
-                                information see `AmazonS3ACL`.
+                                information see `ACL`.
      - parameter metaData:      An optional dictionary of meta data that should be assigned to the object to be uploaded.
      - parameter storageClass:  The optional storage class to use for the object to upload. If none is specified, 
-                                standard is used. For more information see `AmazonS3StorageClass`.
+                                standard is used. For more information see `StorageClass`.
      
-     - returns: An `NSURLRequest`, serialized for use with the Amazon S3 service.
+     - returns: A `URLRequest`, serialized for use with the Amazon S3 service.
      */
-    public func amazonURLRequest(method: Alamofire.Method,
-        path: String? = nil,
-        subresource: String? = nil,
-        acl: AmazonS3ACL? = nil,
-        metaData:[String : String]? = nil,
-        storageClass: AmazonS3StorageClass = .Standard,
-        customParameters:[String : String]? = nil,
-        customHeaders:[String : String]? = nil) -> NSURLRequest {
-            let url = requestURL(path, subresource: subresource, customParameters: customParameters)
-            
-            var mutableURLRequest = NSMutableURLRequest(URL: url)
-            mutableURLRequest.HTTPMethod = method.rawValue
-            
-            setContentType(forRequest: &mutableURLRequest)
-            acl?.setACLHeaders(forRequest: &mutableURLRequest)
-            setStorageClassHeaders(storageClass, forRequest: &mutableURLRequest)
-            setMetaDataHeaders(metaData, forRequest: &mutableURLRequest)
-            setCustomHeaders(customHeaders, forRequest: &mutableURLRequest)
-            setAuthorizationHeaders(forRequest: &mutableURLRequest)
-            
-            return mutableURLRequest
+    open func amazonURLRequest(method: HTTPMethod,
+                               path: String? = nil,
+                               subresource: String? = nil,
+                               acl: ACL? = nil,
+                               metaData:[String : String]? = nil,
+                               storageClass: StorageClass = .standard,
+                               customParameters: [String : String]? = nil,
+                               customHeaders: [String : String]? = nil) -> URLRequest {
+        let url = requestURL(path, subresource: subresource, customParameters: customParameters)
+        
+        var mutableURLRequest = MutableURLRequest(url: url)
+        mutableURLRequest.httpMethod = method.rawValue
+        setContentType(on: &mutableURLRequest)
+        acl?.setACLHeaders(on: &mutableURLRequest)
+        setStorageClassHeaders(storageClass, on: &mutableURLRequest)
+        setMetaDataHeaders(metaData, on: &mutableURLRequest)
+        setCustomHeaders(customHeaders, on: &mutableURLRequest)
+        setAuthorizationHeaders(on: &mutableURLRequest)
+        
+        return mutableURLRequest as URLRequest
     }
     
-    private func requestURL(path: String?, subresource: String?, customParameters:[String : String]? = nil) -> NSURL {
+    fileprivate func requestURL(_ path: String?, subresource: String?, customParameters:[String : String]? = nil) -> URL {
         var url = endpointURL
         if let path = path {
-            url = url.URLByAppendingPathComponent(path)
+            url = url.appendingPathComponent(path)
         }
         
         if let subresource = subresource {
@@ -146,7 +145,7 @@ public class AmazonS3RequestSerializer {
     /**
      A readonly endpoint URL created for the specified bucket, region, and SSL use preference. `AmazonS3RequestManager` uses this as the baseURL for all requests.
      */
-    public var endpointURL: NSURL {
+    open var endpointURL: URL {
         var URLString = ""
         
         let scheme = self.useSSL ? "https" : "http"
@@ -158,19 +157,19 @@ public class AmazonS3RequestSerializer {
             URLString = "\(scheme)://\(region.endpoint)"
         }
         
-        return NSURL(string: URLString)!
+        return URL(string: URLString)!
     }
     
-    private func setContentType(inout forRequest request: NSMutableURLRequest) {
-        let contentTypeString = MIMEType(request) ?? "application/octet-stream"
+    fileprivate func setContentType(on request: inout MutableURLRequest) {
+        let contentTypeString = MIMEType(for: request as URLRequest) ?? "application/octet-stream"
         
         request.setValue(contentTypeString, forHTTPHeaderField: "Content-Type")
     }
     
-    private func MIMEType(request: NSURLRequest) -> String? {
-        if let fileExtension = request.URL?.pathExtension where !fileExtension.isEmpty,
-            let UTIRef = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, nil),
-            MIMETypeRef = UTTypeCopyPreferredTagWithClass(UTIRef.takeUnretainedValue(), kUTTagClassMIMEType) {
+    fileprivate func MIMEType(for request: URLRequest) -> String? {
+        if let fileExtension = request.url?.pathExtension , !fileExtension.isEmpty,
+            let UTIRef = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension as CFString, nil),
+            let MIMETypeRef = UTTypeCopyPreferredTagWithClass(UTIRef.takeUnretainedValue(), kUTTagClassMIMEType) {
                 
                 UTIRef.release()
                 
@@ -183,8 +182,8 @@ public class AmazonS3RequestSerializer {
         return nil
     }
     
-    private func setAuthorizationHeaders(inout forRequest request: NSMutableURLRequest) {
-        request.cachePolicy = .ReloadIgnoringLocalCacheData
+    fileprivate func setAuthorizationHeaders(on request: inout NSMutableURLRequest) {
+        request.cachePolicy = .reloadIgnoringLocalCacheData
         
         if sessionToken != nil {
             request.setValue(sessionToken!, forHTTPHeaderField: "x-amz-security-token")
@@ -192,7 +191,7 @@ public class AmazonS3RequestSerializer {
         
         let timestamp = currentTimeStamp()
         
-        let signature = AmazonS3SignatureHelpers.AWSSignatureForRequest(request,
+        let signature = AmazonS3SignatureHelpers.awsSignature(for: request as URLRequest!,
             timeStamp: timestamp,
             secret: secret)
         
@@ -201,11 +200,11 @@ public class AmazonS3RequestSerializer {
         
     }
     
-    private func setStorageClassHeaders(storageClass: AmazonS3StorageClass, inout forRequest request: NSMutableURLRequest) {
+    fileprivate func setStorageClassHeaders(_ storageClass: StorageClass, on request: inout NSMutableURLRequest) {
         request.setValue(storageClass.rawValue, forHTTPHeaderField: "x-amz-storage-class")
     }
     
-    private func setMetaDataHeaders(metaData:[String : String]?, inout forRequest request: NSMutableURLRequest) {
+    fileprivate func setMetaDataHeaders(_ metaData:[String : String]?, on request: inout NSMutableURLRequest) {
         guard let metaData = metaData else { return }
         
         var metadataHeaders:[String:String] = [:]
@@ -214,10 +213,10 @@ public class AmazonS3RequestSerializer {
             metadataHeaders["x-amz-meta-" + key] = value
         }
         
-        setCustomHeaders(metadataHeaders, forRequest: &request)
+        setCustomHeaders(metadataHeaders, on: &request)
     }
     
-    private func setCustomHeaders(headerFields:[String : String]?, inout forRequest request: NSMutableURLRequest) {
+    fileprivate func setCustomHeaders(_ headerFields:[String : String]?, on request: inout NSMutableURLRequest) {
         guard let headerFields = headerFields else { return }
         
         for (key, value) in headerFields {
@@ -225,42 +224,45 @@ public class AmazonS3RequestSerializer {
         }
     }
     
-    private func currentTimeStamp() -> String {
-        return requestDateFormatter.stringFromDate(NSDate())
+    fileprivate func currentTimeStamp() -> String {
+        return requestDateFormatter.string(from: Date())
     }
     
-    private lazy var requestDateFormatter: NSDateFormatter = {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.timeZone = NSTimeZone(name: "GMT")
+    fileprivate lazy var requestDateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(identifier: "GMT")
         dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss z"
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         
         return dateFormatter
     }()
 }
 
-private extension NSURL {
+private extension URL {
     
-    private func URLByAppendingS3Subresource(subresource: String) -> NSURL {
+    func URLByAppendingS3Subresource(_ subresource: String) -> URL {
         if !subresource.isEmpty {
-            let URLString = self.absoluteString.stringByAppendingString("?\(subresource)")
-            return NSURL(string: URLString)!
+            let URLString = self.absoluteString + "?\(subresource)"
+            return URL(string: URLString)!
             
         }
         return self
     }
     
-    private func URLByAppendingRequestParameter(key: String, value: String) -> NSURL {
+    func URLByAppendingRequestParameter(_ key: String, value: String) -> URL {
         
         if key.isEmpty || value.isEmpty {
             return self
         }
         
-        guard let encodedValue = value.stringByAddingPercentEncodingWithAllowedCharacters(.alphanumericCharacterSet()) else { return NSURL() }
-        var URLString = self.absoluteString
-        URLString = URLString + (URLString.rangeOfString("?") == nil ? "?" : "&") + key + "=" + encodedValue
+        guard let encodedValue = value.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else {
+            return self
+        }
         
-        return NSURL(string: URLString)!
+        var URLString = self.absoluteString
+        URLString = URLString + (URLString.range(of: "?") == nil ? "?" : "&") + key + "=" + encodedValue
+        
+        return URL(string: URLString)!
     }
     
 }

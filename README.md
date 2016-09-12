@@ -182,3 +182,26 @@ let fullControlPermission = AmazonS3ACLPermissionGrant(permission: .FullControl,
 let customACL = AmazonS3CustomACL(grants: [readPermission, writePermission, fullControlPermission])
 amazonS3Manager.setBucketACL(customACL)
 ```
+
+#### 1.0.0 Migration
+
+Version 1.0.0 changes the names public classes and functions to adopt the recommended syntax from the Swift API Design Guidelines. The language version has also been updated to use Swift 3.0.
+
+- Removes `AmazonS3` prefix from some objects, classes, and enums.
+- `ACL` protocol method parameter name changed from `setACLHeaders(forRequest:)` to 'setACLHeaders(on:)`.
+- `PredefinedACL` case name changes
+	- `Private` -> `privateReadWrite`
+	- `Public` -> `publicReadWrite`	
+- Changed request method names on `AmazonS3RequestManager`.
+	- `getObject(path:)` -> `get(at:)`
+	- `downloadObject(path:saveToURL:)` -> `download(at:to:)`
+	- `putObject(fileURL:destinationPath:acl:metaData:storageClass:)` -> `upload(from:to:acl:metaData:storageClass:)`
+	- `putObject(data:destinationPath:acl:metaData:storageClass:)` -> `upload(_:to:acl:metaData:storageClass:)`
+	- `headObject(path:)` -> `getMetaData(forObjectAt:)`
+	- `copyObject(_:destinationPath:)` -> `copy(from:to:)`
+	- `deleteObject(_:)` -> `delete(at:)`
+	- `getACL(forObjectAtPath:)` -> `getACL(forObjectAt:)`
+	- `setACL(forObjectAtPath:acl:)` -> `setACL(_:forObjectAt:)`
+- Alamofire now uses a `DownloadFileDestination` to configure the destination for download requests. You will need to migrate all download requests to use this time, rather than just the destination URL.
+
+

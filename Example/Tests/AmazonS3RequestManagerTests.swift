@@ -20,7 +20,10 @@ class AmazonS3RequestManagerTests: XCTestCase {
     let accessKey = "key"
     let secret = "secret"
     let bucket = "bucket"
-    let region = AmazonS3Region.USWest1
+    let region = Region.USWest1
+    
+    let mockURL = URL(string: "http://www.test.com")!
+    let mockDestination: DownloadRequest.DownloadFileDestination = { _, _ in return(URL(string: "http://www.test.com")!, []) }
     
     override func setUp() {
         super.setUp()
@@ -53,22 +56,22 @@ class AmazonS3RequestManagerTests: XCTestCase {
         let expected = "GET"
         
         // when
-        let request = sut.getObject("test")
+        let request = sut.get(at: "test")
         
         // then
-        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+        XCTAssertEqual(request.request!.httpMethod!, expected)
     }
     
     func test__getObject__setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
+        let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
-        let request = sut.getObject(path)
+        let request = sut.get(at: path)
         
         // then
-        XCTAssertEqual(request.request!.URL!, expectedURL)
+        XCTAssertEqual(request.request!.url!, expectedURL)
     }
     
     /*
@@ -77,10 +80,10 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     func test__downloadObject_path_saveToURL_returnsDownloadRequest() {
         // when
-        let request = sut.downloadObject("test", saveToURL: NSURL())
+        let request = sut.download(at: "test", to: mockDestination)
         
         // then
-        XCTAssertTrue(request.task.isKindOfClass(NSURLSessionDownloadTask))
+        XCTAssertTrue(request.task!.isKind(of: URLSessionDownloadTask.self))
     }
     
     func test__downloadObject_path_saveToURL_setsHTTPMethod() {
@@ -88,22 +91,22 @@ class AmazonS3RequestManagerTests: XCTestCase {
         let expected = "GET"
         
         // when
-        let request = sut.downloadObject("test", saveToURL: NSURL())
+        let request = sut.download(at: "test", to: mockDestination)
         
         // then
-        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+        XCTAssertEqual(request.request!.httpMethod!, expected)
     }
     
     func test__downloadObject_path_saveToURL_setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
+        let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
-        let request = sut.downloadObject(path, saveToURL: NSURL())
+        let request = sut.download(at: path, to: mockDestination)
         
         // then
-        XCTAssertEqual(request.request!.URL!, expectedURL)
+        XCTAssertEqual(request.request!.url!, expectedURL)
     }
     
     /*
@@ -118,72 +121,72 @@ class AmazonS3RequestManagerTests: XCTestCase {
         let request = sut.listBucketObjects()
         
         // then
-        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+        XCTAssertEqual(request.request!.httpMethod!, expected)
     }
     
     func test__listBucketObjects__setsURL() {
         // given
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)?list-type=2")!
+        let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)?list-type=2")!
         
         // when
         let request = sut.listBucketObjects()
         
         // then
-        XCTAssertEqual(request.request!.URL!, expectedURL)
+        XCTAssertEqual(request.request!.url!, expectedURL)
     }
     
     func test__listBucketObjectsWithCustomParameters__setsURL() {
         // given
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)?list-type=2&max-keys=100&prefix=TestPath")!
+        let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)?list-type=2&max-keys=100&prefix=TestPath")!
         
         // when
         let request = sut.listBucketObjects(maxKeys: 100, prefix: "TestPath")
         
         // then
-        XCTAssertEqual(request.request!.URL!, expectedURL)
+        XCTAssertEqual(request.request!.url!, expectedURL)
     }
     
     /*
-    *  MARK: - PUT Object Request - Tests
+    *  MARK: - Upload Object Request - Tests
     */
     
-    func test__putObject_fileURL_destinationPath__returnsUploadRequest() {
+    func test__upload_fileURL_destinationPath__returnsUploadRequest() {
         // when
-        let request = sut.putObject(NSURL(), destinationPath: "path")
+        let request = sut.upload(from: mockURL, to: "path")
         
         // then
-        XCTAssertTrue(request.task.isKindOfClass(NSURLSessionUploadTask))
+        XCTAssertTrue(request.task!.isKind(of: URLSessionUploadTask.self))
     }
     
-    func test__putObject_fileURL_destinationPath_setsHTTPMethod() {
+    func test__upload_fileURL_destinationPath_setsHTTPMethod() {
         // given
         let expected = "PUT"
         
         // when
-        let request = sut.putObject(NSURL(), destinationPath: "path")
+        let request = sut.upload(from: mockURL, to: "path")
         
         // then
-        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+        XCTAssertEqual(request.request!.httpMethod!, expected)
     }
     
-    func test__putObject_fileURL_destinationPath_setsURLWithEndpoint() {
+    func test__upload_fileURL_destinationPath_setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
+        let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
-        let request = sut.putObject(NSURL(), destinationPath: path)
+        let request = sut.upload(from: mockURL, to: path)
         
         // then
-        XCTAssertEqual(request.request!.URL!, expectedURL)
+        XCTAssertEqual(request.request!.url!, expectedURL)
     }
     
-    func test__putObject_fileURL_destinationPath__givenACL_setsHTTPHeader_ACL() {
+    func test__upload_fileURL_destinationPath__givenACL_setsHTTPHeader_ACL() {
         // given
-        let acl = AmazonS3PredefinedACL.Public
+        let acl = PredefinedACL.publicReadWrite
         let path = "TestPath"
         
-        let request = sut.putObject(NSURL(), destinationPath: path, acl: acl)
+        let request = sut.upload(from: mockURL, to: path, acl: acl)
         
         // when
         let headers = request.request!.allHTTPHeaderFields!
@@ -193,43 +196,43 @@ class AmazonS3RequestManagerTests: XCTestCase {
         XCTAssertNotNil(aclHeader, "Should have ACL header field")
     }
     
-    func test__putObject_data_destinationPath__returnsUploadRequest() {
+    func test__upload_data_destinationPath__returnsUploadRequest() {
         // when
-        let request = sut.putObject(NSData(), destinationPath: "path")
+        let request = sut.upload(Data(), to: "path")
         
         // then
-        XCTAssertTrue(request.task.isKindOfClass(NSURLSessionUploadTask))
+        XCTAssertTrue(request.task!.isKind(of: URLSessionUploadTask.self))
     }
     
-    func test__putObject_data_destinationPath__setsHTTPMethod() {
+    func test__upload_data_destinationPath__setsHTTPMethod() {
         // given
         let expected = "PUT"
         
         // when
-        let request = sut.putObject(NSData(), destinationPath: "path")
+        let request = sut.upload(Data(), to: "path")
         
         // then
-        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+        XCTAssertEqual(request.request!.httpMethod!, expected)
     }
     
-    func test__putObject_data_destinationPath__setsURLWithEndpoint() {
+    func test__upload_data_destinationPath__setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
+        let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
-        let request = sut.putObject(NSData(), destinationPath: path)
+        let request = sut.upload(Data(), to: path)
         
         // then
-        XCTAssertEqual(request.request!.URL!, expectedURL)
+        XCTAssertEqual(request.request!.url!, expectedURL)
     }
     
-    func test__putObject_data_destinationPath__givenACL_setsHTTPHeader_ACL() {
+    func test__upload_data_destinationPath__givenACL_setsHTTPHeader_ACL() {
         // given
-        let acl = AmazonS3PredefinedACL.Public
+        let acl = PredefinedACL.publicReadWrite
         let path = "TestPath"
         
-        let request = sut.putObject(NSData(), destinationPath: path, acl: acl)
+        let request = sut.upload(Data(), to: path, acl: acl)
         
         // when
         let headers = request.request!.allHTTPHeaderFields!
@@ -240,27 +243,27 @@ class AmazonS3RequestManagerTests: XCTestCase {
     }
     
      /*
-     *  MARK: - COPY Object Request - Tests
+     *  MARK: - COPY Request - Tests
      */
     
-    func test__copyObject_setsHTTPMethod() {
+    func test__copy_setsHTTPMethod() {
         // given
         let expected = "PUT"
         
         // when
-        let request = sut.copyObject("test", destinationPath: "demo")
+        let request = sut.copy(from: "test", to: "demo")
         
         // then
-        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+        XCTAssertEqual(request.request!.httpMethod!, expected)
     }
     
-    func test__copyObject_givenDestinationPath_setsHTTPHeader_amz_copy() {
+    func test__copy_givenDestinationPath_setsHTTPHeader_amz_copy() {
         // given
         let sourcePath = "TestSourcePath"
         let targetPath = "TestTargetPath"
         let expectedCompleteSourcePath = "/" + bucket + "/" + sourcePath
         
-        let request = sut.copyObject(sourcePath, destinationPath: targetPath)
+        let request = sut.copy(from: sourcePath, to: targetPath)
         
         // when
         let headers = request.request!.allHTTPHeaderFields!
@@ -270,70 +273,70 @@ class AmazonS3RequestManagerTests: XCTestCase {
         XCTAssertEqual(copyHeader, expectedCompleteSourcePath, "AMZ copy header is not set correctly")
     }
     
-    func test__copyObject_fileURL_destinationPath_setsURLWithEndpoint() {
+    func test__copy_fileURL_destinationPath_setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
+        let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
-        let request = sut.copyObject("sourcePath", destinationPath: path)
+        let request = sut.copy(from: "sourcePath", to: path)
         
         // then
-        XCTAssertEqual(request.request!.URL!, expectedURL)
+        XCTAssertEqual(request.request!.url!, expectedURL)
     }
     
     /*
-    *  MARK: - DELETE Object Request - Tests
+    *  MARK: - DELETE Request - Tests
     */
     
-    func test__deleteObject_setsHTTPMethod() {
+    func test__delete_setsHTTPMethod() {
         // given
         let expected = "DELETE"
         
         // when
-        let request = sut.deleteObject("test")
+        let request = sut.delete(at: "test")
         
         // then
-        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+        XCTAssertEqual(request.request!.httpMethod!, expected)
     }
     
-    func test__deleteObject_setsURLWithEndpoint() {
+    func test__delete_setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
+        let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
-        let request = sut.deleteObject(path)
+        let request = sut.delete(at: path)
         
         // then
-        XCTAssertEqual(request.request!.URL!, expectedURL)
+        XCTAssertEqual(request.request!.url!, expectedURL)
     }
     
     /*
-    *  MARK: - HEAD Object Request - Tests
+    *  MARK: - Get Metadata Request - Tests
     */
     
-    func test__headObject_setsHTTPMethod() {
+    func test__getMetaData_setsHTTPMethod() {
         // given
         let expected = "HEAD"
         
         // when
-        let request = sut.headObject("test")
+        let request = sut.getMetaData(forObjectAt: "test")
         
         // then
-        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+        XCTAssertEqual(request.request!.httpMethod!, expected)
     }
     
-    func test__headObject__setsURLWithEndpoint() {
+    func test__getMetaData__setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
+        let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
-        let request = sut.headObject(path)
+        let request = sut.getMetaData(forObjectAt: path)
         
         // then
-        XCTAssertEqual(request.request!.URL!, expectedURL)
+        XCTAssertEqual(request.request!.url!, expectedURL)
     }
     
     /*
@@ -348,49 +351,49 @@ class AmazonS3RequestManagerTests: XCTestCase {
         let request = sut.getBucketACL()
         
         // then
-        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+        XCTAssertEqual(request.request!.httpMethod!, expected)
     }
     
     func test__getObject__setsURL_withACLSubresource() {
         // given
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/?acl")!
+        let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)/?acl")!
         
         // when
         let request = sut.getBucketACL()
         
         // then
-        XCTAssertEqual(request.request!.URL!, expectedURL)
+        XCTAssertEqual(request.request!.url!, expectedURL)
     }
     
     func test__setBucketACL__setsHTTPMethod() {
         // given
         let expected = "PUT"
         
-        let acl = AmazonS3PredefinedACL.Public
+        let acl = PredefinedACL.publicReadWrite
         
         // when
         let request = sut.setBucketACL(acl)
         
         // then
-        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+        XCTAssertEqual(request.request!.httpMethod!, expected)
     }
     
     func test__setBucketACL_setsURLWithEndpoint() {
         // given
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/?acl")!
+        let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)/?acl")!
         
-        let acl = AmazonS3PredefinedACL.Public
+        let acl = PredefinedACL.publicReadWrite
         
         // when
         let request = sut.setBucketACL(acl)
         
         // then
-        XCTAssertEqual(request.request!.URL!, expectedURL)
+        XCTAssertEqual(request.request!.url!, expectedURL)
     }
     
     func test__setBucketACL_setsHTTPHeader_ACL() {
         // given
-        let acl = AmazonS3PredefinedACL.Public
+        let acl = PredefinedACL.publicReadWrite
         
         // when
         let request = sut.setBucketACL(acl)
@@ -402,64 +405,64 @@ class AmazonS3RequestManagerTests: XCTestCase {
         XCTAssertNotNil(aclHeader, "Should have ACL header field")
     }
     
-    func test__getACL_forObjectAtPath__setsHTTPMethod() {
+    func test__getACL_forObjectAt__setsHTTPMethod() {
         // given
         let expected = "GET"
         
         // when
-        let request = sut.getACL(forObjectAtPath: "test")
+        let request = sut.getACL(forObjectAt: "test")
         
         // then
-        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+        XCTAssertEqual(request.request!.httpMethod!, expected)
     }
     
-    func test__getACL_forObjectAtPath__setsURL_withACLSubresource() {
+    func test__getACL_forObjectAt__setsURL_withACLSubresource() {
         // given
         let path = "TestPath"
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/\(path)?acl")!
+        let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)/\(path)?acl")!
         
         // when
-        let request = sut.getACL(forObjectAtPath: path)
+        let request = sut.getACL(forObjectAt: path)
         
         // then
-        XCTAssertEqual(request.request!.URL!, expectedURL)
+        XCTAssertEqual(request.request!.url!, expectedURL)
     }
     
-    func test__setACL_forObjectAtPath__setsHTTPMethod() {
+    func test__setACL_forObjectAt__setsHTTPMethod() {
         // given
         let expected = "PUT"
         
         let path = "TestPath"
-        let acl = AmazonS3PredefinedACL.Public
+        let acl = PredefinedACL.publicReadWrite
         
         // when
-        let request = sut.setACL(forObjectAtPath: path, acl: acl)
+        let request = sut.setACL(acl, forObjectAt: path)
         
         // then
-        XCTAssertEqual(request.request!.HTTPMethod!, expected)
+        XCTAssertEqual(request.request!.httpMethod!, expected)
     }
     
-    func test__setACL_forObjectAtPath__setsURLWithEndpoint() {
+    func test__setACL_forObjectAt__setsURLWithEndpoint() {
         // given
         let path = "TestPath"
-        let acl = AmazonS3PredefinedACL.Public
+        let acl = PredefinedACL.publicReadWrite
         
-        let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/\(path)?acl")!
+        let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)/\(path)?acl")!
         
         // when
-        let request = sut.setACL(forObjectAtPath: path, acl: acl)
+        let request = sut.setACL(acl, forObjectAt: path)
         
         // then
-        XCTAssertEqual(request.request!.URL!, expectedURL)
+        XCTAssertEqual(request.request!.url!, expectedURL)
     }
     
     func test__setACL_forObjectAtPath__setsHTTPHeader_ACL() {
         // given
-        let acl = AmazonS3PredefinedACL.Public
+        let acl = PredefinedACL.publicReadWrite
         let path = "TestPath"
         
         // when
-        let request = sut.setACL(forObjectAtPath: path, acl: acl)
+        let request = sut.setACL(acl, forObjectAt: path)
         
         let headers = request.request!.allHTTPHeaderFields!
         let aclHeader: String? = headers["x-amz-acl"]

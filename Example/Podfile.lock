@@ -1,31 +1,52 @@
 PODS:
-  - Alamofire (3.3.0)
-  - AmazonS3RequestManager (0.11.0):
-    - Alamofire (~> 3.0)
+  - Alamofire (4.0.0)
+  - AmazonS3RequestManager (1.0.1):
+    - Alamofire (~> 4.0)
     - SWXMLHash (~> 2.0)
-  - Nimble (3.2.0)
-  - Nocilla (0.10.0)
-  - Quick (0.8.0)
-  - SWXMLHash (2.2.0)
+  - Nimble (5.0.0-alpha.30p1)
+  - Nocilla (0.11.0)
+  - Quick (0.9.3)
+  - SWXMLHash (2.5.0)
 
 DEPENDENCIES:
   - AmazonS3RequestManager (from `../`)
-  - Nimble (~> 3.0)
+  - Nimble (from `https://github.com/Quick/Nimble`, branch `swift-3.0`)
   - Nocilla (~> 0.10)
-  - Quick (~> 0.8.0)
+  - Quick (from `https://github.com/Quick/Quick.git`, branch `swift-3.0`)
+  - SWXMLHash (from `https://github.com/drmohundro/SWXMLHash.git`, branch `xcode-8.0`)
 
 EXTERNAL SOURCES:
   AmazonS3RequestManager:
     :path: "../"
+  Nimble:
+    :branch: swift-3.0
+    :git: https://github.com/Quick/Nimble
+  Quick:
+    :branch: swift-3.0
+    :git: https://github.com/Quick/Quick.git
+  SWXMLHash:
+    :branch: xcode-8.0
+    :git: https://github.com/drmohundro/SWXMLHash.git
+
+CHECKOUT OPTIONS:
+  Nimble:
+    :commit: 9dc342cdffef660414d17f27aec897d0cacfffea
+    :git: https://github.com/Quick/Nimble
+  Quick:
+    :commit: 8f2bc636ecfa2cc20696f62548b38d4ab943e299
+    :git: https://github.com/Quick/Quick.git
+  SWXMLHash:
+    :commit: e48ea38adef2d52a9302fcdc5edd5e2c3067256d
+    :git: https://github.com/drmohundro/SWXMLHash.git
 
 SPEC CHECKSUMS:
-  Alamofire: 9054db4a1b1ca9e363223183e01cea380159a27c
-  AmazonS3RequestManager: 1eb16d1d19f4ca79e3bb494100139c3ce40cc4df
-  Nimble: 703854335d181df169bbca9c97117b5cf8c47c1d
-  Nocilla: ae0a2b05f3087b473624ac2b25903695df51246a
-  Quick: 563d0f6ec5f72e394645adb377708639b7dd38ab
-  SWXMLHash: cf2a62b04514211b238b39b3aa348ba4746523af
+  Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
+  AmazonS3RequestManager: 025cc5c4a7161bc359657794c9cf325deb07fb40
+  Nimble: c5b995b4cd57789ec44b0cfb79640fc00e61a8c7
+  Nocilla: 7af7a386071150cc8aa5da4da97d060f049dd61c
+  Quick: 31fb576b6cbb6b028cc5e0016e4366accbb346f5
+  SWXMLHash: 04158642e0c90c52274db7914032edd41bed9a41
 
-PODFILE CHECKSUM: 048deb4dd0101798ca87ac23c5ac33c9a33fd74f
+PODFILE CHECKSUM: cf442835b9290de2a892a0dda227f96004cdaaa6
 
-COCOAPODS: 1.0.0.beta.6
+COCOAPODS: 1.1.0.rc.1

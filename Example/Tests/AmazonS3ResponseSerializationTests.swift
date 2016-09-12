@@ -23,7 +23,7 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
     
     class MockResponseObject: ResponseObjectSerializable {
         
-        required init?(response: NSHTTPURLResponse, representation: XMLIndexer) {
+        required init?(response: HTTPURLResponse, representation: XMLIndexer) {
             if representation["fail"].element !=  nil { return nil }
         }
         
@@ -34,11 +34,14 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
      */
     
     func test__XMLResponseSerializer__givenNilData_returnsFailure() {
+        // given
+        let expectedErrorCode = AFError.responseSerializationFailed(reason: .inputDataNil)._code
+        
         // when
-        let result = Request.XMLResponseSerializer().serializeResponse(nil, nil, nil, nil)
+        let result = DataRequest.XMLResponseSerializer().serializeResponse(nil, nil, nil, nil)
         
         // then
-        expect(result.error?.code).to(equal(Error.Code.DataSerializationFailed.rawValue))
+        expect(result.error?._code).to(equal(expectedErrorCode))
     }
     
     func test__XMLResponseSerializer__givenXMLString_returnsXMLIndexer() {
@@ -47,10 +50,10 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
             "<XMLData>" +
             "<XMLElement>test</XMLElement>" +
         "</XMLData>"
-        let data = xml.dataUsingEncoding(NSUTF8StringEncoding)
+        let data = xml.data(using: String.Encoding.utf8)
         
         // when
-        let result = Request.XMLResponseSerializer().serializeResponse(nil, nil, data, nil)
+        let result = DataRequest.XMLResponseSerializer().serializeResponse(nil, nil, data, nil)
         let testContent = result.value!["XMLData"]["XMLElement"].element?.text
         
         // then
@@ -64,35 +67,33 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
     
     func test__s3DataResponseSerializer__givenPreviousError_returnsError() {
         // given
-        let data = NSData(base64EncodedString: "", options: .IgnoreUnknownCharacters)
+        let data = Data(base64Encoded: "", options: .ignoreUnknownCharacters)
         let expectedError = NSError(domain: "test", code: 0, userInfo: nil)
         
         // when
-        let result = Request.s3DataResponseSerializer().serializeResponse(nil, nil, data, expectedError)
+        let result = DataRequest.s3DataResponseSerializer().serializeResponse(nil, nil, data, expectedError)
         
         // then
-        expect(result.error).to(equal(expectedError))
+        expect(result.error as? NSError).to(equal(expectedError))
     }
     
     func test__s3DataResponseSerializer__givenNoData_returnsError() {
         // given
-        let failureReason = "The response did not include any data."
-        let userInfo: [NSObject: AnyObject] = [NSLocalizedFailureReasonErrorKey: failureReason]
-        let expectedError = NSError(domain: Request.S3ErrorDomain, code: Error.Code.DataSerializationFailed.rawValue, userInfo: userInfo)
+        let expectedError = AFError.responseSerializationFailed(reason: .inputDataNil)
         
         // when
-        let result = Request.s3DataResponseSerializer().serializeResponse(nil, nil, nil, expectedError)
+        let result = DataRequest.s3DataResponseSerializer().serializeResponse(nil, nil, nil, expectedError)
         
         // then
-        expect(result.error).to(equal(expectedError))
+        expect(result.error?._code).to(equal(expectedError._code))
     }
     
     func test__s3DataResponseSerializer__givenNoError_returnsSuccessWithData() {
         // given
-        let data = NSData(base64EncodedString: "Test Data", options: .IgnoreUnknownCharacters)
+        let data = Data(base64Encoded: "Test Data", options: .ignoreUnknownCharacters)
         
         // when
-        let result = Request.s3DataResponseSerializer().serializeResponse(nil, nil, data, nil)
+        let result = DataRequest.s3DataResponseSerializer().serializeResponse(nil, nil, data, nil)
         
         // then
         expect(result.value!).to(beIdenticalTo(data))
@@ -100,10 +101,10 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
     
     func test__s3DataResponseSerializer__givenEmptyStringResponse_returnsSuccessWithData() {
         // given
-        let data = NSData(base64EncodedString: "", options: .IgnoreUnknownCharacters)
+        let data = Data(base64Encoded: "", options: .ignoreUnknownCharacters)
         
         // when
-        let result = Request.s3DataResponseSerializer().serializeResponse(nil, nil, data, nil)
+        let result = DataRequest.s3DataResponseSerializer().serializeResponse(nil, nil, data, nil)
         
         // then
         expect(result.value!).to(beIdenticalTo(data))
@@ -111,7 +112,7 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
     
     func test__s3DataResponseSerializer__givenXMLErrorStringResponse_returnsError() {
         // given
-        let expectedError = AmazonS3Error.NoSuchKey.error(failureReason: "The resource you requested does not exist")
+        let expectedError = S3Error.noSuchKey.error(failureReason: "The resource you requested does not exist")
         
         let xmlError = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
             "<Error>" +
@@ -121,19 +122,19 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
             "<RequestId>4442587FB7D0A2F9</RequestId>" +
         "</Error>"
         
-        let data = xmlError.dataUsingEncoding(NSUTF8StringEncoding)
+        let data = xmlError.data(using: String.Encoding.utf8)
         
         // when
-        let result = Request.s3DataResponseSerializer().serializeResponse(nil, nil, data, nil)
+        let result = DataRequest.s3DataResponseSerializer().serializeResponse(nil, nil, data, nil)
         
         // then
-        expect(result.error).to(equal(expectedError))
+        expect(result.error as? NSError).to(equal(expectedError))
     }
     
     func test__s3DataResponseSerializer__givenXMLErrorStringResponseAndPreviousError_returnsXMLErrorError() {
         // given
         let previousError = NSError(domain: "test", code: 0, userInfo: nil)
-        let expectedError = AmazonS3Error.NoSuchKey.error(failureReason: "The resource you requested does not exist")
+        let expectedError = S3Error.noSuchKey.error(failureReason: "The resource you requested does not exist")
         
         let xmlError = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
             "<Error>" +
@@ -143,13 +144,13 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
             "<RequestId>4442587FB7D0A2F9</RequestId>" +
         "</Error>"
         
-        let data = xmlError.dataUsingEncoding(NSUTF8StringEncoding)
+        let data = xmlError.data(using: String.Encoding.utf8)
         
         // when
-        let result = Request.s3DataResponseSerializer().serializeResponse(nil, nil, data, previousError)
+        let result = DataRequest.s3DataResponseSerializer().serializeResponse(nil, nil, data, previousError)
         
         // then
-        expect(result.error).to(equal(expectedError))
+        expect(result.error as? NSError).to(equal(expectedError))
     }
     
     /*
@@ -161,24 +162,24 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
         let expectedError = NSError(domain: "test", code: 0, userInfo: nil)
         
         let xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-        let data = xml.dataUsingEncoding(NSUTF8StringEncoding)
+        let data = xml.data(using: String.Encoding.utf8)
         
         // when
-        let result: Result<MockResponseObject, NSError> = Request
-            .s3ObjectResponseSerializer().serializeResponse(nil, NSHTTPURLResponse(), data, expectedError)
+        let result: Result<MockResponseObject> = DataRequest
+            .s3ObjectResponseSerializer().serializeResponse(nil, HTTPURLResponse(), data, expectedError)
         
         // then
-        expect(result.error).to(equal(expectedError))
+        expect(result.error as? NSError).to(equal(expectedError))
     }
     
     func test__s3ObjectResponseSerializer__givenXMLRepresentation_responseObjectSerializedSuccessfully__returnsResponseObject() {
         // given
         let xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-        let data = xml.dataUsingEncoding(NSUTF8StringEncoding)
+        let data = xml.data(using: String.Encoding.utf8)
         
         // when
-        let result: Result<MockResponseObject, NSError> = Request
-            .s3ObjectResponseSerializer().serializeResponse(nil, NSHTTPURLResponse(), data, nil)
+        let result: Result<MockResponseObject> = DataRequest
+            .s3ObjectResponseSerializer().serializeResponse(nil, HTTPURLResponse(), data, nil)
         
         // then
         expect(result.value).toNot(beNil())
@@ -186,20 +187,21 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
     
     func test__s3ObjectResponseSerializer__givenXMLRepresentation_responseObjectFailsToSerialize__returnsError() {
         // given
+        let expectedErrorCode = AFError.responseSerializationFailed(reason: .inputDataNil)._code
         let xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><fail>"
-        let data = xml.dataUsingEncoding(NSUTF8StringEncoding)
+        let data = xml.data(using: String.Encoding.utf8)
         
         // when
-        let result: Result<MockResponseObject, NSError> = Request
-            .s3ObjectResponseSerializer().serializeResponse(nil, NSHTTPURLResponse(), data, nil)
+        let result: Result<MockResponseObject> = DataRequest
+            .s3ObjectResponseSerializer().serializeResponse(nil, HTTPURLResponse(), data, nil)
         
         // then
-        expect(result.error?.code).to(equal(Error.Code.DataSerializationFailed.rawValue))
+        expect(result.error?._code).to(equal(expectedErrorCode))
     }
     
     func test__s3ObjectResponseSerializer__givenXMLErrorStringResponse_returnsError() {
         // given
-        let expectedError = AmazonS3Error.NoSuchKey.error(failureReason: "The resource you requested does not exist")
+        let expectedError = S3Error.noSuchKey.error(failureReason: "The resource you requested does not exist")
         
         let xmlError = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
             "<Error>" +
@@ -209,20 +211,20 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
             "<RequestId>4442587FB7D0A2F9</RequestId>" +
         "</Error>"
         
-        let data = xmlError.dataUsingEncoding(NSUTF8StringEncoding)
+        let data = xmlError.data(using: String.Encoding.utf8)
         
         // when
-        let result: Result<MockResponseObject, NSError> = Request
+        let result: Result<MockResponseObject> = DataRequest
             .s3ObjectResponseSerializer().serializeResponse(nil, nil, data, nil)
         
         // then
-        expect(result.error).to(equal(expectedError))
+        expect(result.error as? NSError).to(equal(expectedError))
     }
     
     func test__s3ObjectResponseSerializer__givenXMLErrorStringResponseAndPreviousError_returnsXMLErrorError() {
         // given
         let previousError = NSError(domain: "test", code: 0, userInfo: nil)
-        let expectedError = AmazonS3Error.NoSuchKey.error(failureReason: "The resource you requested does not exist")
+        let expectedError = S3Error.noSuchKey.error(failureReason: "The resource you requested does not exist")
         
         let xmlError = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
             "<Error>" +
@@ -232,14 +234,14 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
             "<RequestId>4442587FB7D0A2F9</RequestId>" +
         "</Error>"
         
-        let data = xmlError.dataUsingEncoding(NSUTF8StringEncoding)
+        let data = xmlError.data(using: String.Encoding.utf8)
         
         // when
-        let result: Result<MockResponseObject, NSError> = Request
+        let result: Result<MockResponseObject> = DataRequest
             .s3ObjectResponseSerializer().serializeResponse(nil, nil, data, previousError)
         
         // then
-        expect(result.error).to(equal(expectedError))
+        expect(result.error as? NSError).to(equal(expectedError))
     }
     
     /*
@@ -251,32 +253,30 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
         let expectedError = NSError(domain: "test", code: 0, userInfo: nil)
         
         // when
-        let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, nil, nil, expectedError)
+        let result = DataRequest.s3MetaDataResponseSerializer().serializeResponse(nil, nil, nil, expectedError)
         
         // then
-        expect(result.error).to(equal(expectedError))
+        expect(result.error as? NSError).to(equal(expectedError))
     }
     
     func test__s3MetaDataResponseSerializer__givenNoError_noResponse_returnsError() {
         // given
-        let failureReason = "No response data was found."
-        let userInfo: [NSObject: AnyObject] = [NSLocalizedFailureReasonErrorKey: failureReason]
-        let expectedError = NSError(domain: Request.S3ErrorDomain, code: Error.Code.DataSerializationFailed.rawValue, userInfo: userInfo)
+        let expectedErrorCode = AFError.responseSerializationFailed(reason: .inputDataNil)._code
         
         // when
-        let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, nil, nil, nil)
+        let result = DataRequest.s3MetaDataResponseSerializer().serializeResponse(nil, nil, nil, nil)
         
         // then
-        expect(result.error).to(equal(expectedError))
+        expect(result.error?._code).to(equal(expectedErrorCode))
     }
     
     func test__s3MetaDataResponseSerializer__givenResponse_returnsSuccessWithMetaData() {
         // given
         let headers = ["x-amz-meta-test1" : "foo", "x-amz-meta-test2" : "bar"]
-        let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: headers)
+        let response = HTTPURLResponse(url: URL(string: "http://www.test.com")!, statusCode: 200, httpVersion: nil, headerFields: headers)
         
         // when
-        let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, response, nil, nil)
+        let result = DataRequest.s3MetaDataResponseSerializer().serializeResponse(nil, response, nil, nil)
         let metaDataObject = result.value
         
         // then
@@ -288,15 +288,18 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
         // given
         let failureReason = "No meta data was found."
         
-        let userInfo: [NSObject: AnyObject] = [NSLocalizedFailureReasonErrorKey: failureReason]
-        let expectedError = NSError(domain: Request.S3ErrorDomain, code: Error.Code.DataSerializationFailed.rawValue, userInfo: userInfo)
-        let response = NSHTTPURLResponse(URL: NSURL(), statusCode: 200, HTTPVersion: nil, headerFields: nil)
+        let userInfo: [AnyHashable: Any] = [NSLocalizedFailureReasonErrorKey: failureReason]
+        let expectedError = NSError(domain: S3Error.Domain,
+                                    code: AFError.responseSerializationFailed(reason: .inputDataNil)._code,
+                                    userInfo: userInfo)
+        
+        let response = HTTPURLResponse(url: URL(string: "http://www.test.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)
         
         // whenS
-        let result = Request.s3MetaDataResponseSerializer().serializeResponse(nil, response, nil, nil)
+        let result = DataRequest.s3MetaDataResponseSerializer().serializeResponse(nil, response, nil, nil)
         
         // then
-        expect(result.error).to(equal(expectedError))
+        expect(result.error as? NSError).to(equal(expectedError))
     }
     
 }
