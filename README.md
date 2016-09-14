@@ -71,21 +71,21 @@ amazonS3Manager.listBucketObjects().responseS3Object { (response: Response<S3Buc
 Getting Objects as Response Objects:
 
 ```swift
-amazonS3Manager.getObject("myFolder/fileName.jpg")
+amazonS3Manager.get(at: "myFolder/fileName.jpg")
 ```
 
 Saving Objects To File:
 
 ```swift
-let destination: NSURL = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-amazonS3Manager.downloadObject("myFolder/fileName.jpg", saveToURL: destination)
+let destination: NSURL = FileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+amazonS3Manager.download(at: "myFolder/fileName.jpg", to: destination)
 ```
     
-### Head Objects
+### Get Metadata
 Retrieve metadata from an object without returning the object itself:
 
 ```swift
-amazonS3Manager.headObject("fileName.txt").responseS3MetaData { (response: Response<S3ObjectMetaData, NSError>) in
+amazonS3Manager.getMetaData(forObjectAt: "fileName.txt").responseS3MetaData { (response: Response<S3ObjectMetaData, NSError>) in
     if let metaData = response.result.value?.metaData {
         for objectMetaData in metaData {
             print(objectMetaData)
@@ -97,12 +97,12 @@ amazonS3Manager.headObject("fileName.txt").responseS3MetaData { (response: Respo
 ### Upload Objects
 ```swift
 let fileURL: NSURL = NSURL(fileURLWithPath: "pathToMyObject")
-amazonS3Manager.putObject(fileURL, destinationPath: "pathToSaveObjectTo/fileName.jpg")
+amazonS3Manager.upload(from: fileURL, to: "pathToSaveObjectTo/fileName.jpg")
 ```
 
 ### Copy Objects
 ```swift
-amazonS3Manager.copyObject("demo.txt", destinationPath: "copy.txt").response { request, response, data, error in    
+amazonS3Manager.copy(from: "demo.txt", to: "copy.txt").response { request, response, data, error in    
     print(response)    
     print(error)
 }
@@ -110,7 +110,7 @@ amazonS3Manager.copyObject("demo.txt", destinationPath: "copy.txt").response { r
     
 ### Delete Objects
 ```swift
-amazonS3Manager.deleteObject("myFolder/fileName.jpg")
+amazonS3Manager.delete(at: "myFolder/fileName.jpg")
 ```
 
 ## Response Serialization
@@ -138,7 +138,7 @@ amazonS3Manager.getBucketACL()
 or for an object in the bucket with a `GET` request:
 
 ```swift
-amazonS3Manager.getACL(forObjectAtPath: "myFolder/fileName.jpg")
+amazonS3Manager.getACL(forObjectAt: "myFolder/fileName.jpg")
 ```
     
 ### Setting ACLs
@@ -152,7 +152,7 @@ amazonS3Manager.setBucketACL(AmazonS3PredefinedACL.Public)
 or on an object in the bucket with a `PUT` request:
 
 ```swift
-amazonS3Manager.setACL(forObjectAtPath: "myFolder/fileName.jpg", acl: AmazonS3PredefinedACL.Public)
+amazonS3Manager.setACL(acl: PredefinedACL.publicReadWrite, forObjectAt: "myFolder/fileName.jpg")
 ```
 
 The ACLs for an object can also be set while uploading by using the optional `acl` parameter.
