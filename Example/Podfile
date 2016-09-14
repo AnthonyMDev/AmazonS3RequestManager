@@ -6,18 +6,18 @@ def test_pods
   pod 'Quick', '~> 0.8.0'
   pod 'Nimble', '~> 4.0'
   pod 'Nocilla', '~> 0.10'
-  
+
 end
 
 target 'iOS-Example' do
   platform :ios, '8.0'
-  
+
   pod "AmazonS3RequestManager", :path => "../"
 end
 
 target 'iOS-Tests' do
   platform :ios, '8.0'
-  
+
   pod "AmazonS3RequestManager", :path => "../"
 
   test_pods
@@ -25,13 +25,13 @@ end
 
 target 'OSX-Example' do
   platform :osx, '10.9'
-  
+
   pod "AmazonS3RequestManager", :path => "../"
 end
 
 target 'OSX-Tests' do
   platform :osx, '10.9'
-  
+
   pod "AmazonS3RequestManager", :path => "../"
 
   test_pods

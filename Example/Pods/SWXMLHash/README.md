@@ -17,6 +17,7 @@ The API takes a lot of inspiration from [SwiftyJSON](https://github.com/SwiftyJS
 * [Getting Started](#getting-started)
 * [Configuration](#configuration)
 * [Examples](#examples)
+* [FAQ](#faq)
 * [Changelog](#changelog)
 * [Contributing](#contributing)
 * [License](#license)
@@ -25,6 +26,8 @@ The API takes a lot of inspiration from [SwiftyJSON](https://github.com/SwiftyJS
 
 - iOS 8.0+ / Mac OS X 10.9+ / tvOS 9.0+ / watchOS 2.0+
 - Xcode 7.1+
+
+(note that Xcode 8 beta and Swift 3 support are being tracked in [PR 78](https://github.com/drmohundro/SWXMLHash/pull/78))
 
 ## Installation
 
@@ -44,7 +47,7 @@ Then create a `Podfile` with the following contents:
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
-pod 'SWXMLHash', '~> 2.1.0'
+pod 'SWXMLHash', '~> 2.5.0'
 ```
 
 Finally, run the following command to install it:
@@ -65,7 +68,7 @@ $ brew install carthage
 Then add the following line to your `Cartfile`:
 
 ```
-github "drmohundro/SWXMLHash" ~> 2.1
+github "drmohundro/SWXMLHash" ~> 2.5
 ```
 
 ### Manual Installation
@@ -102,7 +105,7 @@ The available options at this time are:
 
 ## Examples
 
-All examples below can be found in the included [specs](https://github.com/drmohundro/SWXMLHash/blob/master/Tests/SWXMLHashSpecs.swift).
+All examples below can be found in the included [specs](https://github.com/drmohundro/SWXMLHash/blob/master/Tests/).
 
 ### Initialization
 
@@ -185,7 +188,7 @@ Given:
 The below will return "123".
 
 ```swift
-xml["root"]["catalog"]["book"][1].element?.attributes["id"]
+xml["root"]["catalog"]["book"][1].element?.attribute(by: "id")?.text
 ```
 
 Alternatively, you can look up an element with specific attributes. The below will return "John".
@@ -287,17 +290,17 @@ Given:
 ```xml
 <root>
   <books>
-    <book>
+    <book isbn="0000000001">
       <title>Book A</title>
       <price>12.5</price>
       <year>2015</year>
     </book>
-    <book>
+    <book isbn="0000000002">
       <title>Book B</title>
       <price>10</price>
       <year>1988</year>
     </book>
-    <book>
+    <book isbn="0000000003">
       <title>Book C</title>
       <price>8.33</price>
       <year>1990</year>
@@ -314,13 +317,15 @@ struct Book: XMLIndexerDeserializable {
     let price: Double
     let year: Int
     let amount: Int?
-    
+    let isbn: Int
+
     static func deserialize(node: XMLIndexer) throws -> Book {
         return try Book(
             title: node["title"].value(),
             price: node["price"].value(),
             year: node["year"].value(),
-            amount: node["amount"].value()
+            amount: node["amount"].value(),
+            isbn: node.value(ofAttribute: "isbn")
         )
     }
 }
@@ -334,12 +339,44 @@ let books: [Book] = try xml["root"]["books"]["book"].value()
 
 <img src="https://raw.githubusercontent.com/ncreated/SWXMLHash/assets/types-conversion%402x.png" width="600" alt="Types Conversion" />
 
-Build-in, leaf-nodes converters support `Int`, `Double`, `Float` and `String` values (both non- and -optional variants). Custom converters can be added by implementing `XMLElementDeserializable`.
+You can convert any XML to your custom type by implementing `XMLIndexerDeserializable` for any non-leaf node (e.g. `<book>` in the example above).
 
-You can convert any XML to your custom type by implementing `XMLIndexerDeserializable`.
+For leaf nodes (e.g. `<title>` in the example above), built-in converters support `Int`, `Double`, `Float`, `Bool`, and `String` values (both non- and -optional variants). Custom converters can be added by implementing `XMLElementDeserializable`.
+
+For attributes (e.g. `isbn=` in the example above), built-in converters support the same types as above, and additional converters can be added by implementing `XMLAttributeDeserializable`.
 
 Types conversion supports error handling, optionals and arrays. For more examples, look into `SWXMLHashTests.swift` or play with types conversion directly in the Swift playground.
 
+
+## FAQ
+
+### Does SWXMLHash handle URLs for me?
+
+No - SWXMLHash only handles parsing of XML. If you have a URL that has XML content on it, I'd recommend using a library like [AlamoFire](https://github.com/Alamofire/Alamofire) to download the content into a string and then parsing it.
+
+### Does SWXMLHash support writing XML content?
+
+No, not at the moment - SWXMLHash only supports parsing XML (via indexing, deserialization, etc.).
+
+### I'm getting an "Ambiguous reference to member 'subscript'" when I call `.value()`.
+
+`.value()` is used for deserialization - you have to have something that implements `XMLIndexerDeserializable` and that can handle deserialization to the left-hand side of expression.
+
+For example, given the following:
+
+```swift
+let dateValue: NSDate = try! xml["root"]["date"].value()
+```
+
+You'll get an error because there isn't any built-in deserializer for `NSDate`. See the above documentation on adding your own deserialization support.
+
+### I'm getting an `EXC_BAD_ACCESS (SIGSEGV)` when I call `parse()`
+
+Chances are very good that your XML content has what is called a "byte order mark" or BOM. SWXMLHash uses `NSXMLParser` for its parsing logic and there are issues with it and handling BOM characters. See [issue #65](https://github.com/drmohundro/SWXMLHash/issues/65) for more details. Others who have run into this problem have just rstripped the BOM out of their content prior to parsing.
+
+### Have a different question?
+
+Feel free to shoot me an email, post a [question on StackOverflow](http://stackoverflow.com/questions/tagged/swxmlhash), or open an issue if you think you've found a bug. I'm happy to try to help!
 
 ## Changelog
 

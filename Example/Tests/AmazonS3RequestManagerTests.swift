@@ -149,7 +149,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
     
     func test__putObject_fileURL_destinationPath__returnsUploadRequest() {
         // when
-        let request = sut.putObject(NSURL(), destinationPath: "path")
+        let request = sut.putObject(NSURL(string: "empty")!, destinationPath: "path")
         
         // then
         XCTAssertTrue(request.task.isKindOfClass(NSURLSessionUploadTask))
@@ -160,7 +160,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
         let expected = "PUT"
         
         // when
-        let request = sut.putObject(NSURL(), destinationPath: "path")
+        let request = sut.putObject(NSURL(string: "empty")!, destinationPath: "path")
         
         // then
         XCTAssertEqual(request.request!.HTTPMethod!, expected)
@@ -172,7 +172,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
         let expectedURL = NSURL(string: "https://\(region.endpoint)/\(bucket)/TestPath")!
         
         // when
-        let request = sut.putObject(NSURL(), destinationPath: path)
+        let request = sut.putObject(NSURL(string: "empty")!, destinationPath: path)
         
         // then
         XCTAssertEqual(request.request!.URL!, expectedURL)
@@ -183,7 +183,7 @@ class AmazonS3RequestManagerTests: XCTestCase {
         let acl = AmazonS3PredefinedACL.Public
         let path = "TestPath"
         
-        let request = sut.putObject(NSURL(), destinationPath: path, acl: acl)
+        let request = sut.putObject(NSURL(string: "empty")!, destinationPath: path, acl: acl)
         
         // when
         let headers = request.request!.allHTTPHeaderFields!

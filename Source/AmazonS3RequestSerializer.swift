@@ -126,8 +126,9 @@ public class AmazonS3RequestSerializer {
     
     private func requestURL(path: String?, subresource: String?, customParameters:[String : String]? = nil) -> NSURL {
         var url = endpointURL
-        if let path = path {
-            url = url.URLByAppendingPathComponent(path)
+        if let path = path,
+            let aUrl = url.URLByAppendingPathComponent(path) {
+            url = aUrl
         }
         
         if let subresource = subresource {
@@ -243,9 +244,10 @@ private extension NSURL {
     
     private func URLByAppendingS3Subresource(subresource: String) -> NSURL {
         if !subresource.isEmpty {
-            let URLString = self.absoluteString.stringByAppendingString("?\(subresource)")
-            return NSURL(string: URLString)!
-            
+            if let abs = self.absoluteString,
+                let url = NSURL(string: abs.stringByAppendingString("?\(subresource)")) {
+                return url
+            }
         }
         return self
     }
@@ -256,11 +258,11 @@ private extension NSURL {
             return self
         }
         
-        guard let encodedValue = value.stringByAddingPercentEncodingWithAllowedCharacters(.alphanumericCharacterSet()) else { return NSURL() }
-        var URLString = self.absoluteString
+        guard let encodedValue = value.stringByAddingPercentEncodingWithAllowedCharacters(.alphanumericCharacterSet()) else { return self }
+        guard var URLString = self.absoluteString else { return self }
         URLString = URLString + (URLString.rangeOfString("?") == nil ? "?" : "&") + key + "=" + encodedValue
-        
-        return NSURL(string: URLString)!
+
+        return NSURL(string: URLString) ?? self
     }
     
 }

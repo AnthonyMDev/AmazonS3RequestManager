@@ -56,7 +56,7 @@ extension Request {
             case .Success(let xml):
                 if let error = amazonS3ResponseError(forXML: xml) ?? error { return .Failure(error) }
                 
-                if let response = response, responseObject = T(response: response, representation: xml) {
+                if let response = response, let responseObject = T(response: response, representation: xml) {
                     return .Success(responseObject)
                     
                 } else {
@@ -177,7 +177,7 @@ extension Request {
     
     private static func amazonS3ResponseError(forXML xml: XMLIndexer) -> NSError? {
         guard let errorCodeString = xml["Error"]["Code"].element?.text,
-            error = AmazonS3Error(rawValue: errorCodeString) else { return nil }
+            let error = AmazonS3Error(rawValue: errorCodeString) else { return nil }
         
         let errorMessage = xml["Error"]["Message"].element?.text
         return error.error(failureReason: errorMessage)
