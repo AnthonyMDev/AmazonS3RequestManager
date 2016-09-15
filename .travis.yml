@@ -5,8 +5,8 @@ xcode_workspace: Example/AmazonS3RequestManager.xcworkspace
 
 matrix:
     include:
-        - env: SDK=iphonesimulator10.0 SCHEME=iOS          
-        - env: SDK=macosx10.12 SCHEME=OSX
+        - env: SDK=iphonesimulator10.0 SCHEME=iOS DEST='platform=iOS Simulator,name=iPhone 6,OS=10.0'  
+        - env: SDK=macosx10.12 SCHEME=OSX DEST='platform=OS X,arch=x86_64'
 
 script:
-- set -o pipefail && xcodebuild test -workspace ./Example/AmazonS3RequestManager.xcworkspace -scheme $SCHEME -sdk $SDK -configuration Debug ONLY_ACTIVE_ARCH=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty
+- set -o pipefail && xcodebuild test -workspace ./Example/AmazonS3RequestManager.xcworkspace -scheme $SCHEME -sdk $SDK -configuration Debug -destination "$DEST" ONLY_ACTIVE_ARCH=NO CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO | xcpretty
