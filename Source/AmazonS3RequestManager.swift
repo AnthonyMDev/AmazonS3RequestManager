@@ -166,7 +166,7 @@ open class AmazonS3RequestManager {
      
      - returns: A GET request for the object
      */
-    open func get(at path: String) -> Request {
+    open func get(at path: String) -> DataRequest {
         return requestManager.request(requestSerializer.amazonURLRequest(method: .get, path: path))
             .responseS3Data { (response) -> Void in }
     }
@@ -257,7 +257,7 @@ open class AmazonS3RequestManager {
      
      - returns: A HEAD request for the object
      */
-    open func getMetaData(forObjectAt path: String) -> Request {
+    open func getMetaData(forObjectAt path: String) -> DataRequest {
         let headRequest = requestSerializer.amazonURLRequest(method: .head, path: path)
         
         return requestManager.request(headRequest)
@@ -273,7 +273,7 @@ open class AmazonS3RequestManager {
      
      - returns: The put request
      */
-    open func copy(from sourcePath: String, to destinationPath: String) -> Request {
+    open func copy(from sourcePath: String, to destinationPath: String) -> DataRequest {
         
         var completeSourcePath = "/"
         
@@ -300,7 +300,7 @@ open class AmazonS3RequestManager {
      
      - returns: The delete request
      */
-    open func delete(at path: String) -> Request {
+    open func delete(at path: String) -> DataRequest {
         let deleteRequest = requestSerializer.amazonURLRequest(method: .delete, path: path)
         
         return requestManager.request(deleteRequest)
@@ -329,7 +329,7 @@ open class AmazonS3RequestManager {
                                 prefix: String? = nil,
                                 continuationToken: String? = nil,
                                 fetchOwner: Bool? = nil,
-                                startAfter: String? = nil) -> Request {
+                                startAfter: String? = nil) -> DataRequest {
         
         var requestParameters: [String : String] = [:]
         
@@ -383,7 +383,7 @@ open class AmazonS3RequestManager {
      
      - returns: A GET request for the bucket's ACL
      */
-    open func getBucketACL() -> Request {
+    open func getBucketACL() -> DataRequest {
         return requestManager.request(requestSerializer.amazonURLRequest(method: .get,
                                                                          path: "",
                                                                          subresource: "acl",
@@ -399,7 +399,7 @@ open class AmazonS3RequestManager {
      
      - returns: A PUT request to set the bucket's ACL
      */
-    open func setBucketACL(_ acl: ACL) -> Request {
+    open func setBucketACL(_ acl: ACL) -> DataRequest {
         return requestManager.request(requestSerializer.amazonURLRequest(method: .put,
                                                                          path: "",
                                                                          subresource: "acl",
@@ -417,7 +417,7 @@ open class AmazonS3RequestManager {
      
      - returns: A GET request for the object's ACL
      */
-    open func getACL(forObjectAt path:String) -> Request {
+    open func getACL(forObjectAt path:String) -> DataRequest {
         return requestManager.request(requestSerializer.amazonURLRequest(method: .get,
                                                                          path: path,
                                                                          subresource: "acl"))
@@ -432,7 +432,7 @@ open class AmazonS3RequestManager {
      
      - returns: A PUT request to set the objects's ACL
      */
-    open func setACL(_ acl: ACL, forObjectAt path: String) -> Request {
+    open func setACL(_ acl: ACL, forObjectAt path: String) -> DataRequest {
         return requestManager.request(requestSerializer.amazonURLRequest(method: .put,
                                                                          path: path,
                                                                          subresource: "acl",
