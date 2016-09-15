@@ -21,6 +21,7 @@ extension DataRequest {
      
      - returns: The request.
      */
+    @discardableResult
     public func responseS3BucketObjectsList(completion: @escaping (DataResponse<S3BucketObjectList>) -> Void) -> Self {
         return responseS3Object(completion: completion)
     }
@@ -33,6 +34,7 @@ extension DataRequest {
      
      - returns: The request.
      */
+    @discardableResult
     public func responseS3Object<T: ResponseObjectSerializable>
         (completion: @escaping (DataResponse<T>) -> Void) -> Self where T.RepresentationType == XMLIndexer {
         return response(responseSerializer: DataRequest.s3ObjectResponseSerializer(), completionHandler: completion)
@@ -75,6 +77,7 @@ extension DataRequest {
      
      - returns: The request.
      */
+    @discardableResult
     public func responseS3Data(completion: @escaping (DataResponse<Data>) -> Void) -> Self {
         return response(responseSerializer: DataRequest.s3DataResponseSerializer(), completionHandler: completion)
     }
@@ -131,6 +134,7 @@ extension DataRequest {
      
      - returns: The request.
      */
+    @discardableResult
     public func responseS3MetaData(completion: @escaping (DataResponse<S3ObjectMetaData>) -> Void) -> Self {
         return response(responseSerializer: DataRequest.s3MetaDataResponseSerializer(), completionHandler: completion)
     }
