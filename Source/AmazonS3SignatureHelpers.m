@@ -50,9 +50,7 @@
   for (NSString *field in [[mutableAMZHeaderFields allKeys] sortedArrayUsingSelector:@selector(compare:)]) {
     id value = [mutableAMZHeaderFields objectForKey:field];
     [mutableCanonicalizedAMZHeaderString appendFormat:@"%@:%@\n", field, value];
-  }
-  
-//    NSString *canonicalizedResource = bucket ? [NSString stringWithFormat:@"/%@", request.URL.path] : request.URL.path;
+  }  
   
   NSString *canonicalizedResource = [AmazonS3SignatureHelpers canonicalizedResourceFromURL:request.URL];
   NSString *method = [request HTTPMethod];
@@ -73,7 +71,7 @@
 
 + (NSString *)canonicalizedResourceFromURL:(NSURL *)url
 {
-    return [url.path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return [url.path stringByAddingPercentEncodingWithAllowedCharacters: [NSCharacterSet URLQueryAllowedCharacterSet]];
 }
 
 + (NSData *)HMACSHA1EncodedDataFromString:(NSString *)string withKey:(NSString *)key

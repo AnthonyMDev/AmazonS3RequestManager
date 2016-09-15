@@ -38,7 +38,7 @@ public protocol ACL {
     /**
      This method should be implemented to set the ACL headers for the object.
      */
-    func setACLHeaders(on request: inout NSMutableURLRequest)
+    func setACLHeaders(on request: inout URLRequest)
     
 }
 
@@ -74,7 +74,7 @@ public enum PredefinedACL: String, ACL {
     bucketOwnerFullControl = "bucket-owner-full-control",
     logDeliveryWrite = "log-delivery-write"
     
-    public func setACLHeaders(on request: inout NSMutableURLRequest) {
+    public func setACLHeaders(on request: inout URLRequest) {
         request.addValue(self.rawValue, forHTTPHeaderField: AmazonS3PredefinedACLHeaderKey)
     }
     
@@ -237,7 +237,7 @@ public struct ACLPermissionGrant: ACL, Hashable {
     /// The set of grantees for the grant
     fileprivate(set) public var grantees: Set<ACLGrantee>
     
-    public func setACLHeaders(on request: inout NSMutableURLRequest) {
+    public func setACLHeaders(on request: inout URLRequest) {
         let granteeList =  granteeStrings().joined(separator: ", ")
         request.addValue(granteeList, forHTTPHeaderField: permission.requestHeaderFieldKey)
     }
@@ -291,7 +291,7 @@ public struct CustomACL: ACL {
         
     }
     
-    public func setACLHeaders(on request: inout NSMutableURLRequest) {
+    public func setACLHeaders(on request: inout URLRequest) {
         for grant in grants {
             grant.setACLHeaders(on: &request)
         }

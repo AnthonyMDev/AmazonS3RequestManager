@@ -20,7 +20,7 @@ class AmazonS3SignatureHelpersTests: XCTestCase {
     let canonicalizedPath = AmazonS3SignatureHelpers.canonicalizedResource(from: url)
     
     // then
-    XCTAssertEqual(canonicalizedPath, "/testbucket/demo%20file.txt")
+    XCTAssertEqual(canonicalizedPath!, "/testbucket/demo%20file.txt")
   }
 
 }

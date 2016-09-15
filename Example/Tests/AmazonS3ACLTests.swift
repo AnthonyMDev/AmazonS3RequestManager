@@ -20,7 +20,7 @@ class AmazonS3ACLSpec: QuickSpec {
                 let acl = PredefinedACL.privateReadWrite
                 
                 it("sets ACL request headers") {
-                    var request = NSMutableURLRequest()
+                    var request = URLRequest(url: URL(string: "http://www.test.com")!)
                     acl.setACLHeaders(on: &request)
                     
                     let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
@@ -32,7 +32,7 @@ class AmazonS3ACLSpec: QuickSpec {
                 let acl = PredefinedACL.publicReadWrite
                 
                 it("sets ACL request headers") {
-                    var request = NSMutableURLRequest()
+                    var request = URLRequest(url: URL(string: "http://www.test.com")!)
                     acl.setACLHeaders(on: &request)
                     
                     let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
@@ -44,7 +44,7 @@ class AmazonS3ACLSpec: QuickSpec {
                 let acl = PredefinedACL.publicReadOnly
                 
                 it("sets ACL request headers") {
-                    var request = NSMutableURLRequest()
+                    var request = URLRequest(url: URL(string: "http://www.test.com")!)
                     acl.setACLHeaders(on: &request)
                     
                     let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
@@ -56,7 +56,7 @@ class AmazonS3ACLSpec: QuickSpec {
                 let acl = PredefinedACL.authenticatedReadOnly
                 
                 it("sets ACL request headers") {
-                    var request = NSMutableURLRequest()
+                    var request = URLRequest(url: URL(string: "http://www.test.com")!)
                     acl.setACLHeaders(on: &request)
                     
                     let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
@@ -68,7 +68,7 @@ class AmazonS3ACLSpec: QuickSpec {
                 let acl = PredefinedACL.bucketOwnerReadOnly
                 
                 it("sets ACL request headers") {
-                    var request = NSMutableURLRequest()
+                    var request = URLRequest(url: URL(string: "http://www.test.com")!)
                     acl.setACLHeaders(on: &request)
                     
                     let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
@@ -80,7 +80,7 @@ class AmazonS3ACLSpec: QuickSpec {
                 let acl = PredefinedACL.bucketOwnerFullControl
                 
                 it("sets ACL request headers") {
-                    var request = NSMutableURLRequest()
+                    var request = URLRequest(url: URL(string: "http://www.test.com")!)
                     acl.setACLHeaders(on: &request)
                     
                     let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
@@ -92,7 +92,7 @@ class AmazonS3ACLSpec: QuickSpec {
                 let acl = PredefinedACL.logDeliveryWrite
                 
                 it("sets ACL request headers") {
-                    var request = NSMutableURLRequest()
+                    var request = URLRequest(url: URL(string: "http://www.test.com")!)
                     acl.setACLHeaders(on: &request)
                     
                     let aclHeader = request.allHTTPHeaderFields?["x-amz-acl"]
@@ -116,7 +116,7 @@ class AmazonS3ACLSpec: QuickSpec {
                     let acl = aclWithPermission(permission)
                     
                     it("sets ACL request headers") {
-                        var request = NSMutableURLRequest()
+                        var request = URLRequest(url: URL(string: "http://www.test.com")!)
                         acl.setACLHeaders(on: &request)
                         
                         let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]
@@ -129,7 +129,7 @@ class AmazonS3ACLSpec: QuickSpec {
                     let acl = aclWithPermission(permission)
                     
                     it("sets ACL request headers") {
-                        var request = NSMutableURLRequest()
+                        var request = URLRequest(url: URL(string: "http://www.test.com")!)
                         acl.setACLHeaders(on: &request)
                         
                         let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-write"]
@@ -142,7 +142,7 @@ class AmazonS3ACLSpec: QuickSpec {
                     let acl = aclWithPermission(permission)
                     
                     it("sets ACL request headers") {
-                        var request = NSMutableURLRequest()
+                        var request = URLRequest(url: URL(string: "http://www.test.com")!)
                         acl.setACLHeaders(on: &request)
                         
                         let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read-acp"]
@@ -155,7 +155,7 @@ class AmazonS3ACLSpec: QuickSpec {
                     let acl = aclWithPermission(permission)
                     
                     it("sets ACL request headers") {
-                        var request = NSMutableURLRequest()
+                        var request = URLRequest(url: URL(string: "http://www.test.com")!)
                         acl.setACLHeaders(on: &request)
                         
                         let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-write-acp"]
@@ -168,7 +168,7 @@ class AmazonS3ACLSpec: QuickSpec {
                     let acl = aclWithPermission(permission)
                     
                     it("sets ACL request headers") {
-                        var request = NSMutableURLRequest()
+                        var request = URLRequest(url: URL(string: "http://www.test.com")!)
                         acl.setACLHeaders(on: &request)
                         
                         let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-full-control"]
@@ -190,7 +190,7 @@ class AmazonS3ACLSpec: QuickSpec {
                     let acl = aclWithGrantee(grantee)
                     
                     it("sets ACL request headers") {
-                        var request = NSMutableURLRequest()
+                        var request = URLRequest(url: URL(string: "http://www.test.com")!)
                         acl.setACLHeaders(on: &request)
                         
                         let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]
@@ -203,7 +203,7 @@ class AmazonS3ACLSpec: QuickSpec {
                     let acl = aclWithGrantee(grantee)
                     
                     it("sets ACL request headers") {
-                        var request = NSMutableURLRequest()
+                        var request = URLRequest(url: URL(string: "http://www.test.com")!)
                         acl.setACLHeaders(on: &request)
                         
                         let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]
@@ -216,7 +216,7 @@ class AmazonS3ACLSpec: QuickSpec {
                     let acl = aclWithGrantee(grantee)
                     
                     it("sets ACL request headers") {
-                        var request = NSMutableURLRequest()
+                        var request = URLRequest(url: URL(string: "http://www.test.com")!)
                         acl.setACLHeaders(on: &request)
                         
                         let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]
@@ -229,7 +229,7 @@ class AmazonS3ACLSpec: QuickSpec {
                     let acl = aclWithGrantee(grantee)
                     
                     it("sets ACL request headers") {
-                        var request = NSMutableURLRequest()
+                        var request = URLRequest(url: URL(string: "http://www.test.com")!)
                         acl.setACLHeaders(on: &request)
                         
                         let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]
@@ -242,7 +242,7 @@ class AmazonS3ACLSpec: QuickSpec {
                     let acl = aclWithGrantee(grantee)
                     
                     it("sets ACL request headers") {
-                        var request = NSMutableURLRequest()
+                        var request = URLRequest(url: URL(string: "http://www.test.com")!)
                         acl.setACLHeaders(on: &request)
                         
                         let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]
@@ -264,7 +264,7 @@ class AmazonS3ACLSpec: QuickSpec {
                         ACLGrantee.emailAddress("test@test.com"),
                         ACLGrantee.userID("123456")])
                     
-                    var request = NSMutableURLRequest()
+                    var request = URLRequest(url: URL(string: "http://www.test.com")!)
                     acl.setACLHeaders(on: &request)
                     
                     let aclHeader = request.allHTTPHeaderFields?["x-amz-grant-read"]

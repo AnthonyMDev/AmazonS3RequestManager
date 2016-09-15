@@ -111,16 +111,16 @@ open class AmazonS3RequestSerializer {
                                customHeaders: [String : String]? = nil) -> URLRequest {
         let url = requestURL(path, subresource: subresource, customParameters: customParameters)
         
-        var mutableURLRequest = MutableURLRequest(url: url)
-        mutableURLRequest.httpMethod = method.rawValue
-        setContentType(on: &mutableURLRequest)
-        acl?.setACLHeaders(on: &mutableURLRequest)
-        setStorageClassHeaders(storageClass, on: &mutableURLRequest)
-        setMetaDataHeaders(metaData, on: &mutableURLRequest)
-        setCustomHeaders(customHeaders, on: &mutableURLRequest)
-        setAuthorizationHeaders(on: &mutableURLRequest)
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = method.rawValue
+        setContentType(on: &urlRequest)
+        acl?.setACLHeaders(on: &urlRequest)
+        setStorageClassHeaders(storageClass, on: &urlRequest)
+        setMetaDataHeaders(metaData, on: &urlRequest)
+        setCustomHeaders(customHeaders, on: &urlRequest)
+        setAuthorizationHeaders(on: &urlRequest)
         
-        return mutableURLRequest as URLRequest
+        return urlRequest as URLRequest
     }
     
     fileprivate func requestURL(_ path: String?, subresource: String?, customParameters:[String : String]? = nil) -> URL {
@@ -160,7 +160,7 @@ open class AmazonS3RequestSerializer {
         return URL(string: URLString)!
     }
     
-    fileprivate func setContentType(on request: inout MutableURLRequest) {
+    fileprivate func setContentType(on request: inout URLRequest) {
         let contentTypeString = MIMEType(for: request as URLRequest) ?? "application/octet-stream"
         
         request.setValue(contentTypeString, forHTTPHeaderField: "Content-Type")
@@ -182,7 +182,7 @@ open class AmazonS3RequestSerializer {
         return nil
     }
     
-    fileprivate func setAuthorizationHeaders(on request: inout NSMutableURLRequest) {
+    fileprivate func setAuthorizationHeaders(on request: inout URLRequest) {
         request.cachePolicy = .reloadIgnoringLocalCacheData
         
         if sessionToken != nil {
@@ -195,16 +195,16 @@ open class AmazonS3RequestSerializer {
             timeStamp: timestamp,
             secret: secret)
         
-        request.setValue(timestamp ?? "", forHTTPHeaderField: "Date")
+        request.setValue(timestamp, forHTTPHeaderField: "Date")
         request.setValue("AWS \(accessKey):\(signature)", forHTTPHeaderField: "Authorization")
         
     }
     
-    fileprivate func setStorageClassHeaders(_ storageClass: StorageClass, on request: inout NSMutableURLRequest) {
+    fileprivate func setStorageClassHeaders(_ storageClass: StorageClass, on request: inout URLRequest) {
         request.setValue(storageClass.rawValue, forHTTPHeaderField: "x-amz-storage-class")
     }
     
-    fileprivate func setMetaDataHeaders(_ metaData:[String : String]?, on request: inout NSMutableURLRequest) {
+    fileprivate func setMetaDataHeaders(_ metaData:[String : String]?, on request: inout URLRequest) {
         guard let metaData = metaData else { return }
         
         var metadataHeaders:[String:String] = [:]
@@ -216,7 +216,7 @@ open class AmazonS3RequestSerializer {
         setCustomHeaders(metadataHeaders, on: &request)
     }
     
-    fileprivate func setCustomHeaders(_ headerFields:[String : String]?, on request: inout NSMutableURLRequest) {
+    fileprivate func setCustomHeaders(_ headerFields:[String : String]?, on request: inout URLRequest) {
         guard let headerFields = headerFields else { return }
         
         for (key, value) in headerFields {
