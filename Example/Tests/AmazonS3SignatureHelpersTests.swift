@@ -14,13 +14,13 @@ class AmazonS3SignatureHelpersTests: XCTestCase {
   
   func test__canonicalizedResourceFromURL__escapesSpace() {
     // given
-    let url = URL(string: "http://example.com/testbucket/")?.appendingPathComponent("demo file.txt")
+    let url = URL(string: "http://example.com/testbucket/")!.appendingPathComponent("demo file.txt")
     
     // when
     let canonicalizedPath = AmazonS3SignatureHelpers.canonicalizedResource(from: url)
     
     // then
-    XCTAssertEqual(canonicalizedPath!, "/testbucket/demo%20file.txt")
+    XCTAssertEqual(canonicalizedPath, "/testbucket/demo%20file.txt")
   }
 
 }

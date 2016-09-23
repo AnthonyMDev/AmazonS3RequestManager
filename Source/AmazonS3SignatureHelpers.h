@@ -30,10 +30,10 @@
 @interface AmazonS3SignatureHelpers : NSObject
 
 
-+ (NSString *)AWSSignatureForRequest:(NSURLRequest *)request
-                           timeStamp:(NSString *)timestamp
-                              secret:(NSString *)key;
++ (NSString * _Nonnull)AWSSignatureForRequest:(NSURLRequest * _Nonnull)request
+                           timeStamp:(NSString * _Nonnull)timestamp
+                              secret:(NSString * _Nonnull)key;
 
-+ (NSString *)canonicalizedResourceFromURL:(NSURL *)url;
++ (NSString * _Nonnull)canonicalizedResourceFromURL:(NSURL * _Nonnull)url;
 
 @end
