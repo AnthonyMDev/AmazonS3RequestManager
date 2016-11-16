@@ -1,4 +1,6 @@
+#ifdef __OBJC__
 #import <UIKit/UIKit.h>
+#endif
 
 #import "AmazonS3RequestManager.h"
 #import "AmazonS3SignatureHelpers.h"

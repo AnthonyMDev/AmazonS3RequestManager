@@ -58,12 +58,12 @@ extension NSDictionary : NMBCollection {}
 #if _runtime(_ObjC)
 /// Protocol for types that support beginWith(), endWith(), beEmpty() matchers
 @objc public protocol NMBOrderedCollection : NMBCollection {
-    @objc(indexOfObject:)
-    func index(of anObject: Any) -> Int
+    @objc(objectAtIndex:)
+    func object(at index: Int) -> Any
 }
 #else
 public protocol NMBOrderedCollection : NMBCollection {
-    func index(of anObject: Any) -> Int
+    func object(at index: Int) -> Any
 }
 #endif
 
@@ -104,15 +104,25 @@ private let dateFormatter: DateFormatter = {
 
 extension Date: NMBDoubleConvertible {
     public var doubleValue: CDouble {
-        get {
-            return self.timeIntervalSinceReferenceDate
-        }
+        return self.timeIntervalSinceReferenceDate
+    }
+}
+
+extension NSDate: NMBDoubleConvertible {
+    public var doubleValue: CDouble {
+        return self.timeIntervalSinceReferenceDate
     }
 }
 
 extension Date: TestOutputStringConvertible {
     public var testDescription: String {
-        return dateFormatter.string(from: self as Date)
+        return dateFormatter.string(from: self)
+    }
+}
+
+extension NSDate: TestOutputStringConvertible {
+    public var testDescription: String {
+        return dateFormatter.string(from: Date(timeIntervalSinceReferenceDate: self.timeIntervalSinceReferenceDate))
     }
 }
 

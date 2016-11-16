@@ -104,7 +104,8 @@ open class TaskDelegate: NSObject {
         } else if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
             let host = challenge.protectionSpace.host
 
-            if let serverTrustPolicy = session.serverTrustPolicyManager?.serverTrustPolicy(forHost: host),
+            if
+                let serverTrustPolicy = session.serverTrustPolicyManager?.serverTrustPolicy(forHost: host),
                 let serverTrust = challenge.protectionSpace.serverTrust
             {
                 if serverTrustPolicy.evaluate(serverTrust, forHost: host) {
@@ -330,29 +331,30 @@ class DownloadTaskDelegate: TaskDelegate, URLSessionDownloadDelegate {
     {
         temporaryURL = location
 
-        if let destination = destination {
-            let result = destination(location, downloadTask.response as! HTTPURLResponse)
-            let destination = result.destinationURL
-            let options = result.options
+        guard
+            let destination = destination,
+            let response = downloadTask.response as? HTTPURLResponse
+        else { return }
 
-            do {
-                destinationURL = destination
+        let result = destination(location, response)
+        let destinationURL = result.destinationURL
+        let options = result.options
 
-                if options.contains(.removePreviousFile) {
-                    if FileManager.default.fileExists(atPath: destination.path) {
-                        try FileManager.default.removeItem(at: destination)
-                    }
-                }
+        self.destinationURL = destinationURL
 
-                if options.contains(.createIntermediateDirectories) {
-                    let directory = destination.deletingLastPathComponent()
-                    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: nil)
-                }
-
-                try FileManager.default.moveItem(at: location, to: destination)
-            } catch {
-                self.error = error
+        do {
+            if options.contains(.removePreviousFile), FileManager.default.fileExists(atPath: destinationURL.path) {
+                try FileManager.default.removeItem(at: destinationURL)
             }
+
+            if options.contains(.createIntermediateDirectories) {
+                let directory = destinationURL.deletingLastPathComponent()
+                try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            }
+
+            try FileManager.default.moveItem(at: location, to: destinationURL)
+        } catch {
+            self.error = error
         }
     }
 

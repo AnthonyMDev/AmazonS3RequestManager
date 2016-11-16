@@ -2,8 +2,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 def test_pods
-  pod 'Quick', :git => 'https://github.com/Quick/Quick.git', :branch => 'swift-3.0'
-  pod 'Nimble', :git => 'https://github.com/Quick/Nimble', :branch => 'master'
+  pod 'Quick'
+  pod 'Nimble'
   pod 'Nocilla', '~> 0.10'
   
 end
