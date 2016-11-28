@@ -77,7 +77,7 @@ amazonS3Manager.get(at: "myFolder/fileName.jpg")
 Saving Objects To File:
 
 ```swift
-let destinationURL: NSURL = FileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
+let destinationURL: URL = FileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
 let destination: DownloadRequest.DownloadFileDestination = { _, _ in destinationURL, []) }
 amazonS3Manager.download(at: "myFolder/fileName.jpg", to: destination)
 ```
