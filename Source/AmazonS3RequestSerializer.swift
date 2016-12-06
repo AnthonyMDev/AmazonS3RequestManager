@@ -89,15 +89,17 @@ open class AmazonS3RequestSerializer {
      
      :discussion: The `URLRequest`s returned from this method may be used with `Alamofire`, `NSURLSession` or any other network request manager.
      
-     - parameter method:        The HTTP method for the request. For more information see `Alamofire.Method`.
-     - parameter path:          The desired path, including the file name and extension, in the Amazon S3 Bucket.
-     - parameter subresource:   The subresource to be added to the request's query. A subresource can be used to access
-                                options or properties of a resource.
-     - parameter acl:           The optional access control list to set the acl headers for the request. For more 
-                                information see `ACL`.
-     - parameter metaData:      An optional dictionary of meta data that should be assigned to the object to be uploaded.
-     - parameter storageClass:  The optional storage class to use for the object to upload. If none is specified, 
-                                standard is used. For more information see `StorageClass`.
+     - Parameters:
+     - method:            The HTTP method for the request. For more information see `Alamofire.Method`.
+     - path:              The desired path, including the file name and extension, in the Amazon S3 Bucket.
+     - subresource:       The subresource to be added to the request's query. A subresource can be used to access
+                                    options or properties of a resource.
+     - acl:               The optional access control list to set the acl headers for the request. For more
+                                    information see `ACL`.
+     - metaData:          An optional dictionary of meta data that should be assigned to the object to be uploaded.
+     - storageClass:      The optional storage class to use for the object to upload. If none is specified,
+                                    standard is used. For more information see `StorageClass`.
+     - customParameters:  An optional dictionary of custom parameters to be added to the url's query string.
      
      - returns: A `URLRequest`, serialized for use with the Amazon S3 service.
      */
@@ -109,7 +111,7 @@ open class AmazonS3RequestSerializer {
                                storageClass: StorageClass = .standard,
                                customParameters: [String : String]? = nil,
                                customHeaders: [String : String]? = nil) -> URLRequest {
-        let url = requestURL(path, subresource: subresource, customParameters: customParameters)
+        let url = self.url(withPath: path, subresource: subresource, customParameters: customParameters)
         
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
@@ -123,7 +125,19 @@ open class AmazonS3RequestSerializer {
         return urlRequest as URLRequest
     }
     
-    fileprivate func requestURL(_ path: String?, subresource: String?, customParameters:[String : String]? = nil) -> URL {
+    
+    /// This method returns the `URL` for the given path.
+    ///
+    /// - Note: This method only returns an unsigned `URL`. If the object at the generated `URL` requires authentication to access, the `amazonURLRequest(method:, path:)` function above should be used to create a signed `URLRequest`.
+    ///
+    /// - Parameters:
+    ///   - path:               The desired path, including the file name and extension, in the Amazon S3 Bucket.
+    ///   - subresource:        The subresource to be added to the url's query. A subresource can be used to access
+    ///                         options or properties of a resource.
+    ///   - customParameters:   An optional dictionary of custom parameters to be added to the url's query string.
+    ///
+    /// - Returns: A `URL` to access the given path on the Amazon S3 service.
+    open func url(withPath path: String?, subresource: String? = nil, customParameters:[String : String]? = nil) -> URL {
         var url = endpointURL
         if let path = path {
             url = url.appendingPathComponent(path)

@@ -284,6 +284,106 @@ class AmazonS3RequestSerializerTests: XCTestCase {
     XCTAssertEqual(header1, "foo", "Meta data header field is not set correctly.")
     XCTAssertEqual(header2, "bar", "Meta data header field is not set correctly.")
   }
+  
+  // MARK: Amazon Request URL Serialization - Tests
+  
+  func test__url_for_path__returnsURLWithEndpointURL() {
+    // given
+    let path = "TestPath"
+    let expectedURL = URL(string: "https://\(region.endpoint)/\(bucket)/\(path)")!
+    
+    // when
+    let url = sut.url(withPath: path)
+    
+    // then
+    XCTAssertEqual(url, expectedURL)
+  }
+  
+  func test__url_for_path__givenCustomRegion_setsURLWithEndpointURL() {
+    // given
+    let path = "TestPath"
+    let expectedEndpoint = "test.endpoint.com"
+    let region = Region.custom(hostName: "", endpoint: expectedEndpoint)
+    sut.region = region
+    let expectedURL = URL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)")!
+    
+    // when
+    let url = sut.url(withPath: path)
+    
+    // then
+    XCTAssertEqual(url, expectedURL)
+  }
+  
+  func test__url_for_path__givenNoBucket__setsURLWithEndpointURL() {
+    // given
+    sut.bucket = nil
+    
+    let path = "TestPath"
+    let expectedURL = URL(string: "https://\(region.endpoint)/\(path)")!
+    
+    // when
+    let url = sut.url(withPath: path)
+    
+    // then
+    XCTAssertEqual(url, expectedURL)
+  }
+  
+  func test__url_for_path__givenNoPath() {
+    // given
+    sut.bucket = "test"
+    
+    let expectedURL = URL(string: "https://\(region.endpoint)/test")!
+    
+    // when
+    let url = sut.url(withPath: nil)
+    
+    // then
+    XCTAssertEqual(url, expectedURL)
+  }
+  
+  func test__url_for_path__givenUseSSL_false_setsURLWithEndpointURL_usingHTTP() {
+    // given
+    sut.useSSL = false
+    
+    let path = "TestPath"
+    let expectedURL = URL(string: "http://\(region.endpoint)/\(bucket)/\(path)")!
+    
+    // when
+    let url = sut.url(withPath: path)
+    
+    // then
+    XCTAssertEqual(url, expectedURL)
+  }
 
+  func test__url_for_path__givenCustomParameters_setsURLWithEndpointURL() {
+    // given
+    let path = "TestPath"
+    let expectedEndpoint = "test.endpoint.com"
+    let region = Region.custom(hostName: "", endpoint: expectedEndpoint)
+    sut.region = region
+    let expectedURL = URL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)?custom-param=custom%20value%21%2F")!
+    
+    // when
+    let url = sut.url(withPath: path, customParameters: ["custom-param" : "custom value!/"])
+    
+    // then
+    XCTAssertEqual(url, expectedURL)
+  }
+  
+  func test__url_for_path__givenCustomParameters_setsURLWithEndpointURL_ContinuationToken() {
+    // given
+    let path = "TestPath"
+    let expectedEndpoint = "test.endpoint.com"
+    let region = Region.custom(hostName: "", endpoint: expectedEndpoint)
+    sut.region = region
+    let expectedURL = URL(string: "https://\(expectedEndpoint)/\(bucket)/\(path)?continuation-token=1%2FkCRyYIP%2BApo2oop%2FGa8%2FnVMR6hC7pDH%2FlL6JJrSZ3blAYaZkzJY%2FRVMcJ")!
+    
+    // when
+    let url = sut.url(withPath: path,
+      customParameters: ["continuation-token" : "1/kCRyYIP+Apo2oop/Ga8/nVMR6hC7pDH/lL6JJrSZ3blAYaZkzJY/RVMcJ"])
+    
+    // then
+    XCTAssertEqual(url, expectedURL)
+  }
   
 }
