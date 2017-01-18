@@ -7,7 +7,7 @@
 
 An Alamofire based request manager that serializes requests to the AWS S3 (Amazon Simple Storage Solution).
 
-`AmazonS3RequestManager` also includes a request serializer that creates `NSURLRequest` objects for use with any other networking methods.
+`AmazonS3RequestManager` also includes a request serializer that creates `URLRequest` objects for use with any other networking methods.
 
 ## Features
 
@@ -57,7 +57,7 @@ let amazonS3Manager = AmazonS3RequestManager(bucket: myAmazonS3Bucket,
 Gets a list of object in a bucket:
 
 ```swift
-amazonS3Manager.listBucketObjects().responseS3Object { (response: Response<S3BucketObjectList, NSError>) in
+amazonS3Manager.listBucketObjects().responseS3Object { (response: DataResponse<S3BucketObjectList, NSError>) in
     if let files = response.result.value?.files {
         for file in files {
             print(file.path)
@@ -86,7 +86,7 @@ amazonS3Manager.download(at: "myFolder/fileName.jpg", to: destination)
 Retrieve metadata from an object without returning the object itself:
 
 ```swift
-amazonS3Manager.getMetaData(forObjectAt: "fileName.txt").responseS3MetaData { (response: Response<S3ObjectMetaData, NSError>) in
+amazonS3Manager.getMetaData(forObjectAt: "fileName.txt").responseS3MetaData { (response: DataResponse<S3ObjectMetaData, NSError>) in
     if let metaData = response.result.value?.metaData {
         for objectMetaData in metaData {
             print(objectMetaData)
