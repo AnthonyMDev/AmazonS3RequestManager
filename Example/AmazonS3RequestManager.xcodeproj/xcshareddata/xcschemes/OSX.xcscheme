@@ -38,6 +38,16 @@
                ReferencedContainer = "container:AmazonS3RequestManager.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "928CAAB81E5CCDFC002D52A1"
+               BuildableName = "TVOS-Tests.xctest"
+               BlueprintName = "TVOS-Tests"
+               ReferencedContainer = "container:AmazonS3RequestManager.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

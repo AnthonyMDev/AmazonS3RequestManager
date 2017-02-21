@@ -37,6 +37,21 @@ target 'OSX-Tests' do
   test_pods
 end
 
+target 'TVOS-Example' do
+    platform :tvos, '10.1'
+    
+    pod "AmazonS3RequestManager", :path => "../"
+    
+end
+
+target 'TVOS-Tests' do
+    platform :tvos, '10.1'
+    
+    pod "AmazonS3RequestManager", :path => "../"
+    
+    test_pods
+end
+
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     if target.name.include? 'AmazonS3RequestManager'

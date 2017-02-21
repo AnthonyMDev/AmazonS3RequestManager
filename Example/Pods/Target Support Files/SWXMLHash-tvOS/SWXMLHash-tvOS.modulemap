@@ -1,0 +1,6 @@
+framework module SWXMLHash {
+  umbrella header "SWXMLHash-tvOS-umbrella.h"
+
+  export *
+  module * { export * }
+}
