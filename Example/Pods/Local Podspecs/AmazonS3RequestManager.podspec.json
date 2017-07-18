@@ -1,6 +1,6 @@
 {
   "name": "AmazonS3RequestManager",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "license": "MIT",
   "summary": "A Alamofire based request manager that serializes requests to the AWS S3 (Amazon Simple Storage Solution). Based on AFAmazonS3Manager",
   "homepage": "https://github.com/AnthonyMDev/AmazonS3RequestManager",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/AnthonyMDev/AmazonS3RequestManager.git",
-    "tag": "1.1.2"
+    "tag": "1.2.0"
   },
   "ios": {
     "frameworks": "MobileCoreServices"

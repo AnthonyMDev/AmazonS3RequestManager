@@ -68,7 +68,7 @@ public final class S3BucketObjectList: ResponseObjectSerializable {
     }
     
     fileprivate func parseContents(_ xml: XMLIndexer) {
-        for element in xml.children {
+        for element in xml.all {
             if let file = parseFile(element) {
                 files.append(file)
             }
