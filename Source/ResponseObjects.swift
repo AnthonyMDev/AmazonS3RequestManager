@@ -82,8 +82,6 @@ public final class S3BucketObjectList: ResponseObjectSerializable {
             let sizeString = xml["Size"].element?.text,
             let size = Int64(sizeString) else { return nil }
 
-		print("sizeString='\(sizeString)' size=\(size) path=\(path)")
-
         var storageClass: StorageClass?
         if let storageClassString = xml["StorageClass"].element?.text {
             storageClass = StorageClass(rawValue: storageClassString)
