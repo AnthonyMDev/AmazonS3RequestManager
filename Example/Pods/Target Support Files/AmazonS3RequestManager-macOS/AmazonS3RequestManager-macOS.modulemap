@@ -1,5 +1,5 @@
 framework module AmazonS3RequestManager {
-  umbrella header "AmazonS3RequestManager-OSX-umbrella.h"
+  umbrella header "AmazonS3RequestManager-macOS-umbrella.h"
 
   export *
   module * { export * }
