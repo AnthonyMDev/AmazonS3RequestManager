@@ -291,7 +291,7 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
         let userInfo: [AnyHashable: Any] = [NSLocalizedFailureReasonErrorKey: failureReason]
         let expectedError = NSError(domain: S3Error.Domain,
                                     code: AFError.responseSerializationFailed(reason: .inputDataNil)._code,
-                                    userInfo: userInfo)
+                                    userInfo: userInfo as! [String : Any])
         
         let response = HTTPURLResponse(url: URL(string: "http://www.test.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)
         

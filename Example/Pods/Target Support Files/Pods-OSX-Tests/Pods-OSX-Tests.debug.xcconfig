@@ -1,9 +1,9 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 CODE_SIGN_IDENTITY =
-FRAMEWORK_SEARCH_PATHS = $(inherited) $(PLATFORM_DIR)/Developer/Library/Frameworks "$PODS_CONFIGURATION_BUILD_DIR/Alamofire-OSX" "$PODS_CONFIGURATION_BUILD_DIR/AmazonS3RequestManager-OSX" "$PODS_CONFIGURATION_BUILD_DIR/Nimble-OSX" "$PODS_CONFIGURATION_BUILD_DIR/Nocilla-OSX" "$PODS_CONFIGURATION_BUILD_DIR/Quick-OSX" "$PODS_CONFIGURATION_BUILD_DIR/SWXMLHash-OSX"
+FRAMEWORK_SEARCH_PATHS = $(inherited) $(PLATFORM_DIR)/Developer/Library/Frameworks "$PODS_CONFIGURATION_BUILD_DIR/Alamofire-macOS" "$PODS_CONFIGURATION_BUILD_DIR/AmazonS3RequestManager-macOS" "$PODS_CONFIGURATION_BUILD_DIR/Nimble-macOS" "$PODS_CONFIGURATION_BUILD_DIR/Nocilla-macOS" "$PODS_CONFIGURATION_BUILD_DIR/Quick-macOS" "$PODS_CONFIGURATION_BUILD_DIR/SWXMLHash-macOS"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/../Frameworks' '@loader_path/../Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/Alamofire-OSX/Alamofire.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/AmazonS3RequestManager-OSX/AmazonS3RequestManager.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Nimble-OSX/Nimble.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Nocilla-OSX/Nocilla.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Quick-OSX/Quick.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/SWXMLHash-OSX/SWXMLHash.framework/Headers"
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/Alamofire-macOS/Alamofire.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/AmazonS3RequestManager-macOS/AmazonS3RequestManager.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Nimble-macOS/Nimble.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Nocilla-macOS/Nocilla.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Quick-macOS/Quick.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/SWXMLHash-macOS/SWXMLHash.framework/Headers"
 OTHER_LDFLAGS = $(inherited) -framework "Alamofire" -framework "AmazonS3RequestManager" -framework "Nimble" -framework "Nocilla" -framework "Quick" -framework "SWXMLHash"
 OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
 PODS_BUILD_DIR = $BUILD_DIR
