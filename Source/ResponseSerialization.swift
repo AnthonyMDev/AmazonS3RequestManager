@@ -59,9 +59,9 @@ extension DataRequest {
                     
                 } else {
                     let failureReason = "XML could not be serialized into response object: \(xml)"
-                    let userInfo: [AnyHashable: Any] = [NSLocalizedFailureReasonErrorKey: failureReason]
+                    let userInfo: [String: Any] = [NSLocalizedFailureReasonErrorKey: failureReason]
                     let errorCode = AFError.responseSerializationFailed(reason: .inputDataNil)._code
-                    let error = NSError(domain: S3Error.Domain, code: errorCode, userInfo: userInfo as! [String : Any])
+                    let error = NSError(domain: S3Error.Domain, code: errorCode, userInfo: userInfo)
                     return .failure(error)
                 }
                 
@@ -154,9 +154,9 @@ extension DataRequest {
             
             guard let metaData = S3ObjectMetaData(response: response) else {
                 let failureReason = "No meta data was found."
-                let userInfo: [AnyHashable: Any] = [NSLocalizedFailureReasonErrorKey: failureReason]
+                let userInfo: [String: Any] = [NSLocalizedFailureReasonErrorKey: failureReason]
                 let errorCode = AFError.responseSerializationFailed(reason: .inputDataNil)._code
-                let error = NSError(domain: S3Error.Domain, code: errorCode, userInfo: userInfo as! [String : Any])
+                let error = NSError(domain: S3Error.Domain, code: errorCode, userInfo: userInfo)
                 return .failure(error)
             }
             

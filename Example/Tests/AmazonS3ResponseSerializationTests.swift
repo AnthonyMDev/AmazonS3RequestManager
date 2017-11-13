@@ -288,10 +288,10 @@ class AmazonS3ResponseSerializationTests: XCTestCase {
         // given
         let failureReason = "No meta data was found."
         
-        let userInfo: [AnyHashable: Any] = [NSLocalizedFailureReasonErrorKey: failureReason]
+        let userInfo: [String: Any] = [NSLocalizedFailureReasonErrorKey: failureReason]
         let expectedError = NSError(domain: S3Error.Domain,
                                     code: AFError.responseSerializationFailed(reason: .inputDataNil)._code,
-                                    userInfo: userInfo as! [String : Any])
+                                    userInfo: userInfo)
         
         let response = HTTPURLResponse(url: URL(string: "http://www.test.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)
         
