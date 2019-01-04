@@ -20,6 +20,6 @@ s.source_files = 'Source/*.{h,m,swift}'
 
 s.requires_arc = true
 
-s.dependency 'Alamofire', '~> 4.1'
-s.dependency 'SWXMLHash', '~> 4.1.0'
+s.dependency 'Alamofire', '~> 4.5'
+s.dependency 'SWXMLHash', '~> 4.2'
 end

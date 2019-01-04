@@ -1,11 +1,11 @@
-osx_image: xcode8
+osx_image: xcode9.1
 language: objective-c
 podfile: Example/Podfile
 xcode_workspace: Example/AmazonS3RequestManager.xcworkspace
 
 matrix:
     include:
-        - env: SDK=iphonesimulator10.0 SCHEME=iOS DEST='platform=iOS Simulator,name=iPhone 6,OS=10.0'  
+        - env: SDK=iphonesimulator11.0 SCHEME=iOS DEST='platform=iOS Simulator,name=iPhone 6,OS=11.0'  
         - env: SDK=macosx10.12 SCHEME=OSX DEST='platform=OS X,arch=x86_64'
 
 script:

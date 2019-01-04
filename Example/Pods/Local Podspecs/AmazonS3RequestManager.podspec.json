@@ -30,10 +30,10 @@
   "requires_arc": true,
   "dependencies": {
     "Alamofire": [
-      "~> 4.1"
+      "~> 4.5"
     ],
     "SWXMLHash": [
-      "~> 4.1.0"
+      "~> 4.2"
     ]
   }
 }

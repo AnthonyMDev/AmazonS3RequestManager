@@ -1,5 +1,5 @@
 framework module Nocilla {
-  umbrella header "Nocilla-OSX-umbrella.h"
+  umbrella header "Nocilla-macOS-umbrella.h"
 
   export *
   module * { export * }

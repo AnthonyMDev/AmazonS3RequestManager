@@ -126,7 +126,7 @@ public final class S3ObjectMetaData: ResponseObjectSerializable {
         for (header,value) in headers {
             let prefix = "x-amz-meta-"
             if header.hasPrefix(prefix) {
-                let trimmedHeaderName = header.substring(from: prefix.characters.index(prefix.startIndex, offsetBy: prefix.characters.count))
+                let trimmedHeaderName = String(header[prefix.index(prefix.startIndex, offsetBy: prefix.count)...])
                 metaData[trimmedHeaderName] = value
             }
         }
