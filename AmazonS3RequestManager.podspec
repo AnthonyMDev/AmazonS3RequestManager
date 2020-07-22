@@ -16,7 +16,7 @@ s.ios.deployment_target = '8.0'
 s.tvos.deployment_target = '10.1'
 s.osx.deployment_target = '10.10'
 
-s.source_files = 'Source/*.{h,m,swift}'
+s.source_files = 'Source/*.{h,m,swift}', 'AmazonS3SignatureHelpers/*.{h,m}'
 
 s.requires_arc = true
 

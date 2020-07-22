@@ -16,6 +16,10 @@ import Foundation
 
 import Alamofire
 
+#if canImport(AmazonS3SignatureHelpers)
+import AmazonS3SignatureHelpers
+#endif
+
 /**
  MARK: - AmazonS3RequestSerializer
  

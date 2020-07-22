@@ -1,0 +1,5 @@
+framework module AmazonS3SignatureHelpers {
+    umbrella header "AmazonS3SignatureHelpers-framework.h"
+    export *
+    module * { export * }
+}
