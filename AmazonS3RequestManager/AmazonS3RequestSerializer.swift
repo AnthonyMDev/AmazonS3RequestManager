@@ -1,1 +1,0 @@
-../Source/AmazonS3RequestSerializer.swift

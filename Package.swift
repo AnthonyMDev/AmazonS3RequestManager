@@ -5,32 +5,27 @@ import PackageDescription
 
 let package = Package(
     name: "AmazonS3RequestManager",
-    platforms: [.macOS(.v10_12),
-                .iOS(.v10)],
+    platforms: [.macOS(.v10_15),
+                .iOS(.v13)],
     products: [
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "AmazonS3RequestManager",
-            targets: ["AmazonS3RequestManager", "AmazonS3SignatureHelpers"]
+            targets: ["AmazonS3RequestManager"]
         )
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/Alamofire/Alamofire.git", from: "4.5.0"),
-        .package(url: "https://github.com/drmohundro/SWXMLHash.git", from: "4.2.0")
+        .package(url: "https://github.com/drmohundro/SWXMLHash.git", from: "4.2.0"),
+        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", from: "1.3.1")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "AmazonS3RequestManager",
-            dependencies: ["AmazonS3SignatureHelpers", "Alamofire", "SWXMLHash"],
-            path: "AmazonS3RequestManager"
-        ),
-        .target(
-            name: "AmazonS3SignatureHelpers",
-            dependencies: [],
-            path: "AmazonS3SignatureHelpers"
+            dependencies: ["Alamofire", "SWXMLHash", "CryptoSwift"]
         )
     ]
 )
