@@ -1,6 +1,0 @@
-framework module AmazonS3RequestManager {
-  umbrella header "AmazonS3RequestManager-tvOS-umbrella.h"
-
-  export *
-  module * { export * }
-}
