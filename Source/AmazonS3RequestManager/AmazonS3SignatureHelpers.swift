@@ -81,8 +81,6 @@ func canonicalizedResource(from url: URL) -> String {
 
 func base64EncodedHMACSHA1(key: String, payload: String) throws -> String {
     let hmac = try HMAC(key: key, variant: .sha1)
-    guard let base64Encoded = try hmac.authenticate(payload.bytes).toBase64() else {
-        throw SigningError.nonBase64EncodableSignature
-    }
+    let base64Encoded = try hmac.authenticate(payload.bytes).toBase64()
     return base64Encoded
 }
