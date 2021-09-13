@@ -1,6 +1,0 @@
-framework module Nocilla {
-  umbrella header "Nocilla-iOS-umbrella.h"
-
-  export *
-  module * { export * }
-}
